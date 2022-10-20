@@ -1,0 +1,80 @@
+
+// theme colors
+$grey-primary:#f7f7f7;
+$grey-secondary: #dfdfdf;
+$grey-third:#dedede;
+$secondary: #333;
+$error: #d32752;
+$border-color:#d4d4d4;
+$nav-color:#9c88ff;
+$nav-color-2:#58249c;
+$nav-color-dark:#3f1a71;
+$nav-color-light:#742fcd;
+$green-primary:#1f9751;
+$green-shine:#19e635;
+$database-navbar:#f190d4;
+
+$colors:(
+ "primary": $grey-primary,
+  "secondary": $secondary,
+  "error": $error,
+  "border-color":$border-color,
+  "card-p":#999,
+  "create-substance":#555,
+  "nav":$nav-color,
+  "nav-dark":$nav-color-dark,
+  "nav-light":$nav-color-light,
+  "green":$green-primary,
+  "green-shine":$green-shine,
+  "database-navbar":$database-navbar,
+  "orange": #ffa600,
+  "purple": #9900ff,
+  "gray":$grey-third,
+  "white": #fff,
+  "white-2":#e4e4e4,
+);
+//witdh
+$width-wide:75rem;//1200px
+// spacing
+$base-padding: 0.5rem;
+$padding-medium: 1rem;
+$base-margin: 0.75rem;
+
+// borders
+$base-border-thickness: 1px;
+$base-border-radius: 20px;
+
+// box-shadow
+$base-box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+
+// font sizes
+$base-font-size: 1rem;
+$font-size-sm: $base-font-size * 0.75;
+$font-size-lg: $base-font-size * 1.5;
+$font-size-xl: $base-font-size * 2;
+$font-size-xxl: $base-font-size * 3;
+//letter-spacing
+
+//transition
+$base-transition:0.1s;
+//layout
+$center:center;
+//mixin
+@mixin flx-row($justify:$center, $aling:$center){
+    display:flex;
+    justify-content:$justify;
+    align-items:$aling;
+    flex-wrap: wrap;
+}
+@mixin flx-col($justify:$center, $aling:$center){
+    display:flex;
+    justify-content:$justify;
+    align-items:$aling;
+    flex-flow: column wrap;
+}
+@mixin shrinkLabel {
+  top: -0.08rem;
+  left:0;
+  font-size:1rem;
+  color: $secondary;
+}

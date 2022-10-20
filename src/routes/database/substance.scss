@@ -1,0 +1,69 @@
+.substance-container{
+height: 100vh;
+width:90%;
+ border:2px solid red;
+ display: grid;
+grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+grid-template-rows: 1fr;
+ & .substance-title{
+     text-align:center;    
+    }
+& .substance-monograph{
+border:8px solid lemonchiffon;
+padding: 0.5rem;
+display: grid;
+grid-template-columns:1fr;
+grid-template-rows:1fr;
+//STYLE FOR THE MONOGRAPGH TITLE
+& .mono-title-container{
+    border:5px solid green;
+}
+
+/*cccccccccc*/
+& label{
+@include flx-col();
+border:2px solid blue;
+margin: 30px auto;
+position:relative;
+padding: 20px;
+& span{
+@include flx-row();
+position:absolute;
+border:2px solid black;
+top:0;
+left:0;
+width:100%;
+height:100%;
+& img{
+transition:all $base-transition*2;
+opacity: 0;
+border:2px solid red;
+ margin-left: auto;
+ height:$font-size-xl;
+}
+&:hover img{
+opacity: 1;
+cursor: pointer;
+}
+ }
+ & input{
+border:3px solid red;
+ position:absolute;
+top:0;
+left:0;
+ height:100%;
+ width:100%;
+opacity:1;
+transition: all 0.8s;
+&:disabled{
+visibility: hidden;
+}
+ }
+}
+}
+.open-input+input{
+background-color: red;
+transform: translateY(100%);
+opacity:1; 
+}
+}

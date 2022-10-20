@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Poppins:ital,wght@0,100;0,400;1,300;1,700&family=Raleway:ital,wght@0,100;0,300;1,100;1,400;1,500&display=swap');
+
+*{
+  box-sizing:border-box;
+}
+/* base styles */
+html, body, #root {
+  height: 100%;
+}
+body {
+  font-family: Raleway, sans-serif;
+  margin:0;
+  font-size:1.4em;
+  background:$grey-primary;
+  color:$secondary;
+}
+h1,h2,h3,p {
+  margin: 0;
+}
+a{
+  text-decoration:none;
+}
+ul{
+  list-style-type: none;
+  padding:0;
+}
+input, textarea {
+  color:$secondary;
+  padding: 8px;
+  font-size: 1em;
+  border-radius: 4px;
+  border: 1px solid $border-color;
+  background-color:map-get($colors,'white');
+  display: block;
+  width: 100%;
+}
+.App {
+ @include flx-col($justify:flex-start);
+  min-height: 100%;
+}
+.page-title {
+  text-align: center;
+  margin: 40px auto;
+  color:$secondary;
+}
+.loading, .error {
+  text-align: center;
+  margin: 40px auto;
+}
+.dark{
+background-color: #444;
+}

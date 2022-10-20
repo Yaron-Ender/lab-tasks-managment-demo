@@ -1,0 +1,69 @@
+.login-container,
+.signup-container{
+position: fixed;
+ top:50%;
+ left:50%;
+ transform: translate(-50%,-50%);
+ padding:1rem 2rem;
+background:map-get($colors,'white' );
+box-shadow:10px 20px 10px -20px map-get($colors,"green"),
+-10px -20px 10px -20px map-get($colors,"green")
+;
+ font-family:Poppins, sans-serif;
+& h2{
+ text-align: center;
+  color:map-get($colors,"green");
+}
+}
+.login-form,
+.signup-form{
+@include flx-col();
+.input-unit{
+position:relative;
+//style for monograph title, see CreateSubstance Comp
+& .substance-title{
+ font: {
+    size:$font-size-xxl;
+  }
+}
+& .substance-title ~ label{
+z-index:-1;
+}
+}
+label{
+position: absolute;
+top:50%;
+transform: translateY(-50%);
+left:5%;
+ transition:all 0.3s;
+}
+.form-input{
+width: 100%;
+border-radius:5px;
+margin: 20px auto;
+ transition: 300ms ease all;
+ border:0;
+ border-bottom:1px solid $secondary;
+ //deleate the arrows from input[type=number]
+ /* Chrome, Safari, Edge, Opera */
+ input::-webkit-outer-spin-button,
+ input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   /* Firefox */
+   input[type=number] {
+     -moz-appearance: textfield;
+   }
+ }
+&:focus{
+    outline: none;
+}
+&:focus ~ label{
+@include shrinkLabel();
+}
+
+}
+.shrink{
+ @include shrinkLabel();
+}
+}
+

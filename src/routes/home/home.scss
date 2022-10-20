@@ -1,0 +1,59 @@
+.homepage{
+height:100vh;
+max-width:80%;
+ position:relative;
+ @include flx-col();
+border:1px solid red;
+ & .hero-img{
+text-align: center;
+margin-bottom: auto;
+// width:60%;
+height: 80%;
+ }
+ & img{
+width:100%;
+height:100%;
+ }
+ .login-navbar{
+   margin-bottom:auto;
+     width:100%;
+    background:#effaf0;
+    padding:20px 10px;
+   & .login-navbar-container{
+    position: relative;
+     width:90%;
+   text-align:end;
+   margin:0 auto;
+   & a.login-link{
+   display:inline-block;
+    text-decoration: none;
+   color:map-get($colors,'green');
+   border:$base-border-thickness solid $green-primary;
+   padding:$base-padding*0.8 $padding-medium*1.3;
+   border-radius:$base-border-radius*0.3;
+    box-shadow: 3px 3px 3px $green-primary;
+   transition:$base-transition;
+   font: {
+    size:$font-size-lg;
+    weight:700;
+   }
+   &:hover{
+   background-color:map-get($colors,'green');
+    color:#fff;
+   border:$base-border-thickness solid $nav-color;
+    box-shadow: 3px 3px 5px 5px $grey-primary;
+   }
+ }
+ & a.signup-link{
+position: absolute;
+top:4rem;
+ color:map-get($colors,'green');
+ &:hover{
+   color:#fff;
+    transition:$base-transition; 
+ }
+}
+   }
+   
+ }
+}
