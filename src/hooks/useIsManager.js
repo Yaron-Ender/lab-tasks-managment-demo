@@ -10,7 +10,7 @@ export const useISManager = ()=>{
       case "123123":
         return setIsManager(true);
       default:
-        setIsManager(null);
+        setIsManager(false);
     }
   };
 return{ isManager,manager }

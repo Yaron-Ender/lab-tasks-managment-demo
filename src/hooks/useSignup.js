@@ -25,10 +25,10 @@ const [isPending, setIsPending] = useState(false);
  await updateProfile(user,{displayName:userName,photoURL})
  
  //creat users collection
- const docRef = doc(db,'users',employeeNum)
+ const docRef = doc(db,'users',user.uid)
  const getDocument =await getDoc(docRef)
  if(!getDocument.exists()){
-   await setDoc(docRef,{userName,photoURL,employeeNum,assignments:[]})
+   await setDoc(docRef,{id:user.uid,isManager,userName,photoURL,employeeNum,assignments:[]})
  }
  //update AuthContext
  dispatch({ type: "LOGIN", payload:{user,employeeNum,isManager}});

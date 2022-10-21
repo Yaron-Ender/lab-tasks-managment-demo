@@ -6,7 +6,7 @@ import { useSignup } from "../../hooks/useSignup";
 import { useISManager } from "../../hooks/useIsManager";
 const Signup = () => {
   const { error,isPending,signup } = useSignup()
-  // console.log(isManager)
+  const { isManager,manager } = useISManager()
   const defaultInput = {
     userName: "",
     email:'',
@@ -18,7 +18,6 @@ const Signup = () => {
   const [employeeNum,setEmployeeNum] =useState(null)
   const [comparePS,setComparePS] = useState(false)
   const { userName,email, employeeNumber,password, confirmPassword } = inputFields;
-  const { isManager,manager } = useISManager()
   useEffect(()=>{
   setComparePS(false)
   if(password===confirmPassword){
@@ -26,8 +25,7 @@ const Signup = () => {
   }
   setEmployeeNum(prev=>(prev=workersID.find(num => num==employeeNumber)))
   //find if employee is manager
-  if (employeeNum) {
-    if(employeeNum.length==6)
+  if (employeeNum && employeeNum.length==6) {
   manager(employeeNum);
 }
 },[password,confirmPassword,employeeNum,isManager])

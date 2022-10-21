@@ -35,7 +35,7 @@ const CreateSubstance = () => {
   }
   //STATES
   const [show, setShow] = useState(false);
-  const [sustanceName,setSustanceName]=useState('')
+  const [substanceName,setSubstanceName]=useState('')
   const [monograph, setMonograph] = useState([]); //All the monograpes that the user create
   const [openTextareaPannel, setOpenTextareaPannel] = useState(false);
   //FUNCTIONS
@@ -44,7 +44,7 @@ const CreateSubstance = () => {
     e.preventDefault();
   };
   const saveMonograph = () => {
-    console.log(sustanceName);
+    console.log(substanceName);
   };
   //add the individual monograph to state that store all the monographes
   const addMonograph = (e) => {
@@ -152,11 +152,12 @@ const CreateSubstance = () => {
           <FormInput
             type="text"
             id="sustance-title"
-            label="sustance-title"
+            label="Substance Name"
             name="sustanceTitle"
+            value={substanceName}
             className={"form-input substance-title"}
             onChange={(e) => {
-              setSustanceName(e.target.value);
+              setSubstanceName(e.target.value);
             }}
           />
         </header>

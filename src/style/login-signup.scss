@@ -27,7 +27,9 @@ position:relative;
   }
 }
 & .substance-title ~ label{
-z-index:-1;
+  font: {
+     size:$font-size-xl;
+   }
 }
 }
 label{
