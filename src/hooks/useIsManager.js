@@ -4,7 +4,7 @@ export const useISManager = ()=>{
   const [isManager,setIsManager] = useState(null);
   const manager = (employeeNum) => {
     const findManager = workersID.find((num) => num === employeeNum);
-
+  console.log(findManager)
     switch (findManager) {
       case "000000":
       case "123123":

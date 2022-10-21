@@ -19,6 +19,8 @@ const { openDatabaseNavbar } = useStyle()
             >assign job</NavLink>
             <NavLink to="workers">workers</NavLink>
             {user&&<span>hello {user.displayName}</span>}
+            {manager&&<span>manager: {String(manager)}</span>}
+            {!manager&&<span>manager: {String(manager)}</span>}
            </>
           )}
           <p onClick={logout} className='login-link'>Logout</p>

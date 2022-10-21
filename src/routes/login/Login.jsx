@@ -1,23 +1,34 @@
-import { useState } from "react";   
+import { useState,useEffect } from "react";   
 import Button from "../../component/button/button";
 import FormInput from "../../component/input/input.comp";
 import { useLogin } from "../../hooks/useLogin";
+import { workersID } from "../../asstes/workers-ID-Numbers";
+import { useISManager } from "../../hooks/useIsManager";
 const Login = () => {
 const { login,isPending,error } = useLogin();
+const { manager,isManager } = useISManager();
   const defaultInput = {
     email:"",
     employeeNumber:"",
     password: "",
   };
+   const [employeeNum, setEmployeeNum] = useState(null);
   const [inputFields, setInputFields] = useState(defaultInput);
   const { employeeNumber, email, password } = inputFields;
-  const handleInput =(e)=>{
-     const{name,value}=e.target
-     setInputFields(prev=>({...prev,[name]:value}))
-  }
-  const handleSubmit = (e)=>{
+ useEffect(()=>{
+   if(employeeNumber.length==6){
+   setEmployeeNum(prev=>prev=workersID.find(num=>employeeNumber==num));
+  manager(employeeNum)
+}
+},[employeeNumber,isManager])
+const handleInput =(e)=>{
+  const{name,value}=e.target
+  setInputFields(prev=>({...prev,[name]:value}))
+}
+const handleSubmit = (e)=>{
   e.preventDefault()
-  login(email,password,employeeNumber)
+  console.log('do you a manager', isManager)
+  login(email,password,employeeNumber,isManager)
   setInputFields(defaultInput)
   }
     return (
