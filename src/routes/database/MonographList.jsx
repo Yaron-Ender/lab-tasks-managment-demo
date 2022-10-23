@@ -3,6 +3,7 @@ import { useFriestore } from "../../hooks/useFirestore";
 import  edit from'../../asstes/edit.svg';
 
 const MonographList = ({ document,id }) => {
+  console.log(document,id)
   const {updateDocument,updateMonograph}=useFriestore("substances",id)
   const[monographfieldText,setMonographfieldText]=useState("");
   const [MonoName,setMonoName]=useState(null)
@@ -55,6 +56,7 @@ return (
 // create the Monograph title
       Object.keys(document).map((mono, index) => (
         <Fragment key={mono}>
+          {console.log(mono)}
         <div className="mono-title-container"> 
         <form onSubmit={handleSubmitMonograph}>
         <label>

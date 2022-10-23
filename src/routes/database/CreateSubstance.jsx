@@ -4,7 +4,8 @@ import Button from "../../component/button/button";
 import FormInput from "../../component/input/input.comp";
 import SingelTech from "./SingelTech";
 import MonoInput from "../../component/input/MonoInput";
-import Select from 'react-select'
+import Select from 'react-select';
+import { useFriestore } from "../../hooks/useFirestore";
 const CreateSubstance = () => {
   const technologies = [
     { value: "HPLC", label: "HPLC" },

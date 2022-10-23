@@ -4,6 +4,10 @@ export const useFriestore = (_collection,id)=>{
   const colRef = collection(db,_collection)
   const docReff = doc(colRef, id);
   const batch = writeBatch(db);
+//add doc
+const addDocument =(id,content)=>{
+console.log(id,content)
+}
  //updateDoc
  const updateDocument = async (id,mono, tech, index, newVal) => {
    const docReff = doc(colRef, id);
@@ -23,7 +27,7 @@ export const useFriestore = (_collection,id)=>{
     batch.set(docReff,{...modifiedObj})
     await batch.commit();
   }
- return { updateDocument,updateMonograph }
+ return { updateDocument,updateMonograph,addDocument }
 }
 
  
