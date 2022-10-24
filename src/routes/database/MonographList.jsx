@@ -1,9 +1,9 @@
+import React from 'react';
 import { useState,useEffect,useRef,Fragment } from "react";
 import { useFriestore } from "../../hooks/useFirestore";
 import  edit from'../../asstes/edit.svg';
-
-const MonographList = ({ document,id }) => {
-  const {updateDocument,updateMonograph}=useFriestore("substances",id)
+const MonographList2 = ({ document,id }) => {
+ const {updateDocument,updateMonograph}=useFriestore("substances",id)
   const[monographfieldText,setMonographfieldText]=useState("");
   const [MonoName,setMonoName]=useState(null)
   const[doesTextHasChnged,setDoesTextHasChanged]=useState(false)
@@ -29,7 +29,7 @@ const handleSubmitMonograph=(e)=>{
     e.target.children[0].children[0].classList.remove("open-input");
   if(monographfieldText&&
     doesTextHasChnged){
-  updateMonograph(monographfieldText,MonoName)
+  updateMonograph(monographfieldText,MonoName,id)
   setDoesTextHasChanged(false)
   }
   }
@@ -103,6 +103,5 @@ return (
       ))}
   </div>
 );
-};
-
-export default MonographList
+    }
+export default MonographList2;
