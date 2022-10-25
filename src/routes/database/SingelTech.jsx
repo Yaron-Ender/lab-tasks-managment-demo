@@ -15,8 +15,10 @@ updateTests(id,testList)
 },[testList])
 
 const handleClick= (e)=>{
-  setTestList((prev) =>({...prev,[technology]:[...prev[technology],text]}));
-setText("");
+if(text){
+   setTestList((prev) =>({...prev,[technology]:[...prev[technology],text]}));
+ setText("");
+}
 }
    return (
     <div>

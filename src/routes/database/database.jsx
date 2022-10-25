@@ -29,7 +29,7 @@ const createNewSubstance=()=>{
 navigate('/database')
 setOpenCreateNewSub(true)
 }
-//function that get called in createSustance component and turn openCreateSub state to falls in order to close the createSubstabce comp. after push the "save monograph button"
+//function that get called in createSustance component and turn openCreateSub state to falls in order to close the createSubstabce comp. after push the "save monograph" button
 const closeCreateSubstanceComp =()=>{
   setOpenCreateNewSub(false)
   seeAllDoc()

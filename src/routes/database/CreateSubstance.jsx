@@ -61,6 +61,14 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
         };
         let { monographEdition, effectiveDate, note, tests } =
           individualMono["0"];
+        //delete empty technology
+          Object.keys(tests).forEach((tech)=>{
+           if(tests[tech].length==0){
+             delete tests[tech]
+           }
+          })
+          console.log(tests)
+          // tests = tests.forEach(test=>console.log(test))
         console.log(individualMono, individualMono["0"]);
         monographObj[monoNamesArr[i]] = {
           monographEdition,
@@ -143,7 +151,7 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
       }
     });
   };
-  //function that update the tests,it get called from SingleTest Comp and pass "testList"
+  //function that update the tests object,it get called from SingleTest Comp and pass "testList"
   const updateTests = (id, testList) => {
     monograph.forEach((item) => {
       if (item.id === id) {
