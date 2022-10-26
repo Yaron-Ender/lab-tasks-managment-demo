@@ -59,7 +59,7 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
         let individualMono = {
           ...monograph.filter((mono) => mono.monographName == monoNamesArr[i]),
         };
-        let { monographEdition, effectiveDate, note, tests } =
+        let {id,monographEdition, effectiveDate, note, tests } =
           individualMono["0"];
         //delete empty technology
           Object.keys(tests).forEach((tech)=>{
@@ -67,10 +67,9 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
              delete tests[tech]
            }
           })
-          console.log(tests)
-          // tests = tests.forEach(test=>console.log(test))
         console.log(individualMono, individualMono["0"]);
         monographObj[monoNamesArr[i]] = {
+        id,
           monographEdition,
           effectiveDate,
           note,

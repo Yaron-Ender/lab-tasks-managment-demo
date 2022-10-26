@@ -14,18 +14,17 @@ padding: 0.5rem;
 display: grid;
 grid-template-columns:1fr;
 grid-template-rows:1fr;
-//STYLE FOR THE MONOGRAPGH TITLE
-& .mono-title-container{
-    border:5px solid green;
-}
-
-/*cccccccccc*/
+//STYLE FOR THE CHANGED-MONOGRAPGH-CONTAINER
+& .change-monograph-container{
+border:5px solid green;
+//style for the label container
 & label{
 @include flx-col();
 border:2px solid blue;
 margin: 30px auto;
 position:relative;
 padding: 20px;
+//style for the span inside the label
 & span{
 @include flx-row();
 position:absolute;
@@ -46,6 +45,14 @@ opacity: 1;
 cursor: pointer;
 }
  }
+ //style for the container that contaon input and btn
+& .btn-input-container{
+position:absolute;
+width:100%;
+height:100%;
+z-index: -1;
+border:5px solid burlywood;
+ @include flx-row();
  & input{
 border:3px solid red;
  position:absolute;
@@ -53,17 +60,24 @@ top:0;
 left:0;
  height:100%;
  width:100%;
-opacity:1;
 transition: all 0.8s;
 &:disabled{
-visibility: hidden;
+ visibility: hidden;
 }
  }
+& button{
+ position:absolute;
+visibility: hidden;
 }
 }
-.open-input+input{
+&:has(.open-input) > .btn-input-container > input{
 background-color: red;
 transform: translateY(100%);
 opacity:1; 
+}
+}
+
+}
+
 }
 }
