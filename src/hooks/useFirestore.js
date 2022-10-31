@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc } from "firebase/firestore";
+import { collection, doc,getDoc,writeBatch,setDoc,updateDoc } from "firebase/firestore";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);
@@ -10,18 +10,33 @@ const docReff = doc(colRef,id)
 await setDoc(docReff,monographes)
  }
  //updateDoc
- const updateDocument = async (id,mono, tech, index, newVal) => {
+ const updateDocument =async (id,fieldsObj)=>{
    const docReff = doc(colRef, id);
-   const getdoc = await getDoc(doc(colRef,id));
-   const originalObj = getdoc.data()
-    originalObj[mono][tech][index] = newVal;
-   batch.set(docReff,originalObj)
-   await batch.commit();
-  };
+   const getdoc = await getDoc(doc(colRef, id));
+   if(getdoc.exists()){
+const origonalFullData = getdoc.data()
+let modifiedObj={};
+let monoNameAndID={}
+Object.keys(origonalFullData).forEach((o)=>{
+  monoNameAndID = { ...monoNameAndID, [o]:fieldsObj[origonalFullData[o]["id"]] };
+const newData = fieldsObj[origonalFullData[o]["id"]];
+modifiedObj = {...origonalFullData, [o]:{...newData} }
+})  
+  batch.set(docReff, { ...monoNameAndID });
+  await batch.commit();
+}
+ }
+//  const updateDocument = async (id,mono, tech, index, newVal) => {
+//    const docReff = doc(colRef, id);
+//    const getdoc = await getDoc(doc(colRef,id));
+//    const originalObj = getdoc.data()
+//     originalObj[mono][tech][index] = newVal;
+//    batch.set(docReff,originalObj)
+//    await batch.commit();
+//   };
 
   //update MonoGraphName
   const updateMonographName = async (monoName, id) => {
-    console.log(monoName);
     const docReff = doc(colRef, id);
     const getdoc = await getDoc(docReff);
     const originalData = getdoc.data();

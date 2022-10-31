@@ -1,34 +1,62 @@
-import { useState,useEffect,useRef,Fragment } from "react";
+import { useState,useEffect,useRef,useReducer,Fragment } from "react";
+import { Timestamp } from "firebase/firestore";
 import { useFriestore } from "../../hooks/useFirestore";
 import  edit from'../../asstes/edit.svg';
 const MonographList = ({ document,id }) => {
-  const initMonograpghDetailsValue = {
-    effectiveDate: "",
-    monographEdition: "",
-    note: "",
-  };
-  const { updateDocument, updateMonographName } = useFriestore("substances");
-  const [monographFields, setMonographFields] = useState(
-    initMonograpghDetailsValue
-    );
-    const [doesTextHasChnged, setDoesTextHasChanged] = useState(false);
-    const [disabled, setdisabled] = useState(true);
-    const monographName = useRef("")
-    const [changeMonoName,setChangeMonoName] = useState("")
-    const { effectiveDate, monographEdition, note } = monographFields;
+const { updateDocument, updateMonographName } = useFriestore("substances");
+const [monographFields, setMonographFields] = useState(null);
+const [disabled, setdisabled] = useState(true);
+const monographName = useRef("")
+const monoDeteails=useRef({})
+const [changeMonoName,setChangeMonoName] = useState("")
+//THE LOGIC IS SEPARATE TO TWO PARTS 1. MONOGRAPH NAME 2.ALL THE OTHER FIELDS(conversion between Timestamp and date object)
+  //reducer function
+  const firestoreReducer =(state,action)=>{
+const {type,payload}=action
+switch (type){
+case 'MONO_NAME':
+return { ...state, monographName:true};
+case 'MONO_EDITION':
+return { ...state, monographEdition: true };
+case 'EFFECTIVE_DATE':
+return { ...state, effectiveDate: true };
+case 'RESET':
+  return {...state, monographName: false,monographEdition: false,effectiveDate:false };
+default:
+ return state ;
+}
+  }
     //create array of objects {id:monographName} and store it in monographName state
-    const arrayMono = []
-    let newObj ={}
+   
+useEffect(()=>{
+ const arrayMono = [];
+    let newObj ={};
     if(document){
-      Object.keys(document).forEach((m)=> {
-     let  k = document[m]["id"] 
-       arrayMono.push({[k]:m});
-     })
+// it's for monograph names changing
+Object.keys(document).forEach((m)=> {
+  let  k = document[m]["id"] 
+ arrayMono.push({[k]:m});
+ })
      arrayMono.forEach((i)=>{
    newObj  = {...newObj,...i}
    monographName.current=newObj
       })
+//it's for the other fields 
+ Object.keys(document).forEach((n)=>{
+  let {effectiveDate,monographEdition,note,id,tests}=document[n]
+    // effectiveDate=effectiveDate.toDate().toDateString()
+    console.log(effectiveDate,id)
+ monoDeteails.current ={...monoDeteails.current,
+   [document[n]['id']]:{ monographEdition,note,id,tests,effectiveDate} };  
+   console.log(monoDeteails.current);
+ }) 
     }
+},[document])
+  const[state,dispatch]=useReducer(firestoreReducer,{
+  monographName:false,
+  monographEdition:false,
+  effectiveDate:false
+  })
   //open and close input
   const openCloseInput = (e) => {
     const el = window.document.querySelectorAll("span");
@@ -44,30 +72,46 @@ const MonographList = ({ document,id }) => {
   const handleSubmitMonographName = (e) =>{
     e.preventDefault();
     // move input to the top and make it disabled
-    //  setOpenMonoInput(false)
-    setdisabled(true);
-    e.target.children[0].children[0].classList.remove("open-input");
-    //just if doesTextHasChnged state is true the data will be sent to firestore
-    if (doesTextHasChnged) {
-    //send object to useFirestore
-    updateMonographName(changeMonoName,id)
-      setDoesTextHasChanged(false);
-    }
+    setdisabled(true);   
+    //update monograp name
+  if(state.monographName){
+ updateMonographName(changeMonoName,id)
+  }
+  if (state.monographEdition&&monographFields) {
+    updateDocument(id, monographFields);
+    console.log(monographFields)
+  }
+  if(state.effectiveDate&&monographFields) {
+     updateDocument(id, monographFields);
+  }
+  dispatch({type:'RESET'})
   };
-  //handle with the old and the new monograph name
-  const handleChangeMonographName=()=>{
-      
-  }
-  //handle with the old and the new monograph name
-  const handleChangeMonoField = (e,ID) => {
-  if(e.target.name==='monographName'){
-    setChangeMonoName((prev)=>({...prev,[ID]:e.target.value}))
-  }
 
-  const { name, value } = e.target;
-  console.log(name)
-    setMonographFields((prev) => ({ ...prev, [name]: value }));
-    setDoesTextHasChanged(true);
+  //handle with the old and the new monograph name and monograph feilds
+  const handleChangeMonoField = (e, ID) => {
+    const { name, value } = e.target;
+  switch(name){
+  case "monographName":
+setChangeMonoName((prev) => ({ ...prev, [ID]: e.target.value }));
+dispatch({type:'MONO_NAME'})
+break;
+  case "monographEdition":
+  if(e.target.id == ID && value){
+ monoDeteails.current[ID]["monographEdition"] = value;
+ setMonographFields((prev)=>(prev={...monoDeteails.current}))
+ dispatch({ type:"MONO_EDITION" });
+  }
+  break;
+case "effectiveDate":
+if(e.target.id == ID && value){
+   monoDeteails.current[ID]["effectiveDate"]=Timestamp.fromDate(new Date(value))
+ setMonographFields((prev) => (prev = { ...monoDeteails.current }));
+ dispatch({ type:"EFFECTIVE_DATE" });
+}
+
+default:
+ return;
+    }
   };
   //send data to fireStore for update the test
   const handleSubmitTest = async (e, mono, tech, index) => {
@@ -102,7 +146,7 @@ const MonographList = ({ document,id }) => {
       disabled={disabled}
       name="monographName"
       onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
-        value={(changeMonoName[document[mono]["id"]])?changeMonoName[document[mono]["id"]]:''}
+     value={(changeMonoName[document[mono]["id"]])?changeMonoName[document[mono]["id"]]:''}
       />
   <button type="submit"></button>
     </div>
@@ -115,76 +159,52 @@ const MonographList = ({ document,id }) => {
     </span>
     <div className="btn-input-container">
       <input
+      id={document[mono]["id"]}
       type="number"
       disabled={disabled}
-      name={"monographEdition"+document[mono]["id"]}
+     name="monographEdition"
     onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
-      value={monographEdition}
+    value={monoDeteails.current[document[mono]["id"]["monographEdition"]]}
     />
-    <button type="submit"></button>
-      </div>
-        </label>
-       </form>
-              {/* efective date */}
-              {/* <label>
-          <span>
-       {document[mono]['effectiveDate']}
-       <img src={edit} onClick={openCloseInput} />
-      </span>
+  <button type="submit"></button>
+   </div>
+  </label>
+   {/* efective date */}
+  <label>
+    <span>
+      {document[mono]["effectiveDate"].toDate().toDateString()}
+      <img src={edit} onClick={openCloseInput} />
+    </span>
+    <div className="btn-input-container">
       <input
-        type="text"
-        disabled={disabled}
-        name={document[mono]['effectiveDate']}
-        onChange={handleChangeMonoField}
-        value={monographfieldText}
-      />
-    </label> */}
-              {/* note */}
-              {/* <label>
-          <span>
-       {document[mono]['note']}
-       <img src={edit} onClick={openCloseInput} />
-      </span>
-      <input
-        type="text"
-        disabled={disabled}
-        name={document[mono]['note']}
-        onChange={handleChangeMonoField}
-        value={monographfieldText}
-      />
-    </label> */}
-            </div>
-            {Object.keys(document[mono]["tests"]).map((technology, index) => (
-              // create the Test fields
-              <div className="single-test-container" key={index}>
-                {technology.length > 0 && <p>{technology}</p>}
-                <ul>
-                  {document[mono]["tests"][technology].map((test) => (
-                    <li key={test}>test</li>
-                  ))}
-                </ul>
-
-                {/* {document[mono][technology].map((test, index) => (
-                <div key={index} className="test-title-container">
-                  <form
-                    onSubmit={(e) => {
-                      handleSubmitTest(e, mono, technology, index);
-                    }}
-                  >
-                    <label>
-                      <span>
-                        {test}
-                        <img src={edit} onClick={openCloseInput} />
-                      </span>
-                      <input type="text" disabled={disabled} name={test} />
-                    </label>
-                  </form>
-                </div>
-              ))} */}
-              </div>
-            ))}
-          </Fragment>
-        ))}
+      id={document[mono]["id"]}
+      type="date"
+      disabled={disabled}
+     name="effectiveDate"
+    onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
+    value={monoDeteails.current[document[mono]["id"]["effectiveDate"]]}
+    />
+  <button type="submit"></button>
+   </div>
+  
+  </label>
+   {/* tests*/}
+  
+ {Object.keys(document[mono]["tests"]).map((technology)=>{
+  {console.log(technology)}
+<p>technology</p>;
+//  <ul>
+//    {document[mono]["tests"][technology].map((test) => (
+//       <li key={test}>{test}</li>
+//     ))}
+//  </ul>
+  })}
+  
+  <p>trete</p>
+</form>
+</div>
+</Fragment>
+  ))}
     </div>
   );
 }

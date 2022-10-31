@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Timestamp } from "firebase/firestore";
 import Button from "../../component/button/button";
 import FormInput from "../../component/input/input.comp";
 import SingelTech from "./SingelTech";
@@ -67,7 +68,6 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
              delete tests[tech]
            }
           })
-        console.log(individualMono, individualMono["0"]);
         monographObj[monoNamesArr[i]] = {
         id,
           monographEdition,
@@ -103,7 +103,7 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
             item.monographEdition = e.target.value;
             break;
           case "date":
-            item.effectiveDate = e.target.value;
+            item.effectiveDate = Timestamp.fromDate(new Date(e.target.value));
             break;
           default:
             return;
