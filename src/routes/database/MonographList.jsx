@@ -45,10 +45,8 @@ Object.keys(document).forEach((m)=> {
  Object.keys(document).forEach((n)=>{
   let {effectiveDate,monographEdition,note,id,tests}=document[n]
     // effectiveDate=effectiveDate.toDate().toDateString()
-    console.log(effectiveDate,id)
  monoDeteails.current ={...monoDeteails.current,
    [document[n]['id']]:{ monographEdition,note,id,tests,effectiveDate} };  
-   console.log(monoDeteails.current);
  }) 
     }
 },[document])
@@ -79,7 +77,6 @@ Object.keys(document).forEach((m)=> {
   }
   if (state.monographEdition&&monographFields) {
     updateDocument(id, monographFields);
-    console.log(monographFields)
   }
   if(state.effectiveDate&&monographFields) {
      updateDocument(id, monographFields);
@@ -188,24 +185,37 @@ default:
    </div>
   
   </label>
-   {/* tests*/}
   
- {Object.keys(document[mono]["tests"]).map((technology)=>{
-  {console.log(technology)}
-<p>technology</p>;
-//  <ul>
-//    {document[mono]["tests"][technology].map((test) => (
-//       <li key={test}>{test}</li>
-//     ))}
-//  </ul>
-  })}
-  
-  <p>trete</p>
 </form>
 </div>
+{/* tests*/}
+<form>
+{Object.keys(document[mono]['tests']).map((technology)=>
+<label>
+  <span>
+  <h3>{(technology)}</h3>
+ <img src={edit} onClick={openCloseInput} />
+  </span>
+{document[mono]['tests'][technology].map(t=>
+<div className="btn-input-container">
+<li>{t}</li>
+<input
+ id={document[mono]["id"]}
+type="date"
+disabled={disabled}
+name="tests" 
+onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
+value={monoDeteails.current[document[mono]["id"]["effectiveDate"]]}
+/>
+  <button type="submit"></button>
+</div>
+   )}
+</label>
+  )}
+</form>
 </Fragment>
   ))}
-    </div>
+ </div>
   );
 }
 export default MonographList;
