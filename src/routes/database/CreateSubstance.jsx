@@ -191,86 +191,86 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
           />
         </header>
         <div className={`${show ? "show" : ""} monographes-container`}>
-          {monograph.length > 0 &&
-            monograph.map((item) => (
-              <div className="singel-monograph" key={item.id}>
-                <MonoInput
-                  span="monograph"
-                  type="text"
-                  name="monographName"
-                  onKeyUpCapture={(e) => {
-                    handleMonographInput(e, item.id);
-                  }}
-                  required
-                />
-                <MonoInput
-                  span="edition"
-                  type="number"
-                  name="edition"
-                  onChange={(e) => {
-                    handleMonographInput(e, item.id);
-                  }}
-                  required
-                />
-                <MonoInput
-                  span="effective date"
-                  type="date"
-                  name="date"
-                  onChange={(e) => {
-                    handleMonographInput(e, item.id);
-                  }}
-                  required
-                />
-                {/* tech section */}
-                <div className="select-tech">
-                  <p>select Tech</p>
-                  <Select
-                    onChange={(option) => {
-                      handleSelectOption(option, item.id);
-                    }}
-                    options={technologies}
-                    isMulti
-                  />
-                  {item.tech.map((technology) => (
-                    <SingelTech
-                      key={technology}
-                      technology={technology}
-                      id={item.id}
-                      updateTests={updateTests}
-                      monograph={monograph}
-                    />
-                  ))}
-                </div>
-                {/* textarea */}
-                <p>
-                  add Note{" "}
-                  <Button
-                    buttontype="openTextarea"
-                    type="button"
-                    onClick={() => {
-                      handleTextareaPanel(item.id);
-                    }}
-                    children="&#9547;"
-                  />
-                </p>
-                {item["openNote"] && (
-                  <textarea
-                    className="note-textarea"
-                    onKeyUpCapture={(e) => {
-                      handletextareaContent(e, item.id);
-                    }}
-                  ></textarea>
-                )}
-                {/* end of textarea */}
-                <Button
-                  onClick={() => {
-                    removeMonograph(item.id);
-                  }}
-                  children={"remove"}
-                />
-              </div>
-            ))}
+  {monograph.length > 0 &&
+    monograph.map((item) => (
+      <div className="singel-monograph" key={item.id}>
+        <MonoInput
+          span="monograph"
+          type="text"
+          name="monographName"
+          onKeyUpCapture={(e) => {
+            handleMonographInput(e, item.id);
+          }}
+          required
+        />
+        <MonoInput
+          span="edition"
+          type="number"
+          name="edition"
+          onChange={(e) => {
+            handleMonographInput(e, item.id);
+          }}
+          required
+        />
+        <MonoInput
+          span="effective date"
+          type="date"
+          name="date"
+          onChange={(e) => {
+            handleMonographInput(e, item.id);
+          }}
+          required
+        />
+        {/* tech section */}
+        <div className="select-tech">
+          <p>select Tech</p>
+          <Select
+            onChange={(option) => {
+              handleSelectOption(option, item.id);
+            }}
+            options={technologies}
+            isMulti
+          />
+          {item.tech.map((technology) => (
+            <SingelTech
+              key={technology}
+              technology={technology}
+              id={item.id}
+              updateTests={updateTests}
+              monograph={monograph}
+            />
+          ))}
         </div>
+        {/* textarea */}
+        <p>
+          add Note{" "}
+          <Button
+            buttontype="openTextarea"
+            type="button"
+            onClick={() => {
+              handleTextareaPanel(item.id);
+            }}
+            children="&#9547;"
+          />
+        </p>
+        {item["openNote"] && (
+          <textarea
+            className="note-textarea"
+            onKeyUpCapture={(e) => {
+              handletextareaContent(e, item.id);
+            }}
+          ></textarea>
+        )}
+        {/* end of textarea */}
+        <Button
+          onClick={() => {
+            removeMonograph(item.id);
+          }}
+          children={"remove"}
+        />
+      </div>
+    ))}
+</div>
       </form>
     </div>
   );

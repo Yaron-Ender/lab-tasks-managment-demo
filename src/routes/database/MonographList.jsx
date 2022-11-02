@@ -22,8 +22,10 @@ case 'EFFECTIVE_DATE':
 return { ...state, effectiveDate: true };
 case 'TESTS':
 return { ...state,tests: true };
+case 'NOTE':
+ return {...state,note:true }; 
 case 'RESET':
-  return {...state, monographName: false,monographEdition: false,effectiveDate:false };
+  return {...state, monographName: false,monographEdition: false,effectiveDate:false,note:false };
 default:
  return state ;
 }
@@ -57,7 +59,8 @@ Object.keys(document).forEach((m)=> {
   monographName:false,
   monographEdition:false,
   effectiveDate:false,
-  tests:false
+  tests:false,
+  note:false
   })
   //open and close input
   const openCloseInput = (e) => {
@@ -78,15 +81,23 @@ Object.keys(document).forEach((m)=> {
     //update monograp name
   if(state.monographName){
  updateMonographName(changeMonoName,id)
+ dispatch({ type: "RESET" });
   }
   if (state.monographEdition&&monographFields) {
     updateDocument(id, monographFields);
+    dispatch({ type: "RESET" });
   }
   if(state.effectiveDate&&monographFields) {
      updateDocument(id, monographFields);
+     dispatch({ type: "RESET" });
   }
   if(state.tests&&monographFields) {
      updateDocument(id, monographFields);
+     dispatch({ type: "RESET" });
+  }
+  if(state.note&&monographFields) {
+     updateDocument(id, monographFields);
+     dispatch({ type: "RESET" });
   }
   dispatch({type:'RESET'})
   };
@@ -114,24 +125,32 @@ if(e.target.id == ID && value){
 }
 case 'tests':
   if(e.target.id== ID && value){
-console.log(monoDeteails.current[ID]["tests"][technology],t,value,index);
 monoDeteails.current[ID]["tests"][technology][index]=value
-console.log(monoDeteails.current[ID]["tests"][technology]);
 setMonographFields((prev) => (prev = { ...monoDeteails.current }));
+ dispatch({ type: "TESTS" });
   }
+  case 'note':
+if(e.target.id== ID && value){
+console.log(value)
+monoDeteails.current[ID]["note"]=value;
+setMonographFields((prev) => (prev = { ...monoDeteails.current }));
+ dispatch({ type:"NOTE" });
+}
 default:
  return;
     }
   };
+
   //send data to fireStore for update the test
-  const handleSubmitTest = async (e, mono, tech, index) => {
-    e.preventDefault();
-    const newTextValue = e.target[0].value;
-    await updateDocument(id, mono, tech, index, newTextValue);
-    //  setOpenMonoInput(false);
-    setdisabled(true);
-    e.target.children[0].children[0].classList.remove("open-input");
-  };
+  // const handleSubmitTest = async (e, mono, tech, index) => {
+  //   e.preventDefault();
+  //   const newTextValue = e.target[0].value;
+  //   await updateDocument(id, mono, tech, index, newTextValue);
+  //   //  setOpenMonoInput(false);
+  //   setdisabled(true);
+  //   e.target.children[0].children[0].classList.remove("open-input");
+  // };
+
   // --------------------------------------
   return (
     <div className="substance-monograph">
@@ -214,14 +233,32 @@ type="text"
 disabled={disabled}
 name="tests" 
 onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,t,index)}
-// value={monoDeteails&& monoDeteails.current[document[mono]["id"]["tests"][technology][index]]}
-
 />
   <button type="submit"></button>
 </div>
    )}
 </label>
   )}
+</form>
+   {/* note */}
+<form  onSubmit={handleSubmitMonographName}>
+  <label>
+    <span>
+  <img src={edit} onClick={openCloseInput} />
+    </span>
+    <div className="btn-input-container">
+   <textarea
+     id={document[mono]["id"]}
+     disabled={disabled}
+     name="note"
+     onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
+  value={monoDeteails.current[document[mono]["id"]["note"]]}   
+   >
+{document[mono]["note"]}
+  </textarea>
+  <button type="submit"></button>
+   </div>
+  </label>
 </form>
 </Fragment>
   ))}
