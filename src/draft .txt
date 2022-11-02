@@ -8,7 +8,7 @@ three btn:
    **  <SubstancesList substancesID={resultOfCollection} />
        (resultOfCollection-array id's of substances collection )
 
- **    <Route path=":id" element={<Substance />} />
+ **   <Route path=":id" element={<Substance />} />
 
  **     <CreateSubstance closeCreateSubstanceComp={closeCreateSubstanceComp} />
         (closeCreateSubstanceComp -  function that get called in createSustance component and turn openCreateSub state to falls in order to close the createSubstabce comp. after push the "save monograph" button)

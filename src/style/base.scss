@@ -2,20 +2,37 @@
 
 *,*::before,*::after{
   box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 /* base styles */
 html, body, #root {
   height: 100%;
+  font-size:65.5%;
 }
 body {
   font-family: Raleway, sans-serif;
   margin:0;
-  font-size:1em;
+  // font-size:1em;
   background:$grey-primary;
   color:$secondary;
 }
-h1,h2,h3,p {
-  margin: 0;
+h1{
+font-size:$font-size-xxl;
+}
+h2{
+font-size:$font-size-xl;
+}
+h3{
+font-size:$font-size-lg;
+}
+li{
+  font-size:$font-size-lg;
+  list-style-type: none;
+}
+
+span,p{
+font-size:1.5rem;
 }
 a{
   text-decoration:none;
@@ -26,10 +43,10 @@ ul{
 }
 input, textarea {
   color:$secondary;
-  padding: 8px;
-  font-size: 1em;
-  border-radius: 4px;
-  border: 1px solid $border-color;
+  padding:1rem;
+  font-size:2rem;
+  border-radius:0.4rem;
+  border:0.1rem solid $border-color;
   background-color:map-get($colors,'white');
   display: block;
   width: 100%;
@@ -43,12 +60,12 @@ input, textarea {
 }
 .page-title {
   text-align: center;
-  margin: 40px auto;
+  margin:4rem auto;
   color:$secondary;
 }
 .loading, .error {
   text-align: center;
-  margin: 40px auto;
+  margin:4rem auto;
 }
 .dark{
 background-color: #444;

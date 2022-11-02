@@ -2,39 +2,38 @@
  @include flx-col();
 & .databse-title{
 letter-spacing:$base-font-size*.5;
-margin-top:0em;
+margin-top:0;
 text-align: center;
 color:$secondary;
 }
 & .database-navbar{
- position: absolute;
-background-color:map-get($colors,'white');
- width:100vw;
- padding:$base-padding*2 $padding-medium;
-  border:none;
-  box-shadow:inset 0px 15px 1.5em -0.5em rgba(0,0,0,1);
- @include flx-row();
- top:0;
- z-index:0;
- &.open{
+    position: absolute;
+    background-color:map-get($colors,'white');
+    width:100vw;
+    padding:$base-padding*2 $padding-medium;
+    border:none;
+    box-shadow:inset 0rem 2rem 1.5rem -0.8rem rgba(0,0,0,0.9);
+    @include flx-row();
+    top:0;
+    z-index:0;
+    &.open{
  transition:all 0.2s;
- top:75px;
+ top:7.5rem;
  }
 }
 & .database-substances-container{
-    border:$base-border-thickness solid red;
-    width: 95%;
- margin:6rem auto 0;
+border:$base-border-thickness solid red;
+width: 95%;
+margin:7.5rem auto 0;
 & .substancesList{
-    display:flex;
-    flex-wrap:wrap;
-    padding:$base-padding;
+@include flx-row(flex-start);
+padding:$base-padding;
 & a{
     padding:0 $padding-medium;
     border-right:$base-border-thickness solid $nav-color-2;
     color:$nav-color-2;
     font-family:Arapey,Raleway,sans-serif;
-    font-size:1.8rem;
+    font-size:2rem;
 }
 }
 }

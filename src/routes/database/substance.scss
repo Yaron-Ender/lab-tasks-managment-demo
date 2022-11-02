@@ -1,22 +1,28 @@
 .substance-container{
+// is in Sunstance comp.
 height: 100vh;
 width:90%;
- border:2px solid red;
- display: grid;
-grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
-grid-template-rows: 1fr;
- & .substance-title{
-     text-align:center;    
-    }
+border:2px solid red;
+@include flx-row(center,flex-start);
 & .substance-monograph{
+width:100%;
 border:8px solid lemonchiffon;
-padding: 0.5rem;
-display: grid;
-grid-template-columns:1fr;
-grid-template-rows:1fr;
-//STYLE FOR THE CHANGED-MONOGRAPGH-CONTAINER
+@include flx-col;
+// @include grid(4fr,1fr,30px);
+//substance name
+& .substance-title{
+  text-align:center; 
+  font: {
+    size:$font-size-xxl*1.2;
+  } 
+}
 & .change-monograph-container{
-border:5px solid green;
+  border: 8px solid darkblue;
+  width: 100%;
+//STYLE FOR THE CHANGED-MONOGRAPGH-CONTAINER
+& .change-details{
+  border:5px solid green;
+  width: 100%;
 //style for the label container
 & label{
 @include flx-col();
@@ -76,6 +82,8 @@ transform: translateY(100%);
 opacity:1; 
 }
 }
+}
+
 
 }
 

@@ -1,4 +1,3 @@
-import { doc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { useDocument } from '../../hooks/useDocument';
 import MonographList from "./MonographList";

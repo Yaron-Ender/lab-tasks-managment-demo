@@ -26,15 +26,6 @@ modifiedObj = {...origonalFullData, [o]:{...newData} }
   await batch.commit();
 }
  }
-//  const updateDocument = async (id,mono, tech, index, newVal) => {
-//    const docReff = doc(colRef, id);
-//    const getdoc = await getDoc(doc(colRef,id));
-//    const originalObj = getdoc.data()
-//     originalObj[mono][tech][index] = newVal;
-//    batch.set(docReff,originalObj)
-//    await batch.commit();
-//   };
-
   //update MonoGraphName
   const updateMonographName = async (monoName, id) => {
     const docReff = doc(colRef, id);

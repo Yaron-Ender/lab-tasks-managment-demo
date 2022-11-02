@@ -60,12 +60,12 @@ margin: 20px auto;
     outline: none;
 }
 &:focus ~ label{
-@include shrinkLabel();
+@include shrinkLabel;
 }
 
 }
 .shrink{
- @include shrinkLabel();
+ @include shrinkLabel;
 }
 }
 
