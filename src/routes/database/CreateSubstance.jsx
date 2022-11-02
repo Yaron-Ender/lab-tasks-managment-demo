@@ -1,12 +1,14 @@
 import React from "react";
 import { useState } from "react";
+import { Timestamp } from "firebase/firestore";
 import Button from "../../component/button/button";
 import FormInput from "../../component/input/input.comp";
 import SingelTech from "./SingelTech";
 import MonoInput from "../../component/input/MonoInput";
 import Select from 'react-select';
 import { useFriestore } from "../../hooks/useFirestore";
-const CreateSubstance = () => {
+const CreateSubstance = ({ closeCreateSubstanceComp }) => {
+  const { addDocument } = useFriestore("substances");
   const technologies = [
     { value: "HPLC", label: "HPLC" },
     { value: "WET", label: "WET" },
@@ -35,17 +37,48 @@ const CreateSubstance = () => {
     }
   }
   //STATES
+  // const [openCreateSubstane]
   const [show, setShow] = useState(false);
-  const [substanceName,setSubstanceName]=useState('')
+  const [substanceName, setSubstanceName] = useState("");
   const [monograph, setMonograph] = useState([]); //All the monograpes that the user create
   const [openTextareaPannel, setOpenTextareaPannel] = useState(false);
   //FUNCTIONS
-  //
-  const handleSubmit = (e) => {
+  //take the monograph state that store all the monograpgh data and convert it to an object that could be stored in firebase
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  };
-  const saveMonograph = () => {
-    console.log(substanceName);
+    if (substanceName&&monograph.length>0) {
+      let monoNamesArr = [];
+      const monographObj = new Object();
+      //step 1 - create an array with monograph names
+      monograph.forEach((monograph) => {
+        if (!monoNamesArr.includes(monograph.monographName)) {
+          monoNamesArr.push(monograph.monographName);
+        }
+      });
+      //step 2 - iterate throuth monograph and add to the monographObj the monographName as a property
+      for (let i = 0; i < monoNamesArr.length; i++) {
+        let individualMono = {
+          ...monograph.filter((mono) => mono.monographName == monoNamesArr[i]),
+        };
+        let {id,monographEdition, effectiveDate, note, tests } =
+          individualMono["0"];
+        //delete empty technology
+          Object.keys(tests).forEach((tech)=>{
+           if(tests[tech].length==0){
+             delete tests[tech]
+           }
+          })
+        monographObj[monoNamesArr[i]] = {
+        id,
+          monographEdition,
+          effectiveDate,
+          note,
+          tests,
+        };
+      }
+      await addDocument(substanceName, monographObj);
+      closeCreateSubstanceComp();
+    }
   };
   //add the individual monograph to state that store all the monographes
   const addMonograph = (e) => {
@@ -70,7 +103,7 @@ const CreateSubstance = () => {
             item.monographEdition = e.target.value;
             break;
           case "date":
-            item.effectiveDate = e.target.value;
+            item.effectiveDate = Timestamp.fromDate(new Date(e.target.value));
             break;
           default:
             return;
@@ -84,20 +117,20 @@ const CreateSubstance = () => {
     let arr = [];
     monograph.forEach((item) => {
       if (item.id === id) {
-      item.tech = [];
-      op.forEach((optionValue) => {
-        item.tech.push(optionValue.value);
+        item.tech = [];
+        op.forEach((optionValue) => {
+          item.tech.push(optionValue.value);
           arr.push(item.tech);
         });
-        ['HPLC','WET','GC'].forEach((i)=>{
-        if(!item.tech.includes(i)){
-      item.tests[i]=[]
-        }
-      })
+        ["HPLC", "WET", "GC"].forEach((i) => {
+          if (!item.tech.includes(i)) {
+            item.tests[i] = [];
+          }
+        });
       }
       //test state doesn't do nothing, it just for make the jsx tamplte rerender
     });
-     setMonograph((prev) => [...prev]);
+    setMonograph((prev) => [...prev]);
   }; //end
   //open the textarea
   const handleTextareaPanel = (id) => {
@@ -117,20 +150,19 @@ const CreateSubstance = () => {
       }
     });
   };
-  //function that update the tests,it get called from SingleTest Comp and pass "testList"
+  //function that update the tests object,it get called from SingleTest Comp and pass "testList"
   const updateTests = (id, testList) => {
     monograph.forEach((item) => {
       if (item.id === id) {
         Object.keys(testList).forEach((technology) => {
           if (testList[technology].length > 0) {
             item.tests[technology] = testList[technology];
-          } 
+          }
         });
-   setMonograph((prev) => [...prev]);
+        setMonograph((prev) => [...prev]);
       }
     });
   };
-  
   // *********************************
   return (
     <div className="create-Newsubstance-container">
@@ -144,11 +176,7 @@ const CreateSubstance = () => {
               onClick={addMonograph}
               children={"add monograph"}
             />
-            <Button
-              buttontype="createSubstance"
-              onClick={saveMonograph}
-              children={"save monograph"}
-            />
+            <Button buttontype="createSubstance" children={"save monograph"} />
           </div>
           <FormInput
             type="text"
@@ -163,86 +191,86 @@ const CreateSubstance = () => {
           />
         </header>
         <div className={`${show ? "show" : ""} monographes-container`}>
-          {monograph.length > 0 &&
-            monograph.map((item) => (
-              <div className="singel-monograph" key={item.id}>
-                <MonoInput
-                  span="monograph"
-                  type="text"
-                  name="monographName"
-                  onKeyUpCapture={(e) => {
-                    handleMonographInput(e, item.id);
-                  }}
-                  required
-                />
-                <MonoInput
-                  span="edition"
-                  type="number"
-                  name="edition"
-                  onChange={(e) => {
-                    handleMonographInput(e, item.id);
-                  }}
-                  required
-                />
-                <MonoInput
-                  span="effective date"
-                  type="date"
-                  name="date"
-                  onChange={(e) => {
-                    handleMonographInput(e, item.id);
-                  }}
-                  required
-                />
-                {/* tech section */}
-                <div className="select-tech">
-                  <p>select Tech</p>
-                  <Select
-                    onChange={(option) => {
-                      handleSelectOption(option, item.id);
-                    }}
-                    options={technologies}
-                    isMulti
-                  />
-                  {item.tech.map((technology) => (
-                    <SingelTech
-                      key={technology}
-                      technology={technology}
-                      id={item.id}
-                      updateTests={updateTests}
-                      monograph={monograph}
-                    />
-                  ))}
-                </div>
-                {/* textarea */}
-                <p>
-                  add Note{" "}
-                  <Button
-                    buttontype="openTextarea"
-                    type="button"
-                    onClick={() => {
-                      handleTextareaPanel(item.id);
-                    }}
-                    children="&#9547;"
-                  />
-                </p>
-                {item["openNote"] && (
-                  <textarea
-                    className="note-textarea"
-                    onKeyUpCapture={(e) => {
-                      handletextareaContent(e, item.id);
-                    }}
-                  ></textarea>
-                )}
-                {/* end of textarea */}
-                <Button
-                  onClick={() => {
-                    removeMonograph(item.id);
-                  }}
-                  children={"remove"}
-                />
-              </div>
-            ))}
+  {monograph.length > 0 &&
+    monograph.map((item) => (
+      <div className="singel-monograph" key={item.id}>
+        <MonoInput
+          span="monograph"
+          type="text"
+          name="monographName"
+          onKeyUpCapture={(e) => {
+            handleMonographInput(e, item.id);
+          }}
+          required
+        />
+        <MonoInput
+          span="edition"
+          type="number"
+          name="edition"
+          onChange={(e) => {
+            handleMonographInput(e, item.id);
+          }}
+          required
+        />
+        <MonoInput
+          span="effective date"
+          type="date"
+          name="date"
+          onChange={(e) => {
+            handleMonographInput(e, item.id);
+          }}
+          required
+        />
+        {/* tech section */}
+        <div className="select-tech">
+          <p>select Tech</p>
+          <Select
+            onChange={(option) => {
+              handleSelectOption(option, item.id);
+            }}
+            options={technologies}
+            isMulti
+          />
+          {item.tech.map((technology) => (
+            <SingelTech
+              key={technology}
+              technology={technology}
+              id={item.id}
+              updateTests={updateTests}
+              monograph={monograph}
+            />
+          ))}
         </div>
+        {/* textarea */}
+        <p>
+          add Note{" "}
+          <Button
+            buttontype="openTextarea"
+            type="button"
+            onClick={() => {
+              handleTextareaPanel(item.id);
+            }}
+            children="&#9547;"
+          />
+        </p>
+        {item["openNote"] && (
+          <textarea
+            className="note-textarea"
+            onKeyUpCapture={(e) => {
+              handletextareaContent(e, item.id);
+            }}
+          ></textarea>
+        )}
+        {/* end of textarea */}
+        <Button
+          onClick={() => {
+            removeMonograph(item.id);
+          }}
+          children={"remove"}
+        />
+      </div>
+    ))}
+</div>
       </form>
     </div>
   );

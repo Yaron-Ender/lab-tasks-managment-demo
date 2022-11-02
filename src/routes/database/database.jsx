@@ -29,6 +29,11 @@ const createNewSubstance=()=>{
 navigate('/database')
 setOpenCreateNewSub(true)
 }
+//function that get called in createSustance component and turn openCreateSub state to falls in order to close the createSubstabce comp. after push the "save monograph" button
+const closeCreateSubstanceComp =()=>{
+  setOpenCreateNewSub(false)
+  seeAllDoc()
+}
   return (
     <div className="database">
       <nav className={`database-navbar ${open ? "open" : ""}`}>
@@ -47,9 +52,11 @@ setOpenCreateNewSub(true)
       </nav>
       <div className="database-substances-container">
         {error && <p>{error}</p>}
-        {!error && !openCreateNewSub &&<SubstancesList substancesID={resultOfCollection} />}
+        {!error && !openCreateNewSub && (
+          <SubstancesList substancesID={resultOfCollection} />
+        )}
       </div>
-      {openCreateNewSub && <CreateSubstance />}
+      {openCreateNewSub && <CreateSubstance closeCreateSubstanceComp={closeCreateSubstanceComp} />}
       <Routes>
         <Route path=":id" element={<Substance />} />
       </Routes>

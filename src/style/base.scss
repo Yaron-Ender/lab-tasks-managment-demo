@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Poppins:ital,wght@0,100;0,400;1,300;1,700&family=Raleway:ital,wght@0,100;0,300;1,100;1,400;1,500&display=swap');
 
-*{
+*,*::before,*::after{
   box-sizing:border-box;
 }
 /* base styles */
@@ -33,6 +33,9 @@ input, textarea {
   background-color:map-get($colors,'white');
   display: block;
   width: 100%;
+  appearance: none;
+ outline: none;
+
 }
 .App {
  @include flx-col($justify:flex-start);
