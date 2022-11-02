@@ -20,6 +20,8 @@ case 'MONO_EDITION':
 return { ...state, monographEdition: true };
 case 'EFFECTIVE_DATE':
 return { ...state, effectiveDate: true };
+case 'TESTS':
+return { ...state,tests: true };
 case 'RESET':
   return {...state, monographName: false,monographEdition: false,effectiveDate:false };
 default:
@@ -37,23 +39,25 @@ Object.keys(document).forEach((m)=> {
   let  k = document[m]["id"] 
  arrayMono.push({[k]:m});
  })
-     arrayMono.forEach((i)=>{
+  arrayMono.forEach((i)=>{
    newObj  = {...newObj,...i}
    monographName.current=newObj
       })
 //it's for the other fields 
  Object.keys(document).forEach((n)=>{
-  let {effectiveDate,monographEdition,note,id,tests}=document[n]
-    // effectiveDate=effectiveDate.toDate().toDateString()
- monoDeteails.current ={...monoDeteails.current,
-   [document[n]['id']]:{ monographEdition,note,id,tests,effectiveDate} };  
- }) 
+   let {effectiveDate,monographEdition,note,id,tests}=document[n]
+   monoDeteails.current ={...monoDeteails.current,
+    [document[n]['id']]:{ monographEdition,note,id,tests,effectiveDate} };  
+
+  }) 
+
     }
 },[document])
   const[state,dispatch]=useReducer(firestoreReducer,{
   monographName:false,
   monographEdition:false,
-  effectiveDate:false
+  effectiveDate:false,
+  tests:false
   })
   //open and close input
   const openCloseInput = (e) => {
@@ -81,11 +85,14 @@ Object.keys(document).forEach((m)=> {
   if(state.effectiveDate&&monographFields) {
      updateDocument(id, monographFields);
   }
+  if(state.tests&&monographFields) {
+     updateDocument(id, monographFields);
+  }
   dispatch({type:'RESET'})
   };
 
   //handle with the old and the new monograph name and monograph feilds
-  const handleChangeMonoField = (e, ID) => {
+  const handleChangeMonoField = (e, ID,technology,t,index) => {
     const { name, value } = e.target;
   switch(name){
   case "monographName":
@@ -101,11 +108,17 @@ break;
   break;
 case "effectiveDate":
 if(e.target.id == ID && value){
-   monoDeteails.current[ID]["effectiveDate"]=Timestamp.fromDate(new Date(value))
+  monoDeteails.current[ID]["effectiveDate"]=Timestamp.fromDate(new Date(value))
  setMonographFields((prev) => (prev = { ...monoDeteails.current }));
  dispatch({ type:"EFFECTIVE_DATE" });
 }
-
+case 'tests':
+  if(e.target.id== ID && value){
+console.log(monoDeteails.current[ID]["tests"][technology],t,value,index);
+monoDeteails.current[ID]["tests"][technology][index]=value
+console.log(monoDeteails.current[ID]["tests"][technology]);
+setMonographFields((prev) => (prev = { ...monoDeteails.current }));
+  }
 default:
  return;
     }
@@ -183,29 +196,26 @@ default:
     />
   <button type="submit"></button>
    </div>
-  
   </label>
-  
 </form>
 </div>
 {/* tests*/}
-<form>
+<form onSubmit={handleSubmitMonographName}>
 {Object.keys(document[mono]['tests']).map((technology)=>
 <label>
-  <span>
   <h3>{(technology)}</h3>
- <img src={edit} onClick={openCloseInput} />
-  </span>
-{document[mono]['tests'][technology].map(t=>
+{ document[mono]['tests'][technology].map((t,index)=>
 <div className="btn-input-container">
 <li>{t}</li>
+ <img src={edit} onClick={openCloseInput} />
 <input
  id={document[mono]["id"]}
-type="date"
+type="text"
 disabled={disabled}
 name="tests" 
-onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
-value={monoDeteails.current[document[mono]["id"]["effectiveDate"]]}
+onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,t,index)}
+// value={monoDeteails&& monoDeteails.current[document[mono]["id"]["tests"][technology][index]]}
+
 />
   <button type="submit"></button>
 </div>
