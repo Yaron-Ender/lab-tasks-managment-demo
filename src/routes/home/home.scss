@@ -3,11 +3,10 @@ height:100vh;
 max-width:80%;
  position:relative;
  @include flx-col();
-border:1px solid red;
+border:0.1rem solid red;
  & .hero-img{
 text-align: center;
 margin-bottom: auto;
-// width:60%;
 height: 80%;
  }
  & img{
@@ -16,12 +15,12 @@ height:100%;
  }
  .login-navbar{
    margin-bottom:auto;
-     width:100%;
-    background:#effaf0;
-    padding:20px 10px;
+    width:100%;
+  background:#effaf0;
+    padding:2rem 1rem;
    & .login-navbar-container{
     position: relative;
-     width:90%;
+    width:90%;
    text-align:end;
    margin:0 auto;
    & a.login-link{
@@ -47,10 +46,14 @@ height:100%;
  & a.signup-link{
 position: absolute;
 top:4rem;
+left:0;
  color:map-get($colors,'green');
+ transition:$base-transition; 
+ font: {
+  size:$base-font-size;
+ }
  &:hover{
    color:#fff;
-    transition:$base-transition; 
  }
 }
    }

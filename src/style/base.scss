@@ -27,18 +27,19 @@ h3{
 font-size:$font-size-lg;
 }
 h4{
-font-size:$base-font-size
+font-size:$base-font-size;
 }
 li{
   font-size:$font-size-lg;
   list-style-type: none;
 }
 
-span,p{
-font-size:1.5rem;
+span,p,label{
+font-size:$base-font-size;
 }
 a{
   text-decoration:none;
+  font-style:$base-font-size;
 }
 ul{
   list-style-type: none;
@@ -62,7 +63,6 @@ input::-webkit-inner-spin-button {
   appearance: none;
   margin: 0;
 }
-
 /* Firefox */
 input[type=number] {
 appearance: textfield;
