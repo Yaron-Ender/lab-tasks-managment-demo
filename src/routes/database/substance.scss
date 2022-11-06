@@ -1,40 +1,64 @@
 .substance-container{
-// is in Sunstance comp.
+// is in Sunstance comp thatwrap everything.
 height: 100vh;
 width:90%;
 border:2px solid red;
 @include flx-row(center,flex-start);
-& .substance-monograph{
+& .substance-monographes{
+//warp all the monographes included the title
 width:100%;
-border:8px solid lemonchiffon;
+border:8px solid rgb(243, 255, 205);
 @include flx-col;
-// @include grid(4fr,1fr,30px);
 //substance name
 & .substance-title{
   text-align:center; 
   font: {
-    size:$font-size-xxl*1.2;
+  size:$font-size-xxl*1.2;
   } 
 }
-& .change-monograph-container{
+//STYLE FOR THE CHANGED-MONOGRAPGH-CONTAINER
+& .change-singel-monograph{
   border: 8px solid darkblue;
   width: 100%;
-//STYLE FOR THE CHANGED-MONOGRAPGH-CONTAINER
+  display: grid;
+  gap:3rem 0;
+  grid-template:
+  "header header header" auto
+  ". tech ." auto
+  ". note ." auto/
+  1fr minmax(30rem,13fr) 1fr
+  ;
+  //CHANGE DETAILS DEVITION
 & .change-details{
+// has two childes:1.inputs 2.UI
   border:5px solid green;
   width: 100%;
-//style for the label container
+  grid-area: header;
+  display: grid;
+  grid-template-columns:1fr 2fr;
+  gap:0 3rem;
+& .details-input-container{
+  border: 1px solid fuchsia;
+  display: grid;
+  gap:1rem 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+& label:nth-child(1){
+grid-column:1 / -1;
+}
+& label:nth-child(2){
+grid-column:1 / 3;
+}
 & label{
 @include flx-col();
+width:100%;
+height:100%;
 border:2px solid blue;
-margin: 30px auto;
+padding: 2rem 1rem;
 position:relative;
-padding: 20px;
 //style for the span inside the label
 & span{
 @include flx-row();
 position:absolute;
-border:2px solid black;
 top:0;
 left:0;
 width:100%;
@@ -44,36 +68,40 @@ transition:all $base-transition*2;
 opacity: 0;
 border:2px solid red;
  margin-left: auto;
- height:$font-size-xl;
+ height: 70%;
+//  height:$font-size-xl;
 }
 &:hover img{
 opacity: 1;
 cursor: pointer;
 }
  }
- //style for the container that contaon input and btn
+ //style for the container that contain input and btn
 & .btn-input-container{
 position:absolute;
+top:0;
+left: 0;
 width:100%;
 height:100%;
 z-index: -1;
 border:5px solid burlywood;
  @include flx-row();
+ overflow-y:hidden;
  & input{
 border:3px solid red;
  position:absolute;
-top:0;
+top:-100%;
 left:0;
  height:100%;
  width:100%;
-transition: all 0.8s;
-&:disabled{
- visibility: hidden;
+ transition: all 0.8s;
+ &:disabled{
+   visibility: hidden;
+  }
 }
- }
 & button{
- position:absolute;
-visibility: hidden;
+  position:absolute;
+  visibility: hidden;
 }
 }
 &:has(.open-input) > .btn-input-container > input{
@@ -83,8 +111,22 @@ opacity:1;
 }
 }
 }
+& .details-UI-container{
+  border:3px solid fuchsia
+}
+//style for the label container
 
-
+}
+//STYLE FOR CHANGE TESTS
+& .change-tests{
+grid-area: tech;
+}
+//STYLE FOR NOTE
+& .note{
+  margin: 0 auto;
+  max-width:60%;
+grid-area:note;
+}
 }
 
 }

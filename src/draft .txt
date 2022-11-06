@@ -4,10 +4,10 @@ COMPONENT SUMMERY
 **- this mark means that that this component is nested in other component
 -nav bar open
 three btn:
-*new substance * All substance *Search
+*-new substance- *-All substance- *-Search-
    **  <SubstancesList substancesID={resultOfCollection} />
        (resultOfCollection-array id's of substances collection )
-
+      (this comp create Navlinks od sustances name)
  **   <Route path=":id" element={<Substance />} />
 
  **     <CreateSubstance closeCreateSubstanceComp={closeCreateSubstanceComp} />

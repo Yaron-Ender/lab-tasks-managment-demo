@@ -62,22 +62,34 @@ const[state,dispatch]=useReducer(firestoreReducer,{
   note:false
 })
 //open and close input
-const openCloseInput = (e) => {
+const openCloseInput = (e,name) => {
   const el = window.document.querySelectorAll("span");
   el.forEach((s) => {
     s.classList.remove("open-input");
   });
   e.target.parentElement.classList.add("open-input");
-  //  setOpenMonoInput(true)
-  setdisabled(false);
+   const inp = window.document.querySelector(`input[name=${name}]`);
+   inp.disabled=false
+   console.log(inp.disabled)
 };
-
+//turn all the inputs to disable after submiting the form
+const turnToDissable =()=>{
+   const el = window.document.querySelectorAll("span");
+  el.forEach((s) => {
+    s.classList.remove("open-input");
+  });
+const inp = window.document.querySelectorAll('input');
+inp.forEach((inp)=>{
+inp.disabled=true
+})
+}
 //send data to useFirestore
 //THE LOGIC IN THIS FUNCION IS DEVIDED INTO TWO PARTS 1. MONOGRAPH NAME 2.ALL THE OTHER FIELDS(conversion between Timestamp and date object)
 const handleSubmitMonographName = (e) =>{
   e.preventDefault();
   // move input to the top and make it disabled
   setdisabled(true);   
+  turnToDissable()
   //update monograp name
   if(state.monographName){
     updateMonographName(changeMonoName,id)
@@ -144,73 +156,86 @@ default:
   };
   // --------------------------------------
   return (
-    <div className="substance-monograph">
-      <h2 className="substance-title"> {id}</h2>
-      {document &&
-        // create the Monograph title
-        Object.keys(document).map((mono) => (
-    <div className="change-monograph-container"
-     key={document[mono]["id"]}>
+    <div className="substance-monographes">
+    <h2 className="substance-title"> {id}</h2>
+    {document &&
+   // create the Monograph title
+      Object.keys(document).map((mono) => (
+   <div className="change-singel-monograph"
+   key={document[mono]["id"]}>
     
-    <div className="change-details">
-      <form onSubmit={handleSubmitMonographName}>
-    {/* monograph title */}
-    {/* THE BUTTON HERE IS NOT VISIBLE AND USED ONLY FOR SUBMITING THE INPUT PERPUSEES */}
-    <label>
-      <span>
-      {mono}
-      <img src={edit} onClick={openCloseInput} />
-    </span>
-    <div className="btn-input-container">
-      <input
-      type="text"
-      disabled={disabled}
-      name="monographName"
-      onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
-     value={(changeMonoName[document[mono]["id"]])?changeMonoName[document[mono]["id"]]:''}
-      />
+   <div className="change-details">
+   <form onSubmit={handleSubmitMonographName}
+   className="details-input-container">
+  {/* THE BUTTON HERE IS NOT VISIBLE AND USED ONLY FOR SUBMITING THE INPUT PERPUSEES */}
+{/* this form store all the details input */}
+    <label >
+  {/* monograph title */}
+  <span>
+   Monograph name
+   <img src={edit} onClick={(e)=>{openCloseInput(e, "monographName");}} />
+  </span>
+  <div className="btn-input-container">
+  <input
+  type="text"
+  disabled
+  name="monographName"
+  onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
+  value={(changeMonoName[document[mono]["id"]])?changeMonoName[document[mono]["id"]]:''}
+   />
   <button type="submit"></button>
-    </div>
+  </div>
+  </label>
+  {/* efective date */}
+  <label>
+  <span>
+   Effective date
+   <img src={edit} onClick={(e)=>{openCloseInput(e, "effectiveDate");}} />
+  </span>
+  <div className="btn-input-container">
+  <input
+  id={document[mono]["id"]}
+  type="date"
+  disabled
+  name="effectiveDate"
+  onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
+  value={monoDeteails.current[document[mono]["id"]["effectiveDate"]]}
+  />
+  <button type="submit"></button>
+   </div>
   </label>
   {/* monograph edition */}
   <label>
-    <span>
-      {document[mono]["monographEdition"]}
-      <img src={edit} onClick={openCloseInput} />
-    </span>
-    <div className="btn-input-container">
-      <input
-      id={document[mono]["id"]}
-      type="number"
-      disabled={disabled}
-     name="monographEdition"
+  <span>
+   Ed.
+    <img src={edit} onClick={(e)=>{openCloseInput(e, "monographEdition");}} />
+  </span>
+  <div className="btn-input-container">
+   <input
+    id={document[mono]["id"]}
+    type="number"
+    disabled={disabled}
+    name="monographEdition"
     onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
     value={monoDeteails.current[document[mono]["id"]["monographEdition"]]}
     />
   <button type="submit"></button>
    </div>
   </label>
-   {/* efective date */}
-  <label>
-    <span>
-      {document[mono]["effectiveDate"].toDate().toDateString()}
-      <img src={edit} onClick={openCloseInput} />
-    </span>
-    <div className="btn-input-container">
-      <input
-      id={document[mono]["id"]}
-      type="date"
-      disabled={disabled}
-     name="effectiveDate"
-    onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
-    value={monoDeteails.current[document[mono]["id"]["effectiveDate"]]}
-    />
-  <button type="submit"></button>
-   </div>
-  </label>
+
 </form>
+  {/* end of details-input-container */}
+  <div className="details-UI-container">
+  {/* this div responsible of the UI mono details */}
+  <h2> {mono} / <span>
+  {document[mono]["monographEdition"]}
+    </span></h2>
+  <h4> {document[mono]["effectiveDate"].toDate().toDateString()}</h4>
+  </div>
+  {/* end of details_UI-container */}
 </div>
 {/* tests*/}
+<div className="change-tests">
 <form onSubmit={handleSubmitMonographName}>
 {Object.keys(document[mono]['tests']).map((technology)=>
 <label>
@@ -232,7 +257,9 @@ onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,t,index)}
 </label>
   )}
 </form>
+</div>
    {/* note */}
+  <div className="note">
 <form  onSubmit={handleSubmitMonographName}>
   <label>
     <span>
@@ -252,6 +279,7 @@ onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,t,index)}
    </div>
   </label>
 </form>
+  </div>
 </div>
   ))}
  </div>
