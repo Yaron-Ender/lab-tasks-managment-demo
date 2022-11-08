@@ -1,4 +1,4 @@
-import { useState,useEffect,useRef,useReducer,Fragment } from "react";
+import { useState,useEffect,useRef,useReducer } from "react";
 import { Timestamp } from "firebase/firestore";
 import { useFriestore } from "../../hooks/useFirestore";
 import  edit from'../../asstes/edit.svg';
@@ -11,7 +11,7 @@ const monoDeteails=useRef({})
 const [changeMonoName,setChangeMonoName] = useState("")
 //reducer function
 const firestoreReducer =(state,action)=>{
-  const {type,payload}=action
+  const {type}=action
   switch (type){
     case 'MONO_NAME':
 return { ...state, monographName:true};
@@ -37,18 +37,18 @@ case 'TESTS':
       if(document){
         // it's for monograph names changing
         Object.keys(document).forEach((m)=> {
-          let  k = document[m]["id"] 
-          arrayMono.push({[k]:m});
+        let  k = document[m]["id"] 
+         arrayMono.push({[k]:m});
         })
         arrayMono.forEach((i)=>{
-          newObj  = {...newObj,...i}
-          monographName.current=newObj
+        newObj  = {...newObj,...i}
+        monographName.current=newObj
         })
         //it's for the other fields 
         Object.keys(document).forEach((n)=>{
-          let {effectiveDate,monographEdition,note,id,tests}=document[n]
-          monoDeteails.current ={...monoDeteails.current,
-            [document[n]['id']]:{ monographEdition,note,id,tests,effectiveDate} };  
+        let {effectiveDate,monographEdition,note,id,tests}=document[n]
+        monoDeteails.current ={...monoDeteails.current,
+        [document[n]['id']]:{ monographEdition,note,id,tests,effectiveDate} };  
             
   }) 
 
@@ -125,26 +125,26 @@ setChangeMonoName((prev) => ({ ...prev, [ID]: e.target.value }));
 dispatch({type:'MONO_NAME'})
 break;
   case "monographEdition":
-  if(e.target.id == ID && value){
+  if(e.target.id === ID && value){
  monoDeteails.current[ID]["monographEdition"] = value;
  setMonographFields((prev)=>(prev={...monoDeteails.current}))
  dispatch({ type:"MONO_EDITION" });
   }
   break;
 case "effectiveDate":
-if(e.target.id == ID && value){
+if(e.target.id === ID && value){
   monoDeteails.current[ID]["effectiveDate"]=Timestamp.fromDate(new Date(value))
  setMonographFields((prev) => (prev = { ...monoDeteails.current }));
  dispatch({ type:"EFFECTIVE_DATE" });
 }
 case 'tests':
-  if(e.target.id== ID && value){
+  if(e.target.id=== ID && value){
 monoDeteails.current[ID]["tests"][technology][index]=value
 setMonographFields((prev) => (prev = { ...monoDeteails.current }));
  dispatch({ type: "TESTS" });
   }
   case 'note':
-if(e.target.id== ID && value){
+if(e.target.id ===ID && value){
 console.log(value)
 monoDeteails.current[ID]["note"]=value;
 setMonographFields((prev) => (prev = { ...monoDeteails.current }));
@@ -173,7 +173,7 @@ default:
   {/* monograph title */}
   <span>
    Monograph name
-   <img src={edit} onClick={(e)=>{openCloseInput(e, "monographName");}} />
+   <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "monographName");}} />
   </span>
   <div className="btn-input-container">
   <input
@@ -190,7 +190,7 @@ default:
   <label>
   <span>
    Effective date
-   <img src={edit} onClick={(e)=>{openCloseInput(e, "effectiveDate");}} />
+   <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "effectiveDate");}} />
   </span>
   <div className="btn-input-container">
   <input
@@ -208,7 +208,7 @@ default:
   <label>
   <span>
    Ed.
-    <img src={edit} onClick={(e)=>{openCloseInput(e, "monographEdition");}} />
+    <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "monographEdition");}} />
   </span>
   <div className="btn-input-container">
    <input
@@ -243,7 +243,7 @@ default:
 { document[mono]['tests'][technology].map((t,index)=>
 <div className="btn-input-container">
 <li>{t}</li>
- <img src={edit} onClick={openCloseInput} />
+ <img src={edit} alt={edit} onClick={openCloseInput} />
 <input
  id={document[mono]["id"]}
 type="text"
@@ -263,7 +263,7 @@ onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,t,index)}
 <form  onSubmit={handleSubmitMonographName}>
   <label>
     <span>
-  <img src={edit} onClick={openCloseInput} />
+  <img src={edit} alt={edit} onClick={openCloseInput} />
     </span>
     <div className="btn-input-container">
    <textarea

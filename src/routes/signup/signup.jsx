@@ -6,7 +6,7 @@ import { useSignup } from "../../hooks/useSignup";
 import { useISManager } from "../../hooks/useIsManager";
 const Signup = () => {
   const { error,isPending,signup } = useSignup()
-  const { isManager,manager } = useISManager()
+  const { manager,position } = useISManager()
   const defaultInput = {
     userName: "",
     email:'',
@@ -23,14 +23,15 @@ const Signup = () => {
   if(password===confirmPassword){
     setComparePS(true)
   }
-  //find if employee is manager
-  if (employeeNumber.length==6) {
+  //find user position
+  if (employeeNumber.length===6) {
   setEmployeeNum(prev=>(prev=workersID.find(num => num==employeeNumber)))
   manager(employeeNum);
+  console.log(position.current)
 }
-},[password,confirmPassword,employeeNumber,isManager])
+},[password,confirmPassword,employeeNumber,position])
 
-//update theinputField state
+//update the inputField state
   const handleInput = (e) => {
     const { name, value } = e.target;
     setInputFields((prev) => ({ ...prev, [name]: value }));
@@ -38,7 +39,7 @@ const Signup = () => {
   const handleSubmit =async(e)=>{
     e.preventDefault();
     if (comparePS && employeeNum) {
-      await signup(email,password,userName,employeeNum,isManager);
+      await signup(email,password,userName,employeeNum,position);
       setComparePS(false)
       setEmployeeNum(null)
       setInputFields(defaultInput);

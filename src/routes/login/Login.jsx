@@ -6,7 +6,7 @@ import { workersID } from "../../asstes/workers-ID-Numbers";
 import { useISManager } from "../../hooks/useIsManager";
 const Login = () => {
 const { login,isPending,error } = useLogin();
-const { manager,isManager } = useISManager();
+const { manager,position } = useISManager();
   const defaultInput = {
     email:"",
     employeeNumber:"",
@@ -16,19 +16,19 @@ const { manager,isManager } = useISManager();
   const [inputFields, setInputFields] = useState(defaultInput);
   const { employeeNumber, email, password } = inputFields;
  useEffect(()=>{
-   if(employeeNumber.length==6){
+   if(employeeNumber.length===6){
    setEmployeeNum(prev=>prev=workersID.find(num=>employeeNumber==num));
   manager(employeeNum)
+  console.log(position,employeeNum)
 }
-},[employeeNumber,isManager])
+},[employeeNumber,position])
 const handleInput =(e)=>{
   const{name,value}=e.target
   setInputFields(prev=>({...prev,[name]:value}))
 }
 const handleSubmit = (e)=>{
   e.preventDefault()
-  console.log('do you a manager', isManager)
-  login(email,password,employeeNumber,isManager)
+  login(email,password,employeeNumber,position)
   setInputFields(defaultInput)
   }
     return (

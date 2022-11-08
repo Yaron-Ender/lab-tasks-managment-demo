@@ -8,7 +8,7 @@ export const useSignup = ()=>{
     const { dispatch } = useAuthContext()
 const [error, setError] = useState(null);
 const [isPending, setIsPending] = useState(false);
- const signup = async(email,password,userName,employeeNum,isManager)=>
+ const signup = async(email,password,userName,employeeNum,position)=>
  {
   setIsPending(true)
   setError(null)
@@ -28,10 +28,10 @@ const [isPending, setIsPending] = useState(false);
  const docRef = doc(db,'users',user.uid)
  const getDocument =await getDoc(docRef)
  if(!getDocument.exists()){
-   await setDoc(docRef,{id:user.uid,isManager,userName,photoURL,employeeNum,assignments:[]})
+   await setDoc(docRef,{id:user.uid,userName,photoURL,employeeNum,assignments:[],position:position.current})
  }
  //update AuthContext
- dispatch({ type: "LOGIN", payload:{user,employeeNum,isManager}});
+ dispatch({ type: "LOGIN", payload:{user,employeeNum,position}});
  
  setIsPending(false);
  setError(null);

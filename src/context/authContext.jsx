@@ -8,7 +8,7 @@ const authReducer =(state,action)=>{
  switch(type){
     case 'LOGIN':
     return {...state,user:payload.user,employeeNum:payload.employeeNum,
-    manager:payload.isManager}
+      position:payload.position.current}
     case 'AUTH_IS_READY':
       return { ...state,AuthIsReady:true, user: payload };
    case 'LOGOUT':
@@ -21,9 +21,9 @@ const authReducer =(state,action)=>{
 export const AuthContextProvider=({children})=>{
  const[state,dispatch]=useReducer(authReducer,{
     user:null,
-    manager:null,
     AuthIsReady:null,
-    employeeNum:null
+    employeeNum:null,
+    position:null
  })
  console.log('authentication state:', state )
 useEffect(()=>{

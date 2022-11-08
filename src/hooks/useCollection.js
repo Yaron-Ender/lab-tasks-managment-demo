@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react';
 import { db } from '../firebase/firebase'
-import { collection,doc,getDocs,getDoc,onSnapshot } from "firebase/firestore";
+import { collection,onSnapshot } from "firebase/firestore";
 
 export const useCollection=(_collection)=>{
  const [arrayOfDocID, setArrayOfDocID] = useState([]);
