@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc,updateDoc } from "firebase/firestore";
+import { collection, doc,getDoc,writeBatch,setDoc} from "firebase/firestore";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);

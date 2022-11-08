@@ -70,7 +70,6 @@ const openCloseInput = (e,name) => {
   e.target.parentElement.classList.add("open-input");
    const inp = window.document.querySelector(`input[name=${name}]`);
    inp.disabled=false
-   console.log(inp.disabled)
 };
 //turn all the inputs to disable after submiting the form
 const turnToDissable =()=>{
@@ -125,14 +124,14 @@ setChangeMonoName((prev) => ({ ...prev, [ID]: e.target.value }));
 dispatch({type:'MONO_NAME'})
 break;
   case "monographEdition":
-  if(e.target.id === ID && value){
+    if(e.target.id == ID && value){
  monoDeteails.current[ID]["monographEdition"] = value;
  setMonographFields((prev)=>(prev={...monoDeteails.current}))
  dispatch({ type:"MONO_EDITION" });
   }
   break;
 case "effectiveDate":
-if(e.target.id === ID && value){
+if(e.target.id == ID && value){
   monoDeteails.current[ID]["effectiveDate"]=Timestamp.fromDate(new Date(value))
  setMonographFields((prev) => (prev = { ...monoDeteails.current }));
  dispatch({ type:"EFFECTIVE_DATE" });

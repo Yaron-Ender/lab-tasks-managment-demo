@@ -15,5 +15,5 @@ const unsub = onSnapshot(refCol,(snapshot)=>{
 })
 return ()=>{unsub()}
 },[_collection])
-return{ arrayOfDocID }
+return{ arrayOfDocID,error }
 }
