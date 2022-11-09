@@ -68,8 +68,15 @@ const openCloseInput = (e,name) => {
     s.classList.remove("open-input");
   });
   e.target.parentElement.classList.add("open-input");
-   const inp = window.document.querySelector(`input[name=${name}]`);
-   inp.disabled=false
+  let inp 
+  if(name ==='note'){
+     inp = window.document.querySelector(`textarea[name=${name}]`);
+     inp.disabled=false
+    }else{
+      inp = window.document.querySelector(`input[name=${name}]`);
+      inp.disabled=false
+
+  }
 };
 //turn all the inputs to disable after submiting the form
 const turnToDissable =()=>{
@@ -77,9 +84,13 @@ const turnToDissable =()=>{
   el.forEach((s) => {
     s.classList.remove("open-input");
   });
-const inp = window.document.querySelectorAll('input');
-inp.forEach((inp)=>{
-inp.disabled=true
+  window.document.querySelectorAll('input')
+  .forEach((inp)=>{
+  inp.disabled=true
+  })
+window.document.querySelectorAll('textarea')
+.forEach((inpArea)=>{
+inpArea.disabled=true
 })
 }
 //send data to useFirestore
@@ -99,12 +110,12 @@ const handleSubmitMonographName = (e) =>{
     dispatch({ type: "RESET" });
   }
   if(state.effectiveDate&&monographFields) {
-     updateDocument(id, monographFields);
+    updateDocument(id, monographFields);
      dispatch({ type: "RESET" });
   }
   if(state.tests&&monographFields) {
-     updateDocument(id, monographFields);
-     dispatch({ type: "RESET" });
+    updateDocument(id, monographFields);
+    dispatch({ type: "RESET" });
   }
   if(state.note&&monographFields) {
      updateDocument(id, monographFields);
@@ -116,7 +127,7 @@ const handleSubmitMonographName = (e) =>{
 
 
   //handle with the old and the new monograph name and monograph feilds
-  const handleChangeMonoField = (e, ID,technology,t,index) => {
+  const handleChangeMonoField = (e, ID,technology,index) => {
     const { name, value } = e.target;
   switch(name){
   case "monographName":
@@ -137,14 +148,13 @@ if(e.target.id == ID && value){
  dispatch({ type:"EFFECTIVE_DATE" });
 }
 case 'tests':
-  if(e.target.id=== ID && value){
+  if(e.target.id == ID && value){
 monoDeteails.current[ID]["tests"][technology][index]=value
 setMonographFields((prev) => (prev = { ...monoDeteails.current }));
  dispatch({ type: "TESTS" });
   }
   case 'note':
-if(e.target.id ===ID && value){
-console.log(value)
+    if(e.target.id == ID && value){
 monoDeteails.current[ID]["note"]=value;
 setMonographFields((prev) => (prev = { ...monoDeteails.current }));
  dispatch({ type:"NOTE" });
@@ -241,16 +251,17 @@ default:
   <h3>{(technology)}</h3>
 { document[mono]['tests'][technology].map((t,index)=>
 <div className="btn-input-container">
-<li>{t}</li>
- <img src={edit} alt={edit} onClick={openCloseInput} />
+<li>{t}
+ <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"tests");}} />
+</li>
 <input
  id={document[mono]["id"]}
 type="text"
-disabled={disabled}
+disabled
 name="tests" 
-onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,t,index)}
+onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,index)}
 />
-  <button type="submit"></button>
+<button type="submit"></button>
 </div>
    )}
 </label>
@@ -262,19 +273,19 @@ onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,t,index)}
 <form  onSubmit={handleSubmitMonographName}>
   <label>
     <span>
-  <img src={edit} alt={edit} onClick={openCloseInput} />
+  <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"note");}} />
+      <button type="submit">sdsdadasd</button>
     </span>
     <div className="btn-input-container">
    <textarea
      id={document[mono]["id"]}
-     disabled={disabled}
+     disabled
      name="note"
      onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
   value={monoDeteails.current[document[mono]["id"]["note"]]}   
    >
 {document[mono]["note"]}
   </textarea>
-  <button type="submit"></button>
    </div>
   </label>
 </form>
