@@ -51,7 +51,7 @@ const closeCreateSubstanceComp =()=>{
         <Search />
       </nav>
       <div className="database-substances-container">
-        {error && <p>{error}</p>}
+        {error && <p className="error">{error}</p>}
         {!error && !openCreateNewSub && (
           <SubstancesList substancesID={resultOfCollection} />
         )}

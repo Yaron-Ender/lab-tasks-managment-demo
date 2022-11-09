@@ -213,7 +213,7 @@ default:
    <input
     id={document[mono]["id"]}
     type="number"
-    disabled={disabled}
+    disabled
     name="monographEdition"
     onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
     value={monoDeteails.current[document[mono]["id"]["monographEdition"]]}

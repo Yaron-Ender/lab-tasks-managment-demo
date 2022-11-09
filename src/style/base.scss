@@ -76,10 +76,22 @@ appearance: textfield;
   margin:4rem auto;
   color:$secondary;
 }
-.loading, .error {
+.loading{
   text-align: center;
   margin:4rem auto;
 }
 .dark{
 background-color: #444;
+}
+.error {
+  font: {
+  size:$font-size-lg;
+  }
+  text-align: center;
+  color: red;
+  background: pink;
+  border:0.1rem solid red;
+  border-radius:0.4rem;
+  padding:0.8rem;
+  margin: 1rem 0;
 }
