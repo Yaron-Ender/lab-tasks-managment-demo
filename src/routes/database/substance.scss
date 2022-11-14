@@ -34,13 +34,15 @@ border:8px solid rgb(243, 255, 205);
 // has two childes:1.inputs 2.UI
   border:5px solid green;
   width: 100%;
+  padding:2rem;
   grid-area: header;
   display: grid;
   // grid-template-columns:1fr 2fr;
   grid-template-columns: repeat(3, 1fr);
   gap:0 3rem;
 & .details-input-container{
-  border: 1px solid fuchsia;
+  //has on chide-->label
+  // border: 1px solid fuchsia;
   grid-column:1/2;
   display: grid;
   gap:1rem 1rem;
@@ -55,23 +57,21 @@ grid-column:1 / 3;
 @include flx-col();
 width:100%;
 height:100%;
-padding: 2rem 1rem;
+padding: 1rem 0rem;
 position:relative;
 //style for the span inside the label
 & span{
 @include flx-row();
 position:absolute;
 top:0;
-left:0;
-width:100%;
+left:0.5rem;
+width:95%;
 height:100%;
 & img{
 transition:all $base-transition*2;
 opacity: 0;
-border:2px solid red;
- margin-left: auto;
+  margin:0 0 0 auto;
  height: 70%;
-//  height:$font-size-xl;
 }
 &:hover img{
 opacity: 1;
@@ -82,15 +82,14 @@ cursor: pointer;
 & .btn-input-container{
 position:absolute;
 top:0;
-left: 0;
+left:0;
 width:100%;
 height:100%;
 z-index: -1;
-border:5px solid burlywood;
+border:0.1rem solid $black;
  @include flx-row();
  overflow-y:hidden;
  & input{
-border:3px solid red;
  position:absolute;
 top:-100%;
 left:0;
@@ -98,7 +97,7 @@ left:0;
  width:100%;
  transition: all 0.8s;
  &:disabled{
-   visibility: hidden;
+  visibility: hidden;
   }
 }
 & button{
@@ -106,10 +105,15 @@ left:0;
   visibility: hidden;
 }
 }
-&:has(.open-input) > .btn-input-container > input{
-background-color: red;
+&:has(span.open-input) > .btn-input-container > input{
 transform: translateY(100%);
+box-shadow:-1rem -1rem 1.5rem rgba($color:$black, $alpha: 1.0),
+1rem 1rem 1.5rem rgba($color:$white, $alpha: 1.0)
+;
 opacity:1; 
+}
+&:has(span.open-input) > span{
+opacity:0; 
 }
 }
 }
@@ -117,12 +121,32 @@ opacity:1;
  border:3px solid fuchsia;
   grid-column:2/4;
 }
-//style for the label container
-
 }
 //STYLE FOR CHANGE TESTS
 & .change-tests{
-grid-area: tech;
+  border: 3px solid green;
+  width:100%;
+  height:100%;
+  grid-area: tech;
+  & > form{
+  @include flx-row();
+  border: 3px solid gray;
+ width:100%;
+  height:100%;
+  & > label{
+  @include grid(1fr 3fr,2fr);
+  border:2px solid red;
+  width:100%;
+  height:100%;
+  & > h3{
+  grid-row:span 2;
+  color: aqua;
+  }
+  & > li{
+    color:greenyellow;
+  }
+  }
+}
 }
 //STYLE FOR NOTE
 & .note{

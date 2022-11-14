@@ -250,10 +250,12 @@ default:
 <label>
   <h3>{(technology)}</h3>
 { document[mono]['tests'][technology].map((t,index)=>
-<div className="btn-input-container">
-<li>{t}
+<>
+<li>
+  {t}
  <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"tests");}} />
 </li>
+<div className="btn-input-container">
 <input
  id={document[mono]["id"]}
 type="text"
@@ -263,6 +265,7 @@ onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,index)}
 />
 <button type="submit"></button>
 </div>
+</>
    )}
 </label>
   )}

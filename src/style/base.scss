@@ -13,8 +13,7 @@ html, body, #root {
 body {
   font-family: Raleway, sans-serif;
   margin:0;
-  // font-size:1em;
-  background:$grey-primary;
+  background:map-get($colors,'primary');
   color:$secondary;
 }
 h1{

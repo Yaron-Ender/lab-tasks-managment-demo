@@ -1,0 +1,42 @@
+.assignment{
+height: 100vh;
+@include grid(minmax(17rem,1fr) 5fr);
+& .main-sidebar{
+min-height:100vh;
+padding-left:1rem;
+@include grid(1fr,1fr 4fr,0);
+background: map-get($colors,'gray-assignment');
+& nav{
+& ul{
+ & li{
+margin: 0;
+width: 100%;
+& > a{
+width: 100%;
+margin-bottom:1rem;
+padding:0.8rem 1.5rem;
+@include flx-row(flex-start);  
+gap:1rem; 
+font: {
+    family:poppins, sans-serif;
+    size:$font-size-xxl;
+    weight:bold;
+}
+letter-spacing:0.1rem;
+& span{
+font-size:$base-font-size*0.9;
+}
+& img{
+ width:$base-font-size*1.1;
+}
+}
+& >a.active{
+border-radius: 20px 0 0 20px; 
+background: map-get($colors,
+primary);
+}
+}//li
+}//ul
+}//nav
+}//main-slider
+}//assinment

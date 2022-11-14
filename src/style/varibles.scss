@@ -1,21 +1,28 @@
 
 // theme colors
-$grey-primary:#f7f7f7;
+$gray-primary:#f7f7f7;
 $grey-secondary: #dfdfdf;
-$grey-third:#dedede;
+$gray-third:#dedede;
+$gray-background:#f7f7f7;
+$gray-border:#e3e3e3;
+$gray-strong:#a4a4a4;
 $secondary: #333;
 $error: #d32752;
 $border-color:#d4d4d4;
 $nav-color:#9c88ff;
+$nav-color-hover:#8c76fe;
 $nav-color-2:#58249c;
 $nav-color-dark:#3f1a71;
 $nav-color-light:#742fcd;
 $green-primary:#1f9751;
 $green-shine:#19e635;
 $database-navbar:#f190d4;
+$black:#222;
+$black-font:#121212;
+$white:#fff;
 
 $colors:(
- "primary": $grey-primary,
+ "primary": $gray-primary,
   "secondary": $secondary,
   "error": $error,
   "border-color":$border-color,
@@ -29,7 +36,8 @@ $colors:(
   "database-navbar":$database-navbar,
   "orange": #ffa600,
   "purple": #9900ff,
-  "gray":$grey-third,
+  "gray":$gray-third,
+  "gray-assignment":$gray-third,
   "white": #fff,
   "white-2":#e4e4e4,
 );
@@ -44,10 +52,12 @@ $base-margin:1.5rem;//15px
 $base-border-thickness:0.1rem;
 $base-border-radius:2rem;
 
+
 // box-shadow
 $base-box-shadow:0.1rem 0.3rem 0.5rem rgba(0,0,0,0.1);
 $box-shadow-card:2.5rem 3.75rem 3rem -3rem #48556a;
-
+$box-shadow-change-mono:0 0 0.1rem rgba(0,0,0,0.2), 0 0.1rem 0.2rem rgba(0,0,0,0.2);
+$box-shadow-change-mono-hover:0 0px 1px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.2);
 // font sizes
 $base-font-size: 1.6rem;
 $font-size-sm: $base-font-size * 0.75;
@@ -84,4 +94,9 @@ gap:$gap;
   left:0;
   font-size:1rem;
   color: $secondary;
+}
+// activated btn
+@mixin box-shadow-change-mono-active{
+box-shadow: 0 0px 1px rgba(0, 0, 0, 0.4);
+transform: translateY(1px);
 }

@@ -4,7 +4,7 @@ import Navbar from './routes/navbar/navbar';
 import Home from './routes/home/home';
 import Database from './routes/database/database';
 import Workers from './routes/workers/workers';
-import Arragment from './routes/work-arragment/Arragment';
+import Assignment from './routes/dashboard/Assignment';
 import { useAuthContext } from'./hooks/useAuthContext';
 import {useEffect} from 'react';
 function App() {
@@ -20,7 +20,7 @@ return (
         {user && (
           <Routes>
             <Route path="/" element={<Navbar />}>
-               <Route index  element={<Arragment />} />
+               <Route index  element={<Assignment />} />
            
               <Route path="/database/*" element=
               {<Database />}
