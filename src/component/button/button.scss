@@ -58,5 +58,24 @@ margin-top: auto;
   border:0;
   color:map-get($colors,'green' );
  }
+ &.addProject{
+   color:map-get($colors,'nav-addProject');
+   border:$base-border-thickness solid currentcolor;
+   padding:$base-padding*0.25 $base-padding*0.5;
+   border-radius:$base-border-radius*0.2;
+   transition:$base-transition;
+   font: {
+    size:$base-font-size*0.7;
+    family:poppins, sans-serif;
+    weight:bold;
+   }
+   letter-spacing:0.1rem;
+   &:hover{
+   background-color:map-get($colors,'nav-addProject');;
+  color:map-get($colors,'gray-bck');
+   border:$base-border-thickness solid $nav-color;
+   font-weight:bold;
+   }
+ }
 }
 

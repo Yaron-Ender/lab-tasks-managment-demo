@@ -9,13 +9,13 @@ const MainSidebar = () => {
 <nav>
 <ul>
 <li>
-<NavLink to="/">
+<NavLink to="/ass">
 <img src={dashboardIcon}alt='dashboard icon'/>
 <span>Dashboard</span>
 </NavLink>
 </li>
 <li>
-<NavLink to="/database">
+<NavLink to="assignment/addProject">
 <img src={AddIcon}alt='add icon'/>
 <span>Add project</span>
 </NavLink>

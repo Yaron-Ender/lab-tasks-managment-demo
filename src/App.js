@@ -1,5 +1,5 @@
 import './App.scss';
-import { Routes,Route,useNavigate} from "react-router-dom";
+import { Routes,Route,useNavigate,navigate, Navigate} from "react-router-dom";
 import Navbar from './routes/navbar/navbar';
 import Home from './routes/home/home';
 import Database from './routes/database/database';
@@ -20,13 +20,11 @@ return (
         {user && (
           <Routes>
             <Route path="/" element={<Navbar />}>
-               <Route index  element={<Assignment />} />
-           
-              <Route path="/database/*" element=
-              {<Database />}
-              />
-            
-              <Route path="workers" element={<Workers />} />
+              {/* <Route path="/" element={<Navigate to="/Assignment "/>} /> */}
+              <Route index path='/*' element={<Assignment />} />
+              <Route path="/database/*" element={<Database />} />
+
+              <Route path="/workers" element={<Workers />} />
             </Route>
           </Routes>
         )}

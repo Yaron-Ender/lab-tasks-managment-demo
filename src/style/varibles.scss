@@ -22,6 +22,7 @@ $black-font:#121212;
 $white:#fff;
 
 $colors:(
+  "gray-bck":$gray-primary,
  "primary": $gray-primary,
   "secondary": $secondary,
   "error": $error,
@@ -29,6 +30,7 @@ $colors:(
   "card-p":#999,
   "create-substance":#555,
   "nav":$nav-color,
+  "nav-addProject":$nav-color-2,
   "nav-dark":$nav-color-dark,
   "nav-light":$nav-color-light,
   "green":$green-primary,

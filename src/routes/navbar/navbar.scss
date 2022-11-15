@@ -7,7 +7,7 @@
     @include flx-row ($justify:space-between);
     color:map-get($colors,'white');
  & a{
-    text-decoration: none;
+   text-decoration: none;
    color:map-get($colors,'white');
    border:$base-border-thickness solid currentcolor;
    padding:$base-padding*0.5 $base-padding;

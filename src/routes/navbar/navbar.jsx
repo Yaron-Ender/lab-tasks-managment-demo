@@ -20,7 +20,7 @@ const { document,error:errorFromFirestore } =useDocument('users',user.uid)
           <NavLink to="database"
           onClick={()=>{openDatabaseNavbar()}}
           >database</NavLink>
-          <NavLink to="/"
+          <NavLink to="assignment"
           >assign job</NavLink>
           </>
           }

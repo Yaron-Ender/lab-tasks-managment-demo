@@ -19,7 +19,6 @@ padding:0.8rem 1.5rem;
 gap:1rem; 
 font: {
     family:poppins, sans-serif;
-    size:$font-size-xxl;
     weight:bold;
 }
 letter-spacing:0.1rem;
@@ -29,11 +28,12 @@ font-size:$base-font-size*0.9;
 & img{
  width:$base-font-size*1.1;
 }
-}
-& >a.active{
+&:hover{
 border-radius: 20px 0 0 20px; 
 background: map-get($colors,
 primary);
+}
+
 }
 }//li
 }//ul

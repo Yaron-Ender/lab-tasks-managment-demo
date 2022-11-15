@@ -1,16 +1,14 @@
 import { useEffect } from "react";
-const Button = ({children,...otherProps}) => {
+const Button = ({...otherProps}) => {
+  const{buttontype,children}= {...otherProps}
 
-useEffect(()=>{
-
-},[])
-    const{buttontype}= {...otherProps}
     let btnStyle = {
       login: "login",
       substance: "substance",
       createSubstance:"create-Substance",
       addTest: "add-test-btn",
-      openTextarea:'open-textarea-btn'
+      openTextarea:'open-textarea-btn',
+      addProject:'addProject'
     };
 
     return (
