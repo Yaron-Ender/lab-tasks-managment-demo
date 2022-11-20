@@ -5,7 +5,6 @@ export const useFriestore = (_collection)=>{
   const colRef = collection(db, _collection);
  //add document
  const addDocument =async(id,monographes)=>{
-  console.log(_collection,id,monographes)
 const docReff = doc(colRef,id)
 await setDoc(docReff,monographes)
  }

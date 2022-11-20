@@ -19,9 +19,9 @@ const handleSubmit=(e)=>{
  e.preventDefault();
 }
     return (
-      <div className="add-project">
+      <div className="assign-project-container">
         <h3>add project</h3>
-<form className="select-proj-container" onSubmit={handleSubmit}>
+<form className="select-proj-and-mono-container" onSubmit={handleSubmit}>
     <label>
     <span>project :</span>
     <Select
@@ -32,18 +32,19 @@ const handleSubmit=(e)=>{
     />
     </label>
 {projName&& 
-<div className='add-project-mono'>
+<div>
+{/* takes the substance name and bring all the document */}
 <AddProjectMono 
 projName={projName.value}
 />
 </div>
 }
 
-    <Button
-    disabled="disabled"
-    children="Add Project"
-    buttontype="addProject"
-    />
+<Button
+disabled="disabled"
+children="Add Project"
+buttontype="addProject"
+/>
 </form>
       </div>
     );

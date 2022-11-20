@@ -8,7 +8,7 @@ const authReducer =(state,action)=>{
  switch(type){
     case 'LOGIN':
     return {...state,user:payload.user,employeeNum:payload.employeeNum,
-      position:payload.position.current}
+      position:payload.position.current};
     case 'AUTH_IS_READY':
       return { ...state,AuthIsReady:true, user: payload };
    case 'LOGOUT':
@@ -25,8 +25,7 @@ export const AuthContextProvider=({children})=>{
     employeeNum:null,
     position:null
  })
- console.log('authentication state:', state )
-useEffect(()=>{
+  useEffect(()=>{
   const unsub = onAuthStateChanged(auth,(user)=>{
  dispatch({ type: "AUTH_IS_READY", payload: user });
  //cleanup function

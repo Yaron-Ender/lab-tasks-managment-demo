@@ -1,23 +1,24 @@
 import { useState } from 'react'
 import { auth,db,storage } from '../firebase/firebase'
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc,setDoc, getDoc } from "firebase/firestore";
+import { doc,setDoc, getDoc, collection,runTransaction } from "firebase/firestore";
 import { ref,getDownloadURL } from "firebase/storage";
 import { useAuthContext } from './useAuthContext';
+import { async } from '@firebase/util';
 export const useSignup = ()=>{
     const { dispatch } = useAuthContext()
 const [error, setError] = useState(null);
 const [isPending, setIsPending] = useState(false);
+const [professionObj,setProfessionObj]=useState(null)
  const signup = async(email,password,userName,employeeNum,position)=>
  {
   setIsPending(true)
   setError(null)
  try{
- const { user } = await createUserWithEmailAndPassword(auth, email, password);
- if(!user){
+   const { user } = await createUserWithEmailAndPassword(auth, email, password);
+   if(!user){
      throw new Error('"could not complete sinup"');
  }
-
  //download the user profile img from storage firestore
  const photoRef =  ref(storage,`profile-image/${employeeNum}.jpg`);
  const photoURL = await getDownloadURL(photoRef);
@@ -29,9 +30,33 @@ const [isPending, setIsPending] = useState(false);
  const getDocument =await getDoc(docRef)
  if(!getDocument.exists()){
    await setDoc(docRef,{id:user.uid,userName,photoURL,employeeNum,assignments:[],position:position.current})
- }
- //update AuthContext
+  }
+//update AuthContext
  dispatch({ type: "LOGIN", payload:{user,employeeNum,position}});
+ //workers classification- proffesion collection
+ const colRefProfession = collection(db, "profession");
+ const selectProfession =async(prof)=>{
+await runTransaction(db,async(profession)=>{
+  let newInfo=[];
+const getInfo = await profession.get(doc(db,'profession',prof))
+if(!getInfo.exists()){
+   console.log('doc does not exist') 
+ await setDoc(doc(db, "profession",prof), {[prof]:[{value:[userName],label:[userName]}]});
+}
+if(getInfo.data()[prof]!==undefined){
+  newInfo = getInfo.data()[prof]
+  newInfo.push({ value: [userName], label: [userName] }); 
+  console.log(newInfo, getInfo.data());
+}
+ profession.update(doc(db, "profession",prof), { [prof]: newInfo });
+})
+ }
+  Object.keys(position.current).forEach((prof)=>{
+ if(position.current[prof]){
+   selectProfession(prof);
+}
+})
+
  
  setIsPending(false);
  setError(null);

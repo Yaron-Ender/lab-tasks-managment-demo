@@ -27,7 +27,6 @@ const Signup = () => {
   if (employeeNumber.length===6) {
   setEmployeeNum(prev=>(prev=workersID.find(num => num==employeeNumber)))
   manager(employeeNum);
-  console.log(position.current)
 }
 },[password,confirmPassword,employeeNumber,position])
 
