@@ -41,11 +41,11 @@ await runTransaction(db,async(profession)=>{
 const getInfo = await profession.get(doc(db,'profession',prof))
 if(!getInfo.exists()){
    console.log('doc does not exist') 
- await setDoc(doc(db, "profession",prof), {[prof]:[{value:[userName],label:[userName]}]});
+ await setDoc(doc(db, "profession",prof), {[prof]:[{value:userName,label:userName}]});
 }
 if(getInfo.data()[prof]!==undefined){
   newInfo = getInfo.data()[prof]
-  newInfo.push({ value: [userName], label: [userName] }); 
+  newInfo.push({ value:userName, label:userName}); 
   console.log(newInfo, getInfo.data());
 }
  profession.update(doc(db, "profession",prof), { [prof]: newInfo });

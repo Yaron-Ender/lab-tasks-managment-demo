@@ -7,7 +7,7 @@ import Select from 'react-select'
 const AddProject = () => {
 const { arrayOfDocID, error } = useCollection("substances");
 const [selectProject,setSelectProj]=useState([]);
-const [projName,setProjectName ]=useState(null)
+const [projName,setProjtName ]=useState(null)
 useEffect(()=>{
 if(arrayOfDocID.length>0){
 arrayOfDocID.forEach((proj)=>{
@@ -18,15 +18,15 @@ setSelectProj((prev)=>([...prev,{value:proj,label:proj}]))
 const handleSubmit=(e)=>{
  e.preventDefault();
 }
-    return (
+return(
       <div className="assign-project-container">
         <h3>add project</h3>
 <form className="select-proj-and-mono-container" onSubmit={handleSubmit}>
     <label>
-    <span>project :</span>
+    <span>project :(addProject comp)</span>
     <Select
         onChange={(option) => {
-        setProjectName(option);
+        setProjtName(option);
         }}
         options={selectProject}
     />
@@ -39,7 +39,6 @@ projName={projName.value}
 />
 </div>
 }
-
 <Button
 disabled="disabled"
 children="Add Project"
