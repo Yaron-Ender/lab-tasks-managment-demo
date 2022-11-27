@@ -95,19 +95,19 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
   const handleMonographInput = (e, id) => {
     monograph.forEach((item) => {
       if (item.id === id) {
-        switch (e.target.name) {
-          case "monographName":
-            item.monographName = e.target.value;
-            break;
-          case "edition":
-            item.monographEdition = e.target.value;
-            break;
-          case "date":
-            item.effectiveDate = Timestamp.fromDate(new Date(e.target.value));
-            break;
-          default:
-            return;
-        }
+  switch (e.target.name) {
+    case "monographName":
+      item.monographName = e.target.value;
+      break;
+    case "edition":
+      item.monographEdition = e.target.value;
+      break;
+    case "date":
+      item.effectiveDate = Timestamp.fromDate(new Date(e.target.value));
+      break;
+    default:
+      return;
+  }
       }
     });
   };
@@ -168,28 +168,28 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
     <div className="create-Newsubstance-container">
       <h1>Cretae New Substance</h1>
       <form className="signup-form" onSubmit={handleSubmit}>
-        <header>
-          <div className="btn-pannel">
-            <Button
-              buttontype="createSubstance"
-              type="button"
-              onClick={addMonograph}
-              children={"add monograph"}
-            />
-            <Button buttontype="createSubstance" children={"save monograph"} />
-          </div>
-          <FormInput
-            type="text"
-            id="sustance-title"
-            label="Substance Name"
-            name="sustanceTitle"
-            value={substanceName}
-            className={"form-input substance-title"}
-            onChange={(e) => {
-              setSubstanceName(e.target.value);
-            }}
-          />
-        </header>
+    <header>
+    <div className="btn-pannel">
+      <Button
+        buttontype="createSubstance"
+        type="button"
+        onClick={addMonograph}
+        children={"add monograph"}
+      />
+      <Button buttontype="createSubstance" children={"save monograph"} />
+    </div>
+    <FormInput
+      type="text"
+      id="sustance-title"
+      label="Substance Name"
+      name="sustanceTitle"
+      value={substanceName}
+      className={"form-input substance-title"}
+      onChange={(e) => {
+        setSubstanceName(e.target.value);
+      }}
+    />
+  </header>
         <div className={`${show ? "show" : ""} monographes-container`}>
   {monograph.length > 0 &&
     monograph.map((item) => (

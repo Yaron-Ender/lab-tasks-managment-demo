@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 const Button = ({...otherProps}) => {
   const{buttontype,children}= {...otherProps}
 
