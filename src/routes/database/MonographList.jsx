@@ -29,8 +29,7 @@ case 'TESTS':
         return state ;
       }
   }
-    //create array of objects {id:monographName} and store it in monographName state
-    
+    //create array of objects {id:monographName} and store it in monographName state 
     useEffect(()=>{
       const arrayMono = [];
       let newObj ={};
@@ -250,22 +249,20 @@ default:
 <label>
   <h3>{(technology)}</h3>
 { document[mono]['tests'][technology].map((t,index)=>
-<>
-<li>
-  {t}
- <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"tests");}} />
-</li>
+
 <div className="btn-input-container">
+<p>
+  {t}
+ {/* <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"tests");}} /> */}
+</p>
 <input
  id={document[mono]["id"]}
 type="text"
-disabled
 name="tests" 
 onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,index)}
 />
 <button type="submit"></button>
 </div>
-</>
    )}
 </label>
   )}
