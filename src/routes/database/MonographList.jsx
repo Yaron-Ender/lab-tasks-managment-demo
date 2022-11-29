@@ -61,7 +61,7 @@ const[state,dispatch]=useReducer(firestoreReducer,{
   note:false
 })
 //open and close input
-const openCloseInput = (e,name) => {
+const openCloseInput = (e,name,id) => {
   const el = window.document.querySelectorAll("span");
   el.forEach((s) => {
     s.classList.remove("open-input");
@@ -72,9 +72,12 @@ const openCloseInput = (e,name) => {
      inp = window.document.querySelector(`textarea[name=${name}]`);
      inp.disabled=false
     }else{
-      inp = window.document.querySelector(`input[name=${name}]`);
-      inp.disabled=false
-
+    inp = window.document.querySelectorAll(`input[name=${name}]`);
+    inp.forEach((input)=>{
+    if(input.getAttribute('id')==id){
+      input.disabled=false
+    }
+    })
   }
 };
 //turn all the inputs to disable after submiting the form
@@ -122,12 +125,13 @@ const handleSubmitMonographName = (e) =>{
   }
   dispatch({type:'RESET'})
   };
-
-
-
+  
+  
+  
   //handle with the old and the new monograph name and monograph feilds
   const handleChangeMonoField = (e, ID,technology,index) => {
     const { name, value } = e.target;
+    console.log(e.target)
   switch(name){
   case "monographName":
 setChangeMonoName((prev) => ({ ...prev, [ID]: e.target.value }));
@@ -150,7 +154,8 @@ case 'tests':
   if(e.target.id == ID && value){
 monoDeteails.current[ID]["tests"][technology][index]=value
 setMonographFields((prev) => (prev = { ...monoDeteails.current }));
- dispatch({ type: "TESTS" });
+dispatch({ type: "TESTS" });
+handleSubmitMonographName()
   }
   case 'note':
     if(e.target.id == ID && value){
@@ -181,10 +186,11 @@ default:
   {/* monograph title */}
   <span>
    Monograph name
-   <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "monographName");}} />
+   <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "monographName",document[mono]["id"])}} />
   </span>
   <div className="btn-input-container">
   <input
+  id={document[mono]["id"]}
   type="text"
   disabled
   name="monographName"
@@ -198,7 +204,7 @@ default:
   <label>
   <span>
    Effective date
-   <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "effectiveDate");}} />
+   <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "effectiveDate", document[mono]["id"])}} />
   </span>
   <div className="btn-input-container">
   <input
@@ -216,7 +222,7 @@ default:
   <label>
   <span>
    Ed.
-    <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "monographEdition");}} />
+    <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e, "monographEdition", document[mono]["id"])}} />
   </span>
   <div className="btn-input-container">
    <input
@@ -230,7 +236,6 @@ default:
   <button type="submit"></button>
    </div>
   </label>
-
 </form>
   {/* end of details-input-container */}
   <div className="details-UI-container">

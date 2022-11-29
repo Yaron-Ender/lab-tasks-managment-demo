@@ -37,7 +37,6 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
     }
   }
   //STATES
-  // const [openCreateSubstane]
   const [show, setShow] = useState(false);
   const [substanceName, setSubstanceName] = useState("");
   const [monograph, setMonograph] = useState([]); //All the monograpes that the user create
@@ -153,12 +152,12 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
   //function that update the tests object,it get called from SingleTest Comp and pass "testList"
   const updateTests = (id, testList) => {
     monograph.forEach((item) => {
-      if (item.id === id) {
-        Object.keys(testList).forEach((technology) => {
-          if (testList[technology].length > 0) {
-            item.tests[technology] = testList[technology];
-          }
-        });
+     if (item.id === id) {
+    Object.keys(testList).forEach((technology) => {
+   if (testList[technology].length > 0) {
+    item.tests[technology] = testList[technology];
+    }
+    });
         setMonograph((prev) => [...prev]);
       }
     });
@@ -176,7 +175,9 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
         onClick={addMonograph}
         children={"add monograph"}
       />
-      <Button buttontype="createSubstance" children={"save monograph"} />
+      <Button
+       buttontype="createSubstance"
+        children={"save monograph"} />
     </div>
     <FormInput
       type="text"

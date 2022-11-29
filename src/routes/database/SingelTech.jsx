@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import Button from "../../component/button/button";
 import plusSign from "../../asstes/plus.svg"
 const SingelTech = ({technology,id,updateTests,monograph}) => {
-   const initObj={
+const initObj={
       HPLC:[],
       WET:[],
       GC:[]
    }
-   const [testList,setTestList]=useState(initObj)
-   const [text,setText]=useState('')
+const [testList,setTestList]=useState(initObj)
+const [text,setText]=useState('')
 useEffect(()=>{
 updateTests(id,testList)
 },[testList])
@@ -21,7 +21,11 @@ if(text){
 }
 }
    return (
+<>
+   {technology &&
     <div>
+   
+
    <h3>{technology}</h3>
    <ul>
    {monograph.length>0&&monograph.map(mono=>(
@@ -44,6 +48,9 @@ if(text){
     />
     </div>
     </div>
+}
+</>
+    
     );
 };
 
