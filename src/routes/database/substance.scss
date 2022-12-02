@@ -127,63 +127,95 @@ opacity:0;
   width:100%;
   height:100%;
   grid-area: tech;
-  & > form{
-  @include grid(repeat(auto-fit,minmax(20rem,1fr)));
-  // border: 3px solid gray;
+  @include grid(repeat(auto-fit,minmax(20rem,1fr)),auto,2rem);
+//  border: 3px solid gray;
  width:100%;
 height:100%;
-  & > label{
+  & > .change-tests-container{
   //the label has 2 children
-  @include grid(1fr,repeat(auto-fit,3rem),2rem);
+  @include grid(1fr,1fr 3fr,1rem);
+  border:4px solid rgb(94, 0, 128);
  justify-items: center;
-//  align-items:stretch;
-  min-height:20rem;
-  border:2px solid red;
-  width:100%;
-  & > h3{
+ align-items: start;
+ width:100%;
+ & > h3{
+  min-height:2rem;
   border: 2px solid red;
   line-height: 2;
-  // text-align: center;
-  align-self:start;
 }
-& > .btn-input-container{
-border:2px solid black;;
-width: 90%;
-height:3rem;
-position: relative;
-& input{
- position:absolute;
- width:100%;
- height:inherit;
- top:0;
- left:0;
- z-index:-1;
-}
-&  p{
+& >ul{
+  @include flx-col();
+  gap:2rem;
+  width:80%;
+  & > form{
+    width:100%;
+    @include flx-row();
+    & > .btn-input-container{
+  width:80%;
+  min-height:3rem; position: relative;
+  & span{
   position: absolute;
   top:0;
   left:0;
   width:100%;
+  transition:all $change-monograph-transition;
  height:inherit;
+ transform:translateY(25%);
+ border-bottom:0.2rem solid $gray-border;
  font: {
   size:2rem;
   family:Arapey, sans-serif;
  }
 }
-& button{
-position:absolute;
-width:100%;
-height:100%;
-top:0;
-left:0;
-visibility: hidden;
+& input{
+ position:absolute;
+ width:100%;
+ height:100%;
+ top:0;
+ left:0;
+ z-index:1;
+opacity:0;
+transition:all $change-monograph-transition;
+border:0;
+border-radius:0;
+background:
+linear-gradient(90deg,$black,$black) left bottom/0% 0.2rem no-repeat;
+ cursor: pointer;
+ &:focus{
+ cursor: text;
+  opacity:1;
+  background-size: 100% 0.2rem;
+ }
+}
+
+}
+& > button.done{
+  width:20%;
+  height:100%;
+  z-index:1;
+  opacity:0;
+  background: none;
+  border:none;
+  transition:all $change-monograph-transition;
+}
+&:has(input:focus) > li > span{
+  opacity:0;
+}
+&:has(input:focus) > button.done{
+    opacity:0.7;
+    &:hover{
+    opacity:1;
+    transform:scale(1.3);
+  }
+  }
+
 }
 }
   }
-}
+
 }
 //STYLE FOR NOTE
-& .note{
+& .note-container{
   margin: 0 auto;
   max-width:60%;
 grid-area:note;

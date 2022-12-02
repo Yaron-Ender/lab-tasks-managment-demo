@@ -8,7 +8,8 @@ const Button = ({...otherProps}) => {
       createSubstance:"create-Substance",
       addTest: "add-test-btn",
       openTextarea:'open-textarea-btn',
-      addProject:'addProject'
+      addProject:'addProject',
+      done:'done'
     };
 
     return (
