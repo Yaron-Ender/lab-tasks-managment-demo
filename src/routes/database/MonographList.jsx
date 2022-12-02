@@ -178,6 +178,15 @@ default:
    <div className="change-singel-monograph"
    key={document[mono]["id"]}>
     
+  {/* this div responsible of the UI mono details */}
+   <div className="details-UI-container">
+  <h2> {mono} / <span>
+  {document[mono]["monographEdition"]}
+    </span></h2>
+  <h4> {document[mono]["effectiveDate"].toDate().toDateString()}</h4>
+  </div> 
+
+
    <div className="change-details">
   {/* this form store all the details input */}
   <form onSubmit={handleSubmitMonographName}
@@ -238,14 +247,35 @@ default:
    </div>
   </label>
 </form>
-  {/* end of details-input-container */}
-  <div className="details-UI-container">
-  {/* this div responsible of the UI mono details */}
-  <h2> {mono} / <span>
-  {document[mono]["monographEdition"]}
-    </span></h2>
-  <h4> {document[mono]["effectiveDate"].toDate().toDateString()}</h4>
+
+
+<div className="note-container">
+<form  onSubmit={handleSubmitMonographName}>
+  {/* <label> */}
+    {/* <span>
+  <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"note");}} />
+</span> */}
+<button type="submit">sdsdadasd</button>
+   <textarea
+  id={document[mono]["id"]}
+  name="note"
+  onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
+  value={monoDeteails.current[document[mono]["id"]["note"]]}   
+   >
+{document[mono]["note"]}
+  </textarea>
+
+  {/* </label> */}
+</form>
   </div>
+
+
+
+  {/* end of details-input-container */}
+  
+
+
+
   {/* end of details_UI-container */}
 </div>
 {/* tests*/}
@@ -282,25 +312,7 @@ onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,index)}
 </div>
 {/* </form> */}
    {/* note */}
-<div className="note-container">
-<form  onSubmit={handleSubmitMonographName}>
-  {/* <label> */}
-    {/* <span>
-  <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"note");}} />
-</span> */}
-<button type="submit">sdsdadasd</button>
-   <textarea
-  id={document[mono]["id"]}
-  name="note"
-  onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
-  value={monoDeteails.current[document[mono]["id"]["note"]]}   
-   >
-{document[mono]["note"]}
-  </textarea>
 
-  {/* </label> */}
-</form>
-  </div>
 </div>
   ))}
  </div>
