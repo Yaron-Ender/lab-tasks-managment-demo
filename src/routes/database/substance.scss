@@ -9,16 +9,21 @@ border:3px solid red;
 width:100%;
 border:8px solid rgb(243, 255, 205);
 @include flx-col;
+  font: {
+  family:Poppins,sans-serif;
+  }
 //substance name
 & .substance-title{
   text-align:center; 
   font: {
   size:$font-size-xxl*1.2;
+   weight:200;
   } 
+  letter-spacing:0.2rem;
 }
 //STYLE FOR THE CHANGED-MONOGRAPGH-CONTAINER
 & .change-singel-monograph{
-//has 3 children 1.change-details 2. change-tests 3.note
+//has 3 children 1.details-UI-container 2. change-details 3.change-tests
   border: 8px solid darkblue;
   width: 100%;
   display: grid;
@@ -30,12 +35,29 @@ border:8px solid rgb(243, 255, 205);
   1fr minmax(30rem,13fr) 1fr
   ;
   & .details-UI-container{
-    border:3px solid fuchsia;
-grid-area:mono;
+ border:2px solid fuchsia;
+ grid-area:mono;
+ & h2{
+  font: {
+  weight:400;
+  }
+ }
+ & span{
+ font: {
+  weight:400;
+  size:$font-size-lg;
+  }
+ }
+ & h4{
+   font: {
+  weight:400;
+} 
+opacity: 0.7;
+ }
   }
   //CHANGE DETAILS DEVITION
 & .change-details{
-// has two childes:1.inputs 2.UI
+// has two childes:1.details-input-container 2.note-container
   border:5px solid green;
   width: 100%;
   padding:0 1rem;
@@ -157,18 +179,23 @@ transition:all $change-monograph-transition;
       min-height:2rem;
       border: 2px solid red;
       line-height: 2;
+      letter-spacing:0.1rem;
+      font: {
+      family:Poppins,sans-serif;
+      weight:400;
+      }
     }
     & >ul{
-      @include flx-col();
-      gap:2rem;
+    @include flx-col();
+    gap:2rem;
+    width:80%;
+    & > form{
+      width:100%;
+      @include flx-row();
+      & > .btn-input-container{
       width:80%;
-      & > form{
-        width:100%;
-        @include flx-row();
-        & > .btn-input-container{
-          width:80%;
-          min-height:3rem; position: relative;
-          & span{
+      min-height:3rem; position: relative;
+      & span{
   position: absolute;
   top:0;
   left:0;

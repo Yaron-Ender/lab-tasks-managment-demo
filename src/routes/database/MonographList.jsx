@@ -68,17 +68,12 @@ const openCloseInput = (e,name,id) => {
   });
   e.target.parentElement.classList.add("open-input");
   let inp 
-  if(name ==='note'){
-     inp = window.document.querySelector(`textarea[name=${name}]`);
-     inp.disabled=false
-    }else{
-    inp = window.document.querySelectorAll(`input[name=${name}]`);
-    inp.forEach((input)=>{
-    if(input.getAttribute('id')==id){
-      input.disabled=false
-    }
-    })
-  }
+   inp = window.document.querySelectorAll(`input[name=${name}]`);
+   inp.forEach((input) => {
+     if (input.getAttribute("id") == id) {
+       input.disabled = false;
+     }
+   });
 };
 //turn all the inputs to disable after submiting the form
 const turnToDissable =()=>{
@@ -86,19 +81,10 @@ const turnToDissable =()=>{
   el.forEach((s) => {
   s.classList.remove("open-input");
   });
-  // window.document.querySelectorAll('input')
-  // .forEach((inp)=>{
-  // inp.disabled=true
-  // })
-// window.document.querySelectorAll('textarea')
-// .forEach((inpArea)=>{
-// inpArea.disabled=true
-// })
 }
 //send data to useFirestore
 //THE LOGIC IN THIS FUNCION IS DEVIDED INTO TWO PARTS 1. MONOGRAPH NAME 2.ALL THE OTHER FIELDS(conversion between Timestamp and date object)
 const handleSubmitMonographName = (e) =>{
-  console.log(e.target)
   e.preventDefault();
   // move input to the top and make it disabled
   setdisabled(true);   
@@ -126,9 +112,6 @@ const handleSubmitMonographName = (e) =>{
   }
   dispatch({type:'RESET'})
   };
-  
-  
-  
   //handle with the old and the new monograph name and monograph feilds
   const handleChangeMonoField = (e, ID,technology,index) => {
     const { name, value } = e.target;
@@ -152,41 +135,40 @@ if(e.target.id == ID && value){
 }
 break;
 case 'tests':
-if(e.target.id == ID && value){
-monoDeteails.current[ID]["tests"][technology][index]=value
-setMonographFields((prev) => (prev = { ...monoDeteails.current }));
-dispatch({ type: "TESTS" });
-}
-break;
-case 'note':
   if(e.target.id == ID && value){
+    monoDeteails.current[ID]["tests"][technology][index]=value
+    setMonographFields((prev) => (prev = { ...monoDeteails.current }));
+    dispatch({ type: "TESTS" });
+  }
+  break;
+  case 'note':
+    if(e.target.id == ID && value){
     monoDeteails.current[ID]["note"]=value;
     setMonographFields((prev) => (prev = { ...monoDeteails.current }));
- dispatch({ type:"NOTE" });
-}
-default:
- return;
-    }
-  };
-  // --------------------------------------
-  return (
-    <div className="substance-monographes">
-    <h2 className="substance-title"> {id}</h2>
+    dispatch({ type:"NOTE" });
+  }
+  default:
+    return;
+  }
+};
+// --------------------------------------
+return (
+  <div className="substance-monographes">
+  <h2 className="substance-title">{id}</h2>
     {document &&
    // create the Monograph title
-      Object.keys(document).map((mono) => (
-   <div className="change-singel-monograph"
-   key={document[mono]["id"]}>
+   Object.keys(document).map((mono) => (
+     <div className="change-singel-monograph"
+     key={document[mono]["id"]}>
     
   {/* this div responsible of the UI mono details */}
-   <div className="details-UI-container">
+  <div className="details-UI-container">
   <h2> {mono} / <span>
   {document[mono]["monographEdition"]}
     </span></h2>
   <h4> {document[mono]["effectiveDate"].toDate().toDateString()}</h4>
   </div> 
-
-
+  {/* end of details_UI-container */}
    <div className="change-details">
   {/* this form store all the details input */}
   <form onSubmit={handleSubmitMonographName}
@@ -247,39 +229,27 @@ default:
    </div>
   </label>
 </form>
-
-
 <div className="note-container">
 <form  onSubmit={handleSubmitMonographName}>
-  {/* <label> */}
-    {/* <span>
-  <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"note");}} />
-</span> */}
-<button type="submit">sdsdadasd</button>
+<Button
+type='submit'
+children="Add comment"
+buttontype="addProject"
+/>
+{/* <button type="submit">sdsdadasd</button> */}
    <textarea
   id={document[mono]["id"]}
   name="note"
   onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
   value={monoDeteails.current[document[mono]["id"]["note"]]}   
-   >
+  >
 {document[mono]["note"]}
   </textarea>
-
-  {/* </label> */}
 </form>
-  </div>
-
-
-
-  {/* end of details-input-container */}
-  
-
-
-
-  {/* end of details_UI-container */}
+ </div>
 </div>
+
 {/* tests*/}
-{/* <form className="change-tests"> */}
 <div className="change-tests">
 {Object.keys(document[mono]['tests']).map((technology)=>
 <div className="change-tests-container">
@@ -289,7 +259,6 @@ default:
 <form onSubmit={handleSubmitMonographName}>
 <li  className="btn-input-container">
 <span>{t}</span>
- {/* <img src={edit} alt={edit} onClick={(e)=>{openCloseInput(e,"tests");}} /> */}
 <input
  id={document[mono]["id"]}
 type="text"
@@ -306,13 +275,10 @@ onChange={(e)=>handleChangeMonoField(e,document[mono]["id"],technology,index)}
 </form>
    )}
 </ul>
-{/* <button className="btn done" type="submit">submit</button> */}
+
 </div>
   )}
 </div>
-{/* </form> */}
-   {/* note */}
-
 </div>
   ))}
  </div>
