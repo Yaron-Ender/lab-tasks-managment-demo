@@ -4,6 +4,7 @@ import { useFriestore } from "../../hooks/useFirestore";
 import  edit from'../../asstes/edit.svg';
 import done from '../../asstes/done.svg'
 import Button from "../../component/button/button";
+import { format } from 'date-fns'
 const MonographList = ({ document,id }) => {
 const { updateDocument, updateMonographName } = useFriestore("substances");
 const [monographFields, setMonographFields] = useState(null);
@@ -22,13 +23,13 @@ return { ...state, monographEdition: true };
 case 'EFFECTIVE_DATE':
 return { ...state, effectiveDate: true };
 case 'TESTS':
-  return { ...state,tests: true };
-  case 'NOTE':
-    return {...state,note:true }; 
-    case 'RESET':
-      return {...state, monographName: false,monographEdition: false,effectiveDate:false,note:false };
-      default:
-        return state ;
+return { ...state,tests: true };
+case 'NOTE':
+return {...state,note:true }; 
+case 'RESET':
+return {...state, monographName: false,monographEdition: false,effectiveDate:false,note:false };
+default:
+return state ;
       }
   }
     //create array of objects {id:monographName} and store it in monographName state 
@@ -38,18 +39,18 @@ case 'TESTS':
   if(document){
     // it's for monograph names changing
     Object.keys(document).forEach((m)=> {
-    let k = document[m]["id"] 
-      arrayMono.push({[k]:m});
+    let id = document[m]["id"] 
+      arrayMono.push({[id]:m});
     })
-    arrayMono.forEach((i)=>{
-    newObj  = {...newObj,...i}
+    arrayMono.forEach((obj)=>{
+    newObj  = {...newObj,...obj}
     monographName.current=newObj
     })
     //it's for the other fields 
-    Object.keys(document).forEach((n)=>{
-    let {effectiveDate,monographEdition,note,id,tests}=document[n]
+    Object.keys(document).forEach((mono)=>{
+    let {effectiveDate,monographEdition,note,id,tests}=document[mono]
     monoDeteails.current ={...monoDeteails.current,
-    [document[n]['id']]:{ monographEdition,note,id,tests,effectiveDate} };        
+    [document[mono]['id']]:{ monographEdition,note,id,tests,effectiveDate} };        
   }) 
 }
 },[document])
@@ -166,7 +167,7 @@ return (
   <h2> {mono} / <span>
   {document[mono]["monographEdition"]}
     </span></h2>
-  <h4> {document[mono]["effectiveDate"].toDate().toDateString()}</h4>
+  <h4> {format(new Date(document[mono]["effectiveDate"].toDate().toDateString()), 'MM/dd/yyyy')}</h4>
   </div> 
   {/* end of details_UI-container */}
    <div className="change-details">

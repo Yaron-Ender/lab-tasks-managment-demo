@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 const SubstancesList = ({ substancesID }) => {
-
+// THIS COMPONENET IS NOT IN USED
   return (
     <div className="substancesList">
      {substancesID&&(

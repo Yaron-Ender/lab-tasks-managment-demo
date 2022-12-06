@@ -1,0 +1,39 @@
+COMPONENT SUMMERY
+
+/*/*/*/*/*/<Database />/*/*/*/*/*
+**- this mark means that that this component is nested in other component
+-nav bar open
+three btn:
+*-new substance- *-All substance- *-Search-
+   **  <SubstancesList substancesID={resultOfCollection} />
+       (resultOfCollection-array id's of substances collection )
+      (this comp create Navlinks od sustances name)
+ **   <Route path=":id" element={<Substance />} />
+
+ **     <CreateSubstance closeCreateSubstanceComp={closeCreateSubstanceComp} />
+        (closeCreateSubstanceComp -  function that get called in createSustance component and turn openCreateSub state to falls in order to close the createSubstabce comp. after push the "save monograph" button)
+--------------------------------------
+<SubstancesList />  - iterate throught the array's id and make them as links
+------------------------------------------------------
+<Substance /> - by useParams the routers has changed to the substance id and pass the id to 
+**  <MonographList document={document} id={id} />
+----------------------------------------
+<MonographList /> -the document that has been passed is the document object from firestore, the id that passed id the suncstance name, base upon them we build the UI of the component and the logic component
+logic:
+devide into 4 sections
+-by the useEffect we build two objects:one for the handle with the monograph name and the second object to handle the rest of the fields
+
+-openCloseInput - this function assosiate only with details monograph part - it open the input by click the edit button and remove the input when the form is submit
+
+-handleChangeMonoField - this function get called when there change in the input- it's take the value of the input and store it in changeMonoName state for monographName input and handleChangeMonoField state for the rest of the input feilds, then it update the dispatch reducer that has a rule of gurder and barrier in the handleSubmitMonographName function
+
+-handleSubmitMonographName -- according the dispatch filter the function knows witch state to send to firestore and update the substance collection
+
+/*/*/* in this comp i have use data-fns laibary
+
+
+
+
+
+
+

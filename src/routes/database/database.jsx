@@ -1,30 +1,37 @@
 import { useState,useEffect} from "react";
-import { Routes, Route,useNavigate} from "react-router-dom";
+import { useNavigate,useSearchParams} from "react-router-dom";
 import { useCollection } from "../../hooks/useCollection";
-import { useStyle } from '../../hooks/useStyle'
-import Button from "../../component/button/button";
-import SubstancesList from "./substancesList";
+import { useStyle } from '../../hooks/useStyle';
 import Substance from './Substance';
-import Search from "../../component/input/Search";
 import CreateSubstance from "./CreateSubstance";
+import Select from "react-select";
 const Database = () => {
-const { openDatabaseNavbar,openDatabaseNavState } = useStyle();
+const [searchParams,setSearchParams] = useSearchParams()
+const { openDatabaseNavbar,openDatabaseNavState,selectStyle } = useStyle();
 const [open,setOpen]=useState(false)
-const [resultOfCollection,setResultOfCollection]=useState(null)
+const [substanceIdOptions,setSubstanceIdOptions]=useState([])
 const [openCreateNewSub,setOpenCreateNewSub]=useState(false)
 const { arrayOfDocID,error } =useCollection('substances')
 const navigate=useNavigate()
  useEffect(() => {
-   if (openDatabaseNavState) {
+   if (openDatabaseNavState)//from usestyle
+    {
    setTimeout(() => {setOpen(true)}, 10);
    }
-   openDatabaseNavbar()
- }, [openDatabaseNavState,open]);
+   openDatabaseNavbar()//from useStyle
+   if(arrayOfDocID){
+  arrayOfDocID.forEach((substance)=>{
+setSubstanceIdOptions((prev) => [
+  ...prev,
+  { value: substance, label: substance, color: "#742fcd" },
+]);
+})
+   }
+ },[openDatabaseNavState,open,arrayOfDocID ]);
  //functions
-const seeAllDoc=()=>{
-setOpenCreateNewSub(false)
-setResultOfCollection(arrayOfDocID)
-}
+ const handleOption =(option)=>{
+  setSearchParams({filter:option.value})
+ }
 const createNewSubstance=()=>{
 navigate('/database')
 setOpenCreateNewSub(true)
@@ -32,35 +39,35 @@ setOpenCreateNewSub(true)
 //function that get called in createSustance component and turn openCreateSub state to falls in order to close the createSubstabce comp. after push the "save monograph" button
 const closeCreateSubstanceComp =()=>{
   setOpenCreateNewSub(false)
-  seeAllDoc()
+  
 }
   return (
     <div className="database">
       <nav className={`database-navbar ${open ? "open" : ""}`}>
-        <Button
-          children="new substanca"
-          buttontype="substance"
-          onClick={createNewSubstance}
-        />
-
-        <Button
-          children="All substance"
-          onClick={seeAllDoc}
-          buttontype="substance"
-        />
-        <Search />
-      </nav>
-      <div className="database-substances-container">
-        {error && <p className="error">{error}</p>}
-        {!error && !openCreateNewSub && (
-          <SubstancesList substancesID={resultOfCollection} />
-        )}
-      </div>
-      {openCreateNewSub && <CreateSubstance closeCreateSubstanceComp={closeCreateSubstanceComp} />}
-      <Routes>
-        <Route path=":id" element={<Substance />} />
-      </Routes>
+    <div>
+    <h4>Look for Susntance</h4>
+    <Select
+    styles={selectStyle}//from useStyle
+    placeholder="Select Substance"
+    onChange={(option) => {
+      handleOption(option);
+    }}
+    options={substanceIdOptions}
+    />
     </div>
+     <h4 onClick={createNewSubstance}>Create New Substance</h4>
+   </nav>
+    {openCreateNewSub && (
+      <CreateSubstance closeCreateSubstanceComp={closeCreateSubstanceComp} />
+    )}
+    {error && <p className="error">{error}</p>}
+    {!error && searchParams.get("filter") && (
+    <Substance
+    substanceId={searchParams.get("filter")}
+    closeCreateSubstanceComp={closeCreateSubstanceComp}
+    />
+   )}
+  </div>
   );
 };
 

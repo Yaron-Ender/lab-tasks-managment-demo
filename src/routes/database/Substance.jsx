@@ -1,14 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useEffect } from 'react';
 import { useDocument } from '../../hooks/useDocument';
 import MonographList from "./MonographList";
-const Substance = () => {
-  const { id } = useParams();
-  const { error, document } = useDocument("substances", id);
+const Substance = ({ substanceId, closeCreateSubstanceComp }) => {
+useEffect(()=>{
+  closeCreateSubstanceComp()
+},[])
+  const { error, document } = useDocument("substances", substanceId);
   return (
     <div className="substance-container">
       {!error && (
         <>
-      <MonographList document={document} id={id} />
+          <MonographList document={document} id={substanceId} />
         </>
       )}
     </div>

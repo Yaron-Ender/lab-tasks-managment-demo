@@ -1,11 +1,15 @@
 .main-navbar{
-   position: relative;
-   z-index:1;
-    background-color:$nav-color;
-    width:100vw;
-    padding:$base-padding*1.5 $padding-medium;
-    @include flx-row ($justify:space-between);
-    color:map-get($colors,'white');
+  position:sticky;
+  top:0;
+  left:0;
+  z-index:1;
+  background-color:$nav-color;
+  width:100vw;
+  padding:$base-padding*1.5 $padding-medium;
+  @include flx-row ($justify:space-between);
+  color:map-get($colors,'white');
+  box-shadow:0rem 1.5rem 4.5rem -2.2rem rgba(0,0,0,1) ;
+ 
  & a{
    text-decoration: none;
    color:map-get($colors,'white');

@@ -1,35 +1,38 @@
 .database{
-@include flx-col();
-position: relative;
-& .database-navbar{
-    position: absolute;
-    background-color:map-get($colors,'white');
-    width:100vw;
-    padding:$base-padding*2 $padding-medium;
-    border:none;
-    box-shadow:inset 0rem 2rem 1.5rem -1.2rem rgba(0,0,0,0.5);
-    @include flx-row();
-    top:-5rem;
-   z-index:0;
-&.open{
-  transition:all 0.2s;
-  top:0rem;
+font-family: Poppins,sans-serif;
+ min-height: 100vh;
+@include flx-col(start);
+position:relative;
+ & .database-navbar{
+@include flx-row(space-around);
+margin-bottom:2rem;
+transform:translateY(-100%);
+background-color:map-get($colors,'white');
+width:100vw;
+padding:$base-padding*2 $padding-medium*10;
+box-shadow:inset 0rem 1.5rem 1.5rem -1.2rem rgba(0,0,0,0.5);
+color:$nav-color-light;
+& h4{
+ font-size: 2.5rem;
+ transition: all $base-transition;
+}
+& > div{
+@include flx-row(); 
+& h4{
+margin-right:2rem;
  }
 }
-& .database-substances-container{
-border:$base-border-thickness solid red;
-width: 95%;
-margin:7.5rem auto 0;
-& .substancesList{
-@include flx-row(flex-start);
-padding:$base-padding;
-& a{
-    padding:0 $padding-medium;
-    border-right:$base-border-thickness solid $nav-color-2;
-    color:$nav-color-2;
-    font-family:Arapey,Raleway,sans-serif;
-    font-size:2rem;
+& > h4:hover{
+  cursor: pointer;
+  box-shadow:0rem 0.3rem 0.5rem rgba(0,0,0,0.1);
+font: {
+  size: 2.8rem;
+  color:$nav-color-dark;
+} 
 }
-}
+&.open{
+ transition:all $base-transition*2;
+ transform:translateY(0%);
+ }
 }
 }
