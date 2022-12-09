@@ -3,50 +3,109 @@
 // start from the begining
 .create-Newsubstance-container{
 @include flx-col();
-border:2px solid goldenrod;
+// border:2px solid goldenrod;
 width: 100%;
 height:100%;
-
+& > h1{
+  font: {
+  size:$font-size-xxl;
+   weight:200;
+  } 
+  letter-spacing:0.2rem;
+}
 & form{
 height: 100%;
 width:90%;
-border:2px solid red;
+// border:4px solid rgb(0, 119, 255);
 display:grid;
 grid-template-columns:1fr;
 grid-template-rows:1fr;
-
-;
+@include grid(1,1);
 & header{
-@include flx-col(); 
+@include grid(3fr 1fr,auto);
+// justify-items: flex-start;
+// border:10px solid green;
+padding:$padding-medium 0 ;
+& > div{
+// width:100%;
+// border:10px solid red;
+@include flx-row(start);
+} 
 }
-.monographes-container{
-border:2px solid green;
-display:grid;
-gap:2rem 1rem;
-grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));
-grid-template-rows:auto;
-
-& .singel-monograph{
-border:2px solid orange;
-display: flex;
-@include flx-col(center stretch);
+& .monographes-container{
+  // border:10px solid green;
+  @include grid(repeat(auto-fill,minmax(30rem,1fr)),auto,2rem);
+  & .singel-monograph{
+  background-color:$gray100;
+    // border:5px solid orange;
+  box-shadow:$box-shadow-difution;
+  @include flx-col(center stretch);
+  & .general-details{
+  width:100%; 
+  border-bottom:3px solid $gray-primary; 
+  // box-shadow:$base-box-shadow;
+  // border:2px solid greenyellow; 
+  @include grid(1fr 1fr,auto,1rem 0.5rem);
+  & > div:has(input[name='monographName']){
+ grid-column: 1 / 3;
+}
+}
 & .select-tech{
-margin: 50px auto;
-display: flex;
+box-shadow:$base-box-shadow;
+// border:2px solid red;
+padding-top: 2rem;
+width: 100%;
 @include flx-col();
-& .test-container{
- margin: 2rem 0.1rem 1rem;
-display: flex;
-justify-content:center;
-align-items: center;
-& .input-mono-container{
-margin-right: auto;
-// width:50%;
+& .select-tech-result{
+padding: 2rem;
+box-shadow:$box-shadow-difution;
+//  border:2px solid blue;
+width: 100%;
+& > h3{
+  text-align: center;
+  color:$nav-color-light;
+  letter-spacing:0.3rem;
+}
+& > ul{
+ border-bottom:0.2rem solid $nav-color-light;
+ margin-bottom:2.5rem;
+& > li{
+  padding-left:1.5rem;
+}
+}
+& .add-test-container{
+//becuase the MonoInputComp, some of the style is in monoInput.scss
+  @include flx-row();
+  & >.add-test-input-container{
+    width:80%; 
+  }
+  &  > button.done{
+    width:20%;
+  height:100%;
+  z-index:1;
+  opacity:0;
+  background: none;
+  border:none;
+  transition:all $change-monograph-transition;
+}
+&:has(input:focus) > button.done{
+  opacity:0.7;
+  &:hover{
+  opacity:1;
+  transform:scale(1.3);
 }
 }
 }
-& .note-textarea{
-    border:2px solid red;
+}
+}
+& .add-note-container{
+width:100%;
+box-shadow:$base-box-shadow;
+// border:2px solid red;
+margin-bottom:2rem;
+& > p{
+text-align: center;
+}
 }
 }
 }

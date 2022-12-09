@@ -12,12 +12,16 @@ export default function AddProjectMono({ projName, handleTestFields }) {
       });
     }
   }, [document]);
+  const handleClick = ()=>{
+    
+  }
   return (
+    <>
+    {projName && <h2>{projName}</h2>}
     <div
       className="projName-and-select-mono-container"
       style={{ background: "lightpink" }}
     >
-      {projName && <h2>{projName}</h2>}
       {document &&
         Object.keys(document).map((monoTitle) => (
           <div
@@ -36,7 +40,7 @@ export default function AddProjectMono({ projName, handleTestFields }) {
       {/* try to add the img as content to h3 */}
       {Object.keys(document[monoTitle].tests).map((tech) => (
         <Fragment key={tech}>
-          <h4>{tech}</h4>
+          <h4>h4-{tech}</h4>
 
           {document[monoTitle].tests[tech].map((test) => (
             <AddTest
@@ -54,5 +58,7 @@ export default function AddProjectMono({ projName, handleTestFields }) {
         ))}
       {error && <p>{error}</p>}
     </div>
+    
+    </>
   );
 }

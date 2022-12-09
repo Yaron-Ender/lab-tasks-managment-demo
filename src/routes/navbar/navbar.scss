@@ -4,9 +4,9 @@
   left:0;
   z-index:1;
   background-color:$nav-color;
-  width:100vw;
+   width:100vw;
   padding:$base-padding*1.5 $padding-medium;
-  @include flx-row ($justify:space-between);
+  @include flx-row ($justify:space-around);
   color:map-get($colors,'white');
   box-shadow:0rem 1.5rem 4.5rem -2.2rem rgba(0,0,0,1) ;
  

@@ -5,7 +5,6 @@ font-family: Poppins,sans-serif;
 position:relative;
  & .database-navbar{
 @include flx-row(space-around);
-margin-bottom:2rem;
 transform:translateY(-100%);
 background-color:map-get($colors,'white');
 width:100vw;
@@ -16,7 +15,15 @@ color:$nav-color-light;
  font-size: 2.5rem;
  transition: all $base-transition;
 }
+& h4:first-child{
+  font: {
+  size:1.5rem;
+  weight:400;
+
+  }
+}
 & > div{
+  z-index:4;
 @include flx-row(); 
 & h4{
 margin-right:2rem;

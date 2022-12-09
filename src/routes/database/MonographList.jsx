@@ -90,9 +90,13 @@ const handleSubmitMonographName = (e) =>{
   // move input to the top and make it disabled
   setdisabled(true);   
   turnToDissable()
-  //update monograph name in firestore
+  //check that monograph input is not empty before update monograph name in firestore
   if(state.monographName){
-    updateMonographName(changeMonoName,id)
+    Object.keys(changeMonoName).forEach((i)=>{
+      if(  changeMonoName[i]){
+     updateMonographName(changeMonoName,id)
+      }
+    })
     dispatch({ type: "RESET" });
   }
   if (state.monographEdition&&monographFields) {
@@ -237,15 +241,14 @@ type='submit'
 children="Add comment"
 buttontype="addProject"
 />
-{/* <button type="submit">sdsdadasd</button> */}
-   <textarea
+<textarea
   id={document[mono]["id"]}
   name="note"
   onChange={(e)=>handleChangeMonoField(e,document[mono]["id"])}
   value={monoDeteails.current[document[mono]["id"]["note"]]}   
   >
 {document[mono]["note"]}
-  </textarea>
+ </textarea>
 </form>
  </div>
 </div>

@@ -6,7 +6,6 @@ import AddProjectMono from './addProjectMono';
 import Select from 'react-select';
 import { useFriestore } from '../../hooks/useFirestore';
 const AddProject = () => {
-
 const { addDocument } = useFriestore('assignments')
 const { arrayOfDocID, error } = useCollection("substances");
 const [selectProject,setSelectProj]=useState([]);
@@ -47,30 +46,33 @@ const handleSubmit=async(e)=>{
   e.preventDefault();
 await addDocument(projName,buildProjectObj.current)
 }
+/////////////////////////////////////////////////////////
 return(
     <div className="assign-project-container">
-      <h3>add project</h3>
+      {/* <h3>add project</h3> */}
 <form className="select-proj-and-mono-container" onSubmit={handleSubmit}>
+<header>
 <Button
 type='submit'
 children="Add Project"
 buttontype="addProject"
 />
    <label>
-   <span>project :(addProject comp)</span>
+   <span>add project</span>
    <Select
     onChange={(option)=>handleChange(option)}
     options={selectProject}
     />
     </label>
+</header>
 {projName&& 
-<div>
+<>
 {/* takes the substance name and bring all the document */}
 <AddProjectMono 
 projName={projName}
 handleTestFields={handleTestFields}
 />
-</div>
+</>
 }
 </form>
       </div>

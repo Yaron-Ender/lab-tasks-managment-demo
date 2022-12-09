@@ -14,7 +14,7 @@ funcionality:
   -pass the useSearchParams result into Substace Comp
 
  **     <CreateSubstance closeCreateSubstanceComp={closeCreateSubstanceComp} />
-        (closeCreateSubstanceComp -  function that get called in createSustance component and turn openCreateSub state to fales in order to close the createSubstabce comp. after push the "save monograph" button)
+        (closeCreateSubstanceComp -  function that get called in createSustance component and turn openCreateSub state to false in order to close the createSubstabce comp. after push the "save monograph" button)
 --------------------------------------
 
 ------------------------------------------------------
@@ -33,6 +33,36 @@ devide into 4 sections
 -handleSubmitMonographName -- according the dispatch filter the function knows witch state to send to firestore and update the substance collection
 
 /*/*/* in this comp i have use data-fns laibary
+
+/*/*/*/*/*<Assingnment />/*/*/*/*/*/*
+** <MainSidebar />   ** < AddProject/>
+                               |
+                     ** <addProjMono />
+                               |
+                         **<AddTest />
+
+
+** < AddProject/> - 
+-build array of options based on substance collection (selectProject state)
+-handleTestFeild function get the information from addProjMono and to AddTest
+-pass the substance name and buildProject.current obj to assignment collection in firestore
+
+-- THE DOCUMENT ID IS THE SUBSTANCE NAME AND IT SHOULD BE CHANGED
+
+  ** <addProjMono /> -
+ -- takes the substance name that passed from AddProject and call to handleTestFeild function with the monograph name 
+ 
+
+
+
+
+
+
+
+
+ NOTE:
+ 
+
 
 
 

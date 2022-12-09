@@ -17,23 +17,23 @@ return (
   <div className="App">
     {AuthIsReady && (
       <>
-        {user && (
-          <Routes>
-            <Route path="/" element={<Navbar />}>
-              {/* <Route path="/" element={<Navigate to="/Assignment "/>} /> */}
-              <Route index path='/*' element={<Assignment />} />
-              <Route path="/database/*" element={<Database />} />
+       {user && (
+    <Routes>
+    <Route path="/" element={<Navbar />}>
+      {/* <Route path="/" element={<Navigate to="/Assignment "/>} /> */}
+      <Route index path='/*' element={<Assignment />} />
+      <Route path="/database/*" element={<Database />} />
 
-              <Route path="/workers" element={<Workers />} />
-            </Route>
-          </Routes>
-        )}
-        {!user && (
-          <Routes>
-            <Route path="/home/*" element={<Home />} />
-          </Routes>
-        )}
-      </>
+      <Route path="/workers" element={<Workers />} />
+    </Route>
+  </Routes>
+)}
+{!user && (
+  <Routes>
+    <Route path="/home/*" element={<Home />} />
+  </Routes>
+)}
+</>
     )}
   </div>
 );

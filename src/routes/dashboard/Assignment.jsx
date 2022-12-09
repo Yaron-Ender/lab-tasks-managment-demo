@@ -10,7 +10,7 @@ const Assignment = () => {
 <Routes>
 <Route path='assignment/addProject' element={<AddProject />}/>
 </Routes>
-<h1>text</h1>
+{/* <h1>text</h1> */}
     </div>
     );
 };

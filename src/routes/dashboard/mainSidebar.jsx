@@ -5,11 +5,11 @@ import dashboardIcon from '../../asstes/dashboard.svg'
 const MainSidebar = () => {
     return (
 <div className='main-sidebar'>
-<h3>sometext</h3>
+{/* <h3>sometext</h3> */}
 <nav>
 <ul>
 <li>
-<NavLink to="/ass">
+<NavLink to="/assignment">
 <img src={dashboardIcon}alt='dashboard icon'/>
 <span>Dashboard</span>
 </NavLink>

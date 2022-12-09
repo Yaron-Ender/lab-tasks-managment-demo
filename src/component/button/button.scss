@@ -15,6 +15,7 @@
   background:map-get($colors,'green' );
   color:map-get($colors,'white' );
   border:none;
+  transition:$base-transition;
     }
   }
  &.substance{
@@ -28,8 +29,13 @@
    }
  }
  &.create-Substance{
-   color:map-get($colors,'create-substance' );
-  padding:$base-padding*1.2 $padding-medium*1.2;
+  font: {
+    size:$base-font-size;
+  }
+  border: none;
+  margin-left: 2rem;
+  color:map-get($colors,'create-substance' );
+  padding:$base-padding*.5;
    border-radius:$base-border-radius*0.3;
    transition:$base-transition;
    &:hover{
@@ -56,7 +62,7 @@ margin-top: auto;
  }
  &.open-textarea-btn{
   border:0;
-  color:map-get($colors,'green' );
+  color:map-get($colors,'nav-light' );
  }
  &.addProject{
    color:map-get($colors,'nav-addProject');
@@ -94,6 +100,21 @@ margin-top: auto;
     width: 100%;
     height:100%;
    }
+ }
+ &.remove{
+  transition:$base-transition*2;
+  font: {
+    size:$font-size-sm;
+  }
+  padding:$base-padding $padding-medium;
+  color:$black;
+  &:hover{
+   font: {
+    size:$font-size-sm*1.3;
+  }
+  background-color:$error;
+  color:$white;
+  }
  }
 }
 

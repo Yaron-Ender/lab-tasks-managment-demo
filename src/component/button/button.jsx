@@ -9,7 +9,8 @@ const Button = ({...otherProps}) => {
       addTest: "add-test-btn",
       openTextarea:'open-textarea-btn',
       addProject:'addProject',
-      done:'done'
+      done:'done',
+      remove:'remove',
     };
 
     return (

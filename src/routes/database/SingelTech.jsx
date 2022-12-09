@@ -1,7 +1,7 @@
 import MonoInput from "../../component/input/MonoInput";
 import { useState, useEffect } from "react";
 import Button from "../../component/button/button";
-import plusSign from "../../asstes/plus.svg"
+import done from "../../asstes/done.svg"
 const SingelTech = ({technology,id,updateTests,monograph}) => {
 const initObj={
       HPLC:[],
@@ -23,9 +23,7 @@ if(text){
    return (
 <>
    {technology &&
-    <div>
-   
-
+    <div className="select-tech-result">
    <h3>{technology}</h3>
    <ul>
    {monograph.length>0&&monograph.map(mono=>(
@@ -36,16 +34,25 @@ if(text){
    ))
    }
    </ul>
-   <div className="test-container">
-   <MonoInput type="text" span={"add test"}
+   <div className="add-test-container">
+   <MonoInput
+   className='add-test-input-container'
+   type="text"
+   span={"add test"}
    onChange={(e)=>{setText(e.target.value)}}
- value={text}
+   value={text}
    />
-   <Button type="button" 
+   <Button
+  onClick={handleClick}
+  type='button'
+  buttontype="done" 
+  children={<img className="done-img" src={done} alt='done-btn'/>} 
+/>
+   {/* <Button type="button" 
    buttontype='addTest' 
     children={<img className="plus-sign" src={plusSign}
      onClick={handleClick}  />}
-    />
+    /> */}
     </div>
     </div>
 }

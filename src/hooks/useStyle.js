@@ -4,19 +4,18 @@ const [openDatabaseNavState,setOpenDatabaseNavState] =useState(false)
 const openDatabaseNavbar =()=>{
     setOpenDatabaseNavState(true)
 }
-const selectStyle = {
+const selectCompDatabaseStyle = {
   control: (styles, state) => ({
     ...styles,
     width: "calc(100% + 5rem)",
     fontSize: "2rem",
-    padding:'0rem 3rem',
-    margin:0,
+    padding: "0rem 3rem",
+    margin: 0,
     borderColor: state.isFocused ? "green" : "",
     border: "0.5px solid #222",
     boxShadow: "none",
     backgroundColor: state.isFocused ? "" : "",
   }),
-  // ValueContain:(style)=>({...style,width:'100%'}),
   placeholder: (styles) => ({
     ...styles,
     color: "$nav-color-light",
@@ -27,13 +26,33 @@ const selectStyle = {
       fontSize: isFocused ? "2.4rem" : "2rem",
       color: isFocused ? "#fff" : data.color,
       backgroundColor: isFocused ? "#9c88ff" : "#fff;",
-      boxShadow:isFocused?'inset -0.5rem -1rem 0.5rem -1rem rgba(0,0,0,0.7)':''
+      boxShadow: isFocused
+        ? "inset -0.5rem -1rem 0.5rem -1rem rgba(0,0,0,0.7)"
+        : "",
     };
   },
-dropdownIndicator: (style) => {
-return { width: "calc(100% + 5rem)" };
-},
+  dropdownIndicator: (style) => {
+    return { width: "calc(100% + 5rem)" };
+  },
 };
-
-return { openDatabaseNavbar, openDatabaseNavState,selectStyle };
+const selectCompCreateSunstanceStyle = {
+  control: (styles, state) => {
+    return {
+      ...styles,
+      fontSize: "2rem",
+      width: "100%",
+      backgroundColor: "",
+    };
+  },
+  option: (styles, { data, isFocused, isDisable, isSelected }) => ({
+    ...styles,
+    fontSize: isFocused ? "2rem" : "1.5rem",
+  }),
+};
+return {
+  openDatabaseNavbar,
+  openDatabaseNavState,
+  selectCompDatabaseStyle,
+  selectCompCreateSunstanceStyle,
+};
 }

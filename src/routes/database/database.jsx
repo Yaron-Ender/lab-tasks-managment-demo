@@ -7,7 +7,7 @@ import CreateSubstance from "./CreateSubstance";
 import Select from "react-select";
 const Database = () => {
 const [searchParams,setSearchParams] = useSearchParams()
-const { openDatabaseNavbar,openDatabaseNavState,selectStyle } = useStyle();
+const { openDatabaseNavbar,openDatabaseNavState,selectCompDatabaseStyle } = useStyle();
 const [open,setOpen]=useState(false)
 const [substanceIdOptions,setSubstanceIdOptions]=useState([])
 const [openCreateNewSub,setOpenCreateNewSub]=useState(false)
@@ -45,14 +45,15 @@ const closeCreateSubstanceComp =()=>{
     <div className="database">
       <nav className={`database-navbar ${open ? "open" : ""}`}>
     <div>
-    <h4>Look for Susntance</h4>
+    <h4>Select Substance to Modify</h4>
     <Select
-    styles={selectStyle}//from useStyle
+    styles={selectCompDatabaseStyle}//from useStyle
     placeholder="Select Substance"
     onChange={(option) => {
       handleOption(option);
     }}
     options={substanceIdOptions}
+    onMenuOpen={()=>{setOpenCreateNewSub(false)}}
     />
     </div>
      <h4 onClick={createNewSubstance}>Create New Substance</h4>
