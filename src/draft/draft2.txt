@@ -43,7 +43,10 @@ devide into 4 sections
 
 
 ** < AddProject/> - 
--build array of options based on substance collection (selectProject state)
+-build array of options based on substance collection (selectProject state)-only once when it get called
+
+- arrOfMonogrpaghsNames.current =[],evry time the Select box changes
+
 -handleTestFeild function get the information from addProjMono and to AddTest
 -pass the substance name and buildProject.current obj to assignment collection in firestore
 
@@ -61,7 +64,7 @@ devide into 4 sections
 
 
  NOTE:
- 
+
 
 
 

@@ -9,27 +9,38 @@ const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
   const [date,setDate] =useState('')
   const fields = useRef({});
   fields.current = {
+    [monoTitle]:{
+    [tech]:{
     [test]: {
       workers: [],
       comments: "",
       dueDate: "",
     }
+  }
+  }
   };
+  // console.log(fields.current)
   useEffect(() => {
-  fields.current[test]['comments']=textArea;
-  fields.current[test]['workers']=workers;
-  fields.current[test]['dueDate']=date;
-  //handleTestField function is get calles also from addProjectMono,because that we pass empty string
-  handleTestFields("",fields.current);
-  }, [document,textArea,workers,date]);
+    fields.current[monoTitle][tech][test]["comments"] = textArea;
+    fields.current[monoTitle][tech][test]["workers"] = workers;
+    fields.current[monoTitle][tech][test]["dueDate"] = date;
+    if(textArea||date||workers.length>0){
+      handleTestFields("",fields.current,tech,test);
+    }
+  }, [textArea,date,workers]);
 
   const handleDateORcomment = (e) => {  
-  const {name,value} = e.target
+    const {name,value} = e.target
   switch(name){
- case 'comment':
-  setTextArea(value)
+    case 'comment':  
+      setTextArea((prev)=>(prev=value));
+  break;
   case 'date':
   setDate(value)
+   setDate((prev) => (prev = value));
+  break;
+  default:
+    return;
   }
   };
   const handleWorkers = (option) => {

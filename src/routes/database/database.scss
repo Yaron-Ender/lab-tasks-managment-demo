@@ -1,7 +1,7 @@
 .database{
 font-family: Poppins,sans-serif;
  min-height: 100vh;
-@include flx-col(start);
+@include flx-col(flex-start);
 position:relative;
  & .database-navbar{
 @include flx-row(space-around);

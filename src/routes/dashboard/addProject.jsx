@@ -8,21 +8,25 @@ import { useFriestore } from '../../hooks/useFirestore';
 const AddProject = () => {
 const { addDocument } = useFriestore('assignments')
 const { arrayOfDocID, error } = useCollection("substances");
-const [selectProject,setSelectProj]=useState([]);
+const [selectProject,setSelectProject]=useState([]);
 const [arrayMonographName,setArrayMonographName] = useState([]);
 const [projName,setProjName ]=useState(null);
 const buildProjectObj = useRef({});
 const arrOfMonogrpaghsNames= useRef();
-arrOfMonogrpaghsNames.current=[]
 useEffect(()=>{
   if(arrayOfDocID.length>0){
     arrayOfDocID.forEach((proj)=>{
-    setSelectProj((prev)=>([...prev,{value:proj,label:proj}]))
+      setSelectProject((prev)=>([...prev,{value:proj,label:proj}]))
     })
   }
 },[arrayOfDocID])
+useEffect(()=>{
+  arrOfMonogrpaghsNames.current=[]
+  buildProjectObj.current = {};
+},[projName])
 // function that handle the data from AddTEst comp and from addProjectMono comp.
-const handleTestFields =(monoTitle,fieldsObj)=>{
+
+const handleTestFields =(monoTitle,fieldsObj,tech,test)=>{
   if(monoTitle){
     for(let i=0;i<=arrOfMonogrpaghsNames.current.length;i++){
       if(!arrOfMonogrpaghsNames.current.includes(monoTitle)){
@@ -32,19 +36,33 @@ const handleTestFields =(monoTitle,fieldsObj)=>{
   arrOfMonogrpaghsNames.current.forEach((mono)=>{
   buildProjectObj.current={...buildProjectObj.current,[mono]:''}
 })
+
 }
 if(fieldsObj){
-  Object.keys(buildProjectObj.current).forEach((m)=>{
-  buildProjectObj.current[m]={...buildProjectObj.current[m],...fieldsObj}
+  Object.keys(fieldsObj).map((m)=>{
+buildProjectObj.current[m]={...buildProjectObj.current[m],
+  [tech]:{ ...buildProjectObj.current[m][tech], [test]:fieldsObj[m][tech][test] } } 
   })
+
   }
 }
+// get called from addProjectMono
+const deleteMonograph =(monoTitle)=>{
+  Object.keys(buildProjectObj.current).forEach((m)=>{
+    if(m === monoTitle){
+      console.log(m)
+    delete buildProjectObj.current[m]
+  }
+  })
+}
 const handleChange = (option)=>{
-  setProjName((prev)=>(option.value));
+  setProjName(option.value);
 }
 const handleSubmit=async(e)=>{
   e.preventDefault();
-await addDocument(projName,buildProjectObj.current)
+//console.log(buildProjectObj.current)
+
+ await addDocument('',buildProjectObj.current)
 }
 /////////////////////////////////////////////////////////
 return(
@@ -71,6 +89,7 @@ buttontype="addProject"
 <AddProjectMono 
 projName={projName}
 handleTestFields={handleTestFields}
+deleteMonograph={deleteMonograph}
 />
 </>
 }

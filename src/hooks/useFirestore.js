@@ -1,13 +1,19 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc} from "firebase/firestore";
+import { collection, doc,getDoc,writeBatch,setDoc, addDoc} from "firebase/firestore";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);
  //add document
  const addDocument =async(id,monographes)=>{
+if(!id){
+  console.log('hai hai')
+await addDoc(colRef,monographes)
+}
 const docReff = doc(colRef,id)
 await setDoc(docReff,monographes)
  }
+ //adddocument without ID
+
  //updateDoc
  const updateDocument =async (id,fieldsObj)=>{
    const docReff = doc(colRef, id);

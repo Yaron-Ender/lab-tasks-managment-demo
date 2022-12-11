@@ -29,7 +29,7 @@ padding:$padding-medium 0 ;
 & > div{
 // width:100%;
 // border:10px solid red;
-@include flx-row(start);
+@include flx-row(flex-start);
 } 
 }
 & .monographes-container{
