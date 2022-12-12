@@ -7,11 +7,10 @@
 // height: 100vh;
 @include grid(minmax(17rem,1fr) 5fr);
 & .main-sidebar{
-
 padding-left:1rem;
 @include grid(1fr,1fr 4fr,0);
 background: map-get($colors,'gray-assignment');
-border:2px solid red;
+// border:2px solid red;
 & nav{
 position:sticky;
  top:0;
@@ -50,39 +49,115 @@ primary);
 }//li
 }//ul
 }//nav
-}//main-slider
+}//end main-slider
 & > .assign-project-container{
 // border:3px solid green;
 & > form.select-proj-and-mono-container{
-    @include grid(repeat(4,1fr),minmax(10rem,auto));
-    border:2px solid red;
-    // @include flx-row(start);
-& >header{
-grid-column:span 2;
-
+@include grid(repeat(4,1fr),minmax(10rem,auto));
+// border:5px solid red;
+& >header{ 
+align-self:center;
+ grid-column:span 2;
 & > label{
-    @include flx-row();
-    & > span{
-        padding:1rem 3rem;
+     @include flx-row();
+     & > span{
+    padding:1rem 3rem;
     }
-}
-& > button{
-}
+    }
 }//header
-& > h2{
+& > div{
+@include flx-col(space-around);
 grid-column:span 2;
-color: red;  
+ & > h2{
+text-align: center;
+font: {
+   size:$font-size-xxl;
+   weight:100;
+     }
+letter-spacing:0.5rem;
+   }
+grid-column:span 2;
 }
 & > .projName-and-select-mono-container{
-grid-column: 1/-1; 
-@include grid(repeat(4,1fr),auto,1rem);
+    // border: 3px solid black;
+    grid-column: 1/-1; 
+    @include grid(1fr,auto,5rem);
 & >.assign-mono-box{
-
+ margin:2rem 0;
+ @include grid(1fr,minmax(10rem,auto) auto-fill);
+ padding:0rem 2rem;
+ border-bottom:.3rem solid $black;
+ // border: 20px solid rgb(222, 10, 10);
+ & >h3{
+@include flx-row();
+ padding:1rem 0;
+background-color:$gray-border;
+color:$nav-color-dark;
+font: {
+size:$font-size-lg*1.2;
+weight:700;
 }
-
-
+letter-spacing:1rem;
+box-shadow:$box-shadow-change-mono;
+ // border:3px solid black;
+  border:0.1rem solid $black;
+& img.cancel-icon{
+width:3rem;
+border-radius: 50%;
+margin-left: auto;
+cursor: pointer;
+transition:all $base-transition;
+&:hover{
+transform:rotatez(90deg) scale(1.2);
+box-shadow:$base-box-shadow;
 }
-
+&:active{
+box-shadow:$box-shadow-change-mono;
+transform: scale(0.9);
+}
+}
+}
+& > .assign-technology-box{
+ margin-bottom: 3rem;
+@include grid(4rem repeat(auto-fill,minmax(10rem,auto)),auto,2rem);
+box-shadow:$box-shadow-difution;
+& > h4{
+letter-spacing:1rem;
+text-align: center;
+writing-mode: vertical-rl;
+text-orientation: upright;
+margin-right:0rem;
+transition:all $base-transition-slow ease-in;
+}
+&:has(input:focus) > h4,
+&:has(textArea:focus) > h4
+{
+font: {
+size:$font-size-lg;
+}
+}
+& > ul{
+background-color:$nav-color;
+color:$white;
+margin:1rem 0;
+box-shadow:$base-box-shadow;
+border-radius:0.5rem;
+& >li{
+ & > h4{
+ font: {
+  size:$font-size-lg; 
+ };
+text-align:center;
+padding:0.5rem 0;
+ }
+}
+}
+}//end of assign-technology-box
+&:nth-child(1){
+border-top:0.3rem solid black;
+}
+}//end assign-mono-box
+}
 }//form.select-proj-and-mono-container
 }//assgin-project-containder
 }//assinment

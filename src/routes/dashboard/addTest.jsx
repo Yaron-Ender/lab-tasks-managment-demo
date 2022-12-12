@@ -19,7 +19,6 @@ const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
   }
   }
   };
-  // console.log(fields.current)
   useEffect(() => {
     fields.current[monoTitle][tech][test]["comments"] = textArea;
     fields.current[monoTitle][tech][test]["workers"] = workers;
@@ -52,9 +51,9 @@ const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
      };
 
   return (
-    <ul style={{ border: "2px dashed black", padding: "20px 0" }}>
+    <ul>
       <li>
-        {test}
+        <h4>{test}</h4>
         {professionDoc && (
           <>
       <Select

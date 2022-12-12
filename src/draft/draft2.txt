@@ -43,21 +43,18 @@ devide into 4 sections
 
 
 ** < AddProject/> - 
--build array of options based on substance collection (selectProject state)-only once when it get called
+-build array of options based on substance collection (selectProject state)-only once when it get called- this is the starter point of all the funcionality that come later
 
-- arrOfMonogrpaghsNames.current =[],evry time the Select box changes
+- arrOfMonogrpaghsNames.current =[],evry time the Select box changes, the project name passed to addProjectMono comp and from there handleTestFeild get called
 
--handleTestFeild function get the information from addProjMono and to AddTest
--pass the substance name and buildProject.current obj to assignment collection in firestore
+-handleTestFeild get called from two seperated comp:addProjectMono and addTest
 
--- THE DOCUMENT ID IS THE SUBSTANCE NAME AND IT SHOULD BE CHANGED
+when it called from addProjectMono, it passed the monograsphes names 
+then, the addProject comp add this monograph name to the object that already have a projectName as a property.
 
-  ** <addProjMono /> -
- -- takes the substance name that passed from AddProject and call to handleTestFeild function with the monograph name 
- 
+whenever a user change the fields the handleTestFields function get called from addTEsst comp and pass the information that has changed to addProject comp that complete to build the object 
 
-
-
+the object store in firestore with anynomouse id
 
 
 

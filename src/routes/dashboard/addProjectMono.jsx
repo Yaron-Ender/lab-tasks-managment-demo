@@ -1,6 +1,7 @@
 import { useDocument } from "../../hooks/useDocument";
 import cancel from '../../asstes/cancel.svg';
 import AddTest from "./addTest";
+import Button from "../../component/button/button";
 import { useEffect,Fragment,useState } from "react";
 import { useRef } from "react";
 export default function AddProjectMono({ projName, handleTestFields, deleteMonograph }) {
@@ -33,44 +34,40 @@ export default function AddProjectMono({ projName, handleTestFields, deleteMonog
   };
   return (
     <>
-
-      {projName && <h2>{projName}</h2>}
-  <div
-    className="projName-and-select-mono-container"
-    style={{ background: "lightpink" }}
+  <div>
+    {projName && <h2>{projName}</h2>}
+     <Button type="submit" children="Add Project" buttontype="addProject" />
+  </div>
+      <div
+        className="projName-and-select-mono-container"
+      >
+        {document &&
+          // monographList.length > 0 &&
+          // Object.keys(document).map((monoTitle)
+          monographList.map((monoTitle) => (
+            <div
+    key={buildObjBasedDocument.current[monoTitle]["id"]}
+    className="assign-mono-box"
   >
-    {document &&
-      // monographList.length > 0 &&
-      // Object.keys(document).map((monoTitle)
-    monographList.map((monoTitle) => (
-    <div
-      style={{
-        background: "lightgreen",
-        padding: "20px 0",
-        border: "1px solid black",
-      }}
-    key={buildObjBasedDocument.current[monoTitle]['id']}
-      className="assign-mono-box"
-    >
-      <h3>
-        {monoTitle}
-        <img
-          className="cancel-icon"
-          width={20}
-          src={cancel}
-          onClick={() => {
-            handleClick(monoTitle);
-          }}
-        />
-      </h3>
-      {/* try to add the img as content to h3 */}
+    <h3>
+      {monoTitle}
+      <img
+        className="cancel-icon"
+        src={cancel}
+        onClick={() => {
+          handleClick(monoTitle);
+        }}
+      />
+    </h3>
+    {/* try to add the img as content to h3 */}
 
-      {
-      Object.keys(buildObjBasedDocument.current[monoTitle].tests).map((tech) => (
-    <Fragment key={tech}>
-      <h4>h4-{tech}</h4>
+    {Object.keys(buildObjBasedDocument.current[monoTitle].tests).map(
+  (tech) => (
+    <div className="assign-technology-box" key={tech}>
+      <h4>{tech}</h4>
 
-      {buildObjBasedDocument.current[monoTitle].tests[tech].map((test) => (
+      {buildObjBasedDocument.current[monoTitle].tests[tech].map(
+      (test) => (
         <AddTest
           // key={Math.random()}
           handleTestFields={handleTestFields}
@@ -79,14 +76,15 @@ export default function AddProjectMono({ projName, handleTestFields, deleteMonog
           test={test}
           substanceDoc={document}
         />
-      ))}
-    </Fragment>
       )
-      )}
-    </div>
-      ))}
-    {error && <p>{error}</p>}
+    )}
   </div>
+            )
+          )}
+        </div>
+          ))}
+        {error && <p>{error}</p>}
+      </div>
     </>
   );
 }

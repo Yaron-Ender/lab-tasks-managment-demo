@@ -52,7 +52,7 @@ const deleteMonograph =(monoTitle)=>{
   Object.keys(buildProjectObj.current[projName]).forEach((m)=>{
     if(m === monoTitle){
       console.log(m)
-    delete buildProjectObj.current[m]
+    delete buildProjectObj.current[projName][m]
   }
   })
 }
@@ -66,15 +66,9 @@ const handleSubmit=async(e)=>{
 }
 /////////////////////////////////////////////////////////
 return(
-    <div className="assign-project-container">
-      {/* <h3>add project</h3> */}
+  <div className="assign-project-container">
 <form className="select-proj-and-mono-container" onSubmit={handleSubmit}>
 <header>
-<Button
-type='submit'
-children="Add Project"
-buttontype="addProject"
-/>
    <label>
    <span>add project</span>
    <Select
