@@ -6,7 +6,6 @@ export const useFriestore = (_collection)=>{
  //add document
  const addDocument =async(id,monographes)=>{
 if(!id){
-  console.log('hai hai')
 await addDoc(colRef,monographes)
 }
 const docReff = doc(colRef,id)
