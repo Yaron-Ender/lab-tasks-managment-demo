@@ -2,87 +2,89 @@ import { useDocument } from "../../hooks/useDocument";
 import { useState, useEffect, useRef,useReducer, useCallback } from "react";
 import { format } from "date-fns";
 import ProjectspreviewDetails from "./projectspreviewDetails";
-
 const Projectspreview = ({ assignmentDocID }) => {
-  const initObj ={
-    HPLC:[],
-    HPLC_FILL_DET:(substanceName,mono,tech,test)=>{
-      // setTest1(document[substanceName][mono][tech][test]['comments']);
-    // setTest1(substanceName['ih-eur']['HPLC']['assay']['comments']);
-    if(document){
-      console.log(document[substanceName])
-    }
-  }
+const { error: documentError, document } = useDocument("assignments",assignmentDocID);
+const [copy,setCopy]=useState([])
+const initObj ={
+    HPLC:{},
+    WET:{},
+    GC:{},
   }
   const projectsReducer =(state,action)=>{
-  // console.log(action)
+    const {type,payload,substanceName} = action;
+    const {property} = payload
+    // switch (type){
+      // case 'HPLC': 
+    switch(property){
+      case 'comments':
+   
+   return { ...state,[type]:{test:payload.test,monographName:payload.monographName, comments:document[substanceName][payload.monographName][type][payload.test][payload.property]}};
+case 'dueDate':
+return { ...state,[type]:{...state[type],test:payload.test,monographName:payload.monographName,dueDate:document[substanceName][payload.monographName][type][payload.test][payload.property]}}; 
+ case 'workers':
+  return { ...state,[type]:{...state[type],test:payload.test,monographName:payload.monographName,workers:document[substanceName][payload.monographName][type][payload.test][payload.property]}}; 
+  default:
+    return state
+  }
   
-  //put here function that takes the details from the dispatch and up dtae a state 
-  // setWorkers()
-  const {type,payload,substanceName} = action;
-  switch (type){
-  case 'HPLC':
+  // case 'WET':
+  //   return {...state}
+  //   case 'GC':
+  // return {...state}
+  // default:
+  // return state
+  // }
+}
   
-  state.HPLC_FILL_DET(substanceName,payload.monographName,type,payload.test);
-return { ...state,HPLC:[...state['HPLC'],{test:payload.test,monographName:payload.monographName,comments:payload.comments}]};
-case 'WET':
-return {...state}
-case 'GC':
-return {...state}
-default:
-return state
-}
-}
 const [iterate,setIterate]=useState(0)
-const [test1,setTest1]=useState(null)
 const [state,dispatch]=useReducer(projectsReducer,initObj)
-const { error: documentError, document } = useDocument("assignments",assignmentDocID);
-const [monographes,setMonographes]=useState([])
-const [monoName,setrMonoName]=useState('')
-const [tests,setTests]=useState([])
 const [dueDateArray,setDueDateArray]=useState([])
-const obj=useRef(initObj).current
-  // console.log(document)
+const obj=useRef(state).current
 
  const lastDuedate = ()=>{
-  Object.keys(document).forEach((substanceName)=>{
+   Object.keys(document).forEach((substanceName)=>{
   Object.keys(document[substanceName]).forEach((monographName)=>{
-  setMonographes((prev)=>(prev=[...prev,monographName]))
-  Object.keys(document[substanceName][monographName]).forEach((tech)=>{
-  Object.keys(document[substanceName][monographName][tech]).forEach((test)=>{
-  setIterate((prev)=>(++prev))
-  setTests((prev)=>(prev=[...prev,test]))
-  Object.entries(document[substanceName][monographName][tech][test]).forEach((details)=>{
-  if(details[0]==='dueDate' && details[1]!==''){
-  const date = new Date(details[1]).getTime() 
-  setDueDateArray((prev) => (prev = [...prev, date]));
-  }
-  if(details[0]==='comments'){
-    const comments = details[1]
-  dispatch({type:tech,payload:{monographName,test,comments},substanceName})
-  }
-  if(details[0]==='workers'){
-    const workers = details[1]
-  dispatch({type:tech,payload:{monographName,test,workers},substanceName})
-  }
-})//end forEach details
-//grab tests details
-Object.keys()
-})
+    // setMonographes((prev)=>(prev=[...prev,monographName]))
+    Object.keys(document[substanceName][monographName]).forEach((tech)=>{
+      Object.keys(document[substanceName][monographName][tech]).forEach((test)=>{
+    // grab details
+    Object.keys(document[substanceName][monographName][tech][test]).forEach((detailsProperty)=>{
+      Object.keys(document[substanceName][monographName][tech][test]).forEach((property)=>{
+  // console.log(property)
+  setIterate((prev) => ++prev);
+  dispatch({type:tech,payload:{monographName,test,property},substanceName})
+  })
+});
+//grab details methode 2
+Object.entries(document[substanceName][monographName][tech][test]).forEach(
+  (details) => {
+        if (details[0] === "dueDate" && details[1] !== "") {
+          const date = new Date(details[1]).getTime();
+          setDueDateArray((prev) => (prev = [...prev, date]));
+        }
+     
+        }
+        ); //end forEach details
+        //grab tests details
+  })
 }) 
 })
 }) 
 setDueDateArray((prev)=>(prev.sort((a,b)=>b-a)))
 }
+ 
+
+console.log(copy)
 
 useEffect(()=>{
-if(document){
- lastDuedate()
-}    
+  if(document){
+    lastDuedate()
+  
+  }    
 },[document])
 ////////////////////////////////////////////////////
-  return(
- <div>
+return(
+  <div>
 {document&& Object.keys(document).map((projName)=>(
 <>
 <h2>{projName}</h2>
@@ -92,27 +94,22 @@ if(document){
 </span>
 }
 
-{/* {state['HPLC']['monographName']&&
-<h3>{state['HPLC']['monographName']}</h3>
-} */}
+{state['HPLC']['monographName']&&
 
-{state['HPLC'].length>0&& state['HPLC'].map((obj)=>(
-<h3>{obj['monographName']}  - {obj['test']} -{obj['comments']}  </h3>
-
-))
-}
-{
-test1&&
-<h4>{test1}</h4>
-
-}
-{document&&
-<h4>{document[projName]['ih-eur']['HPLC']['asaay']['comments']}</h4>
+<h3>{state['HPLC']['monographName']} - {state['HPLC']['test']} -
+{state['HPLC']['dueDate']} - {state['HPLC']['comments']} -{state['HPLC']['workers'].join(', ')} </h3>
 }
 
-{/* < ProjectspreviewDetails
-x = {state['HPLC']}
-/> */}
+
+{/* {state['HPLC'].length>0&& state['HPLC'].map((obj)=>(
+<h3>{obj['monographName']}  - {obj['test']} -{obj['comments']}- {obj['dueDate']}  </h3>))} */}
+
+
+< ProjectspreviewDetails
+x = {copy}
+/>
+
+
 {
   iterate&&
   <h3>{iterate}</h3>
