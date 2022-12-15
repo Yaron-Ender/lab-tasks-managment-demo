@@ -36,7 +36,6 @@ const handleTestFields =(monoTitle,fieldsObj,tech,test)=>{
   arrOfMonogrpaghsNames.current.forEach((mono)=>{
   buildProjectObj.current[projName]={...buildProjectObj.current[projName],[mono]:''}
 })
-console.log(buildProjectObj)
 
 }
 if(fieldsObj){
@@ -60,7 +59,6 @@ const handleChange = (option)=>{
 }
 const handleSubmit=async(e)=>{
   e.preventDefault();
-//console.log(buildProjectObj.current)
  await addDocument('',buildProjectObj.current)
 }
 /////////////////////////////////////////////////////////

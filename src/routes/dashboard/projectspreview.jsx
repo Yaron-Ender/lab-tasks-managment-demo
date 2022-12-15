@@ -1,120 +1,110 @@
 import { useDocument } from "../../hooks/useDocument";
-import { useState, useEffect, useRef,useReducer, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
+import Select from 'react-select'
+import { useStyle } from "../../hooks/useStyle";
 import ProjectspreviewDetails from "./projectspreviewDetails";
 const Projectspreview = ({ assignmentDocID }) => {
-const { error: documentError, document } = useDocument("assignments",assignmentDocID);
-const [copy,setCopy]=useState([])
-const initObj ={
-    HPLC:{},
-    WET:{},
-    GC:{},
-  }
-  const projectsReducer =(state,action)=>{
-    const {type,payload,substanceName} = action;
-    const {property} = payload
-    // switch (type){
-      // case 'HPLC': 
-    switch(property){
-      case 'comments':
-   
-   return { ...state,[type]:{test:payload.test,monographName:payload.monographName, comments:document[substanceName][payload.monographName][type][payload.test][payload.property]}};
-case 'dueDate':
-return { ...state,[type]:{...state[type],test:payload.test,monographName:payload.monographName,dueDate:document[substanceName][payload.monographName][type][payload.test][payload.property]}}; 
- case 'workers':
-  return { ...state,[type]:{...state[type],test:payload.test,monographName:payload.monographName,workers:document[substanceName][payload.monographName][type][payload.test][payload.property]}}; 
-  default:
-    return state
-  }
-  
-  // case 'WET':
-  //   return {...state}
-  //   case 'GC':
-  // return {...state}
-  // default:
-  // return state
-  // }
-}
-  
+  const { error: documentError, document } = useDocument("assignments",assignmentDocID);
+  const { error:professionError, document:professionDocument } = useDocument('profession','supervisor');
+  console.log(professionDocument,documentError)
+ const { selectCompDatabaseStyle } = useStyle();
 const [iterate,setIterate]=useState(0)
-const [state,dispatch]=useReducer(projectsReducer,initObj)
+// const [state,dispatch]=useReducer(projectsReducer,initObj)
 const [dueDateArray,setDueDateArray]=useState([])
-const obj=useRef(state).current
 
  const lastDuedate = ()=>{
    Object.keys(document).forEach((substanceName)=>{
   Object.keys(document[substanceName]).forEach((monographName)=>{
-    // setMonographes((prev)=>(prev=[...prev,monographName]))
-    Object.keys(document[substanceName][monographName]).forEach((tech)=>{
-      Object.keys(document[substanceName][monographName][tech]).forEach((test)=>{
-    // grab details
-    Object.keys(document[substanceName][monographName][tech][test]).forEach((detailsProperty)=>{
-      Object.keys(document[substanceName][monographName][tech][test]).forEach((property)=>{
-  // console.log(property)
-  setIterate((prev) => ++prev);
-  dispatch({type:tech,payload:{monographName,test,property},substanceName})
-  })
-});
-//grab details methode 2
-Object.entries(document[substanceName][monographName][tech][test]).forEach(
-  (details) => {
-        if (details[0] === "dueDate" && details[1] !== "") {
-          const date = new Date(details[1]).getTime();
-          setDueDateArray((prev) => (prev = [...prev, date]));
-        }
-     
-        }
-        ); //end forEach details
-        //grab tests details
+  Object.keys(document[substanceName][monographName]).forEach((tech)=>{
+  Object.keys(document[substanceName][monographName][tech]).forEach((test)=>{
+  Object.entries(document[substanceName][monographName][tech][test]).forEach(
+    (details) => {
+  if(details[0] === "dueDate" && details[1] !== "") {
+    const date = new Date(details[1]).getTime();
+   setDueDateArray((prev) => (prev = [...prev, date]));
+    }
+setIterate((prev) => ++prev);
+}
+ ); //end forEach details
   })
 }) 
 })
 }) 
 setDueDateArray((prev)=>(prev.sort((a,b)=>b-a)))
 }
- 
+const handleSuperviser = ()=>{
 
-console.log(copy)
-
+}
 useEffect(()=>{
-  if(document){
-    lastDuedate()
-  
+if(document){
+lastDuedate()
   }    
 },[document])
 ////////////////////////////////////////////////////
 return(
   <div>
-{document&& Object.keys(document).map((projName)=>(
-<>
+{documentError&&<h2 className="error" >{documentError}</h2>}
+{document&&professionDocument&& Object.keys(document).map((projName)=>(
+  <>
 <h2>{projName}</h2>
-{dueDateArray.length>0&&
+
+{dueDateArray &&
+dueDateArray.length>0&&
 <span>
 {format(new Date(dueDateArray[0]),'MM/dd/yyyy')}
 </span>
 }
 
-{state['HPLC']['monographName']&&
+<div>
+{Object.keys(document[projName]).map((monograph)=>(
+  <>
+<h4 style={{color:'red'}}>HPLC TESTS</h4>
+<h3>{monograph}</h3>
+{document[projName][monograph]['HPLC']&&
+Object.keys(document[projName][monograph]['HPLC']).map((test)=>(
+<>
+<div>
+<h3>{test}</h3>
+<span>select supervier</span>
+<Select
+styles={selectCompDatabaseStyle}
+onChange={(option)=>(handleSuperviser(option))}
+options={professionDocument['supervisor']}
 
-<h3>{state['HPLC']['monographName']} - {state['HPLC']['test']} -
-{state['HPLC']['dueDate']} - {state['HPLC']['comments']} -{state['HPLC']['workers'].join(', ')} </h3>
-}
-
-
-{/* {state['HPLC'].length>0&& state['HPLC'].map((obj)=>(
-<h3>{obj['monographName']}  - {obj['test']} -{obj['comments']}- {obj['dueDate']}  </h3>))} */}
-
-
-< ProjectspreviewDetails
-x = {copy}
 />
+</div>
+{Object.keys(document[projName][monograph]['HPLC'][test]).map((property)=>(
+(property==='workers')?
+<div><h3>{document[projName][monograph]['HPLC'][test][property].toString()}</h3>
+</div>:
+<h3>{document[projName][monograph]['HPLC'][test][property]}</h3>
 
-
+))}
+</>
+))}
+<h4 style={{color:'red'}}>WET TESTS</h4>
+{document[projName][monograph]['WET']&&
+Object.keys(document[projName][monograph]['WET']).map((test)=>(
+<>
+<h3>{test}</h3>
+</>
+))}
+<h4 style={{color:'red'}}>GC TESTS</h4>
+{(document[projName][monograph]['GC'])&&
+Object.keys(document[projName][monograph]['GC']).map((test)=>(
+<>
+<h3>{test}</h3>
+</>
+))}
+</>
+))}
+</div>
+    
 {
   iterate&&
   <h3>{iterate}</h3>
 }
-
 </>
 ))}
 </div>

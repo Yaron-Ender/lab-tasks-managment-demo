@@ -4,6 +4,7 @@ import Select from 'react-select';
  import { useRef,useState,useEffect } from 'react';
 const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
   const { document: professionDoc, error } = useDocument("profession", tech);
+  console.log(professionDoc)
   const [textArea, setTextArea] = useState("");
   const [workers,setWorkers] = useState([])
   const [date,setDate] =useState('')

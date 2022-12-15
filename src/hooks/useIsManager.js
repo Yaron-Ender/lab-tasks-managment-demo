@@ -6,7 +6,7 @@ export const useISManager = ()=>{
    HPLC:false,
    WET:false,
    GC:false,
-   superviser:false 
+   supervisor:false 
   }  
   const position = useRef({});
   const manager = (employeeNum) => {
@@ -14,7 +14,7 @@ export const useISManager = ()=>{
     position.current=initObj
   switch (findManager) {
     case "000000":
-    case "123123":
+    case "100000":
     return position.current={...position.current,manager:true}
     case "111111":
     case "222222":
@@ -28,7 +28,8 @@ export const useISManager = ()=>{
     case "888888":
     return   position.current = { ...position.current,GC: true };
     case "999999":
-    return (position.current = { ...position.current, superviser:true });    
+    case "123123":
+    return (position.current = { ...position.current, supervisor:true });    
     default:
     return (position.current = initObj);
           }
