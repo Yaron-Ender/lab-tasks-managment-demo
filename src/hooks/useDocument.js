@@ -13,7 +13,6 @@ setError(null)
 }else{
   setError('document not found')
 }
-
 },(err)=>{
 setError("failed to get document");
  console.log(err.message)

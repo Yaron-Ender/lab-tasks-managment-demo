@@ -23,7 +23,6 @@ useEffect(()=>{
 useEffect(()=>{
   arrOfMonogrpaghsNames.current=[]
   buildProjectObj.current = {[projName]:''};
-  console.log(buildProjectObj)
 },[projName])
 // function that handle the data from AddTEst comp and from addProjectMono comp.
 

@@ -15,6 +15,7 @@ const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
       workers: [],
       comments: "",
       dueDate: "",
+      supervisor:'',
     }
   }
   }

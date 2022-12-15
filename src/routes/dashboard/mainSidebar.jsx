@@ -9,7 +9,7 @@ const MainSidebar = () => {
 <nav>
 <ul>
 <li>
-<NavLink to="/assignment">
+<NavLink to="/assignment/projectsDashboard">
 <img src={dashboardIcon}alt='dashboard icon'/>
 <span>Dashboard</span>
 </NavLink>
