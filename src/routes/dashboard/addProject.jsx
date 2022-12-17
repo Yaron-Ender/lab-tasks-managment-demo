@@ -49,7 +49,6 @@ buildProjectObj.current[projName][m]={...buildProjectObj.current[projName][m],
 const deleteMonograph =(monoTitle)=>{
   Object.keys(buildProjectObj.current[projName]).forEach((m)=>{
     if(m === monoTitle){
-      console.log(m)
     delete buildProjectObj.current[projName][m]
   }
   })

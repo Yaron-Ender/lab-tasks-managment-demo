@@ -48,7 +48,7 @@ const closeCreateSubstanceComp =()=>{
     <h4>Select Substance to Modify</h4>
     <Select
     styles={selectCompDatabaseStyle}//from useStyle
-    placeholder="Select Substance"
+    placeholder="substances list"
     onChange={(option) => {
       handleOption(option);
     }}

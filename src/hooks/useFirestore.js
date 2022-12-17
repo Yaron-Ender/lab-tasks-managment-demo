@@ -1,17 +1,18 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc, addDoc} from "firebase/firestore";
+import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc} from "firebase/firestore";
+import { async } from "@firebase/util";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);
  //add document
  const addDocument =async(id,monographes)=>{
+  //add document without ID
 if(!id){
 await addDoc(colRef,monographes)
 }
 const docReff = doc(colRef,id)
 await setDoc(docReff,monographes)
  }
- //adddocument without ID
 
  //updateDoc
  const updateDocument =async (id,fieldsObj)=>{
@@ -53,6 +54,18 @@ modifiedObj = {...origonalFullData, [o]:{...newData} }
     batch.set(docReff, { ...modifiedData });
   await batch.commit(); 
   };
- return { updateDocument,updateMonographName,addDocument }
+//has used by projectsPreview component
+  const generalDocUpdate =async(updatedObj,id)=>{
+    if(getDoc(doc(colRef,id))){
+    const document = await getDoc(doc(colRef,id));
+    const {projName,monograph,tech,test,option} = updatedObj;
+    const string = `${projName}.${monograph}.${tech}.${test}.supervisor`;
+    const value = option.value;
+    await updateDoc(doc(colRef, id), {
+    [string]:value
+      });
+    }
+  }
+ return { updateDocument,updateMonographName,addDocument,generalDocUpdate };
 }
 
