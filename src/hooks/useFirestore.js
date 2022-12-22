@@ -6,14 +6,14 @@ export const useFriestore = (_collection)=>{
   const colRef = collection(db, _collection);
  //add document
  const addDocument =async(id,monographes)=>{
-  //add document without ID
-if(!id){
-await addDoc(colRef,monographes)
-}
 const docReff = doc(colRef,id)
 await setDoc(docReff,monographes)
  }
-
+const addDocumentWithAnonymousID =async(obj)=>{
+ const doc = await addDoc(colRef,obj)
+ //return the doc id for addProject comp
+return doc.id
+}
  //updateDoc
  const updateDocument =async (id,fieldsObj)=>{
    const docReff = doc(colRef, id);
@@ -66,6 +66,23 @@ modifiedObj = {...origonalFullData, [o]:{...newData} }
       });
     }
   }
- return { updateDocument,updateMonographName,addDocument,generalDocUpdate };
+const updateUsersAssignment =async(userIDAndNameObj,assignmentID)=>{
+const docRef = doc(colRef, userIDAndNameObj["workerID"]);
+const docsnap = await getDoc(docRef);
+if(docsnap.exists()){
+  const userAssignmentsArr = docsnap.data().assignments;
+userAssignmentsArr.push(assignmentID)
+await updateDoc(docRef, { 'assignments':userAssignmentsArr});
+
+}
+  }
+ return {
+   updateDocument,
+   updateMonographName,
+   addDocument,
+   addDocumentWithAnonymousID,
+   generalDocUpdate,
+   updateUsersAssignment,
+ };
 }
 

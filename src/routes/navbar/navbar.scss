@@ -28,8 +28,10 @@
    font-weight:bold;
    }
  }
- 
- .login-link{
+ & .welcome-user >span{
+ text-transform: capitalize;
+ }
+ & .login-link{
  border:none;
  cursor: pointer;
  font: {

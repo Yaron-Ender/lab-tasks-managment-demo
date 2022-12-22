@@ -67,9 +67,9 @@ export default function AddProjectMono({ projName, handleTestFields, deleteMonog
       <h4>{tech}</h4>
 
       {buildObjBasedDocument.current[monoTitle].tests[tech].map(
-      (test) => (
+      (test,index) => (
         <AddTest
-          // key={Math.random()}
+           key={index}
           handleTestFields={handleTestFields}
           monoTitle={monoTitle}
           tech={tech}

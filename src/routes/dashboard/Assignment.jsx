@@ -4,7 +4,7 @@ import MainSidebar from './mainSidebar';
 import AddProject from './addProject';
 import ProjectDashboard from './projectDashboard';
 const Assignment = () => {
-    return (
+return (
 <div className='assignment'>
 <MainSidebar />
 <Outlet/>
@@ -12,7 +12,7 @@ const Assignment = () => {
 <Route path='assignment/projectsDashboard' element={<ProjectDashboard />} />
 <Route path='assignment/addProject' element={<AddProject />}/>
 </Routes>
-    </div>
+</div>
     );
 };
 

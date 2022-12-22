@@ -4,7 +4,6 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc,setDoc, getDoc, collection,runTransaction } from "firebase/firestore";
 import { ref,getDownloadURL } from "firebase/storage";
 import { useAuthContext } from './useAuthContext';
-import { async } from '@firebase/util';
 export const useSignup = ()=>{
     const { dispatch } = useAuthContext()
 const [error, setError] = useState(null);
@@ -40,13 +39,14 @@ await runTransaction(db,async(profession)=>{
   let newInfo=[];
 const getInfo = await profession.get(doc(db,'profession',prof))
 if(!getInfo.exists()){
-   console.log('doc does not exist') 
- await setDoc(doc(db, "profession",prof), {[prof]:[{value:userName,label:userName}]});
+  console.log('doc does not exist') 
+ await setDoc(doc(db, "profession", prof), {
+   [prof]: [{ value: userName, label: userName,id:user.uid,employeeNum }],
+ });
 }
 if(getInfo.data()[prof]!==undefined){
   newInfo = getInfo.data()[prof]
-  newInfo.push({ value:userName, label:userName}); 
-  console.log(newInfo, getInfo.data());
+  newInfo.push({ value: userName, label: userName, id: user.uid, employeeNum }); 
 }
  profession.update(doc(db, "profession",prof), { [prof]: newInfo });
 })

@@ -26,10 +26,11 @@ export const useISManager = ()=>{
     return   position.current = { ...position.current,WET: true };
     case "777777":
     case "888888":
+    case "200000":
     return   position.current = { ...position.current,GC: true };
     case "999999":
     case "123123":
-    return (position.current = { ...position.current, supervisor:true });    
+    return position.current = { ...position.current, supervisor:true };    
     default:
     return (position.current = initObj);
           }

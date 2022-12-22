@@ -6,8 +6,9 @@ import AddProjectMono from './addProjectMono';
 import Select from 'react-select';
 import { useFriestore } from '../../hooks/useFirestore';
 const AddProject = () => {
-const { addDocument } = useFriestore('assignments')
+const { addDocumentWithAnonymousID } = useFriestore('assignments')
 const { arrayOfDocID, error } = useCollection("substances");
+const { updateUsersAssignment } =useFriestore('users')
 const [selectProject,setSelectProject]=useState([]);
 const [arrayMonographName,setArrayMonographName] = useState([]);
 const [projName,setProjName ]=useState(null);
@@ -53,25 +54,54 @@ const deleteMonograph =(monoTitle)=>{
   }
   })
 }
+//Select project
 const handleChange = (option)=>{
   setProjName(option.value);
 }
+//add assignment to assignments property in users collection
+const addAssignmentToWorker = (assignmentObj,assignmentID) => {
+//assignmentObj--> is the assignment object
+//assignmetID --> is the id's asssignment document
+  //reach to monographes
+Object.values(Object.values(assignmentObj)).map((monographesObj, index) => {
+//monographesObj --> {ih-eur: {…}, ih-jp: {…}, ih-usa: ''}
+ if (monographesObj) {
+  Object.values(monographesObj).map((tech)=>{
+  //in every monograph only filled tech will apear --> {WET: {…}, HPLC: {…}}
+Object.values(tech).map((testsObject)=>{
+  //testsObject is noe obj contains all test -->{organic: {…}, imp: {…}, assay: {…}}
+Object.entries(testsObject).map((test)=>{
+  //['kf', {…}]
+if(test[1]['workers'].length>0){
+test[1]['workers'].forEach((userIDAndNameObj)=>{
+//itrate throught userCollection and  
+updateUsersAssignment(userIDAndNameObj,assignmentID)
+
+})
+}
+})
+})
+})
+}
+});
+};
 const handleSubmit=async(e)=>{
   e.preventDefault();
- await addDocument('',buildProjectObj.current)
+ const assignmentID = await addDocumentWithAnonymousID(buildProjectObj.current);
+addAssignmentToWorker(buildProjectObj.current, assignmentID);
 }
 /////////////////////////////////////////////////////////
 return(
   <div className="assign-project-container">
 <form className="select-proj-and-mono-container" onSubmit={handleSubmit}>
 <header>
-   <label>
-   <span>add project</span>
-   <Select
-    onChange={(option)=>handleChange(option)}
-    options={selectProject}
-    />
-    </label>
+  <label>
+  <span>add project</span>
+  <Select
+  onChange={(option)=>handleChange(option)}
+  options={selectProject}
+  />
+  </label>
 </header>
 {projName&& 
 <>
@@ -84,7 +114,7 @@ deleteMonograph={deleteMonograph}
 </>
 }
 </form>
-      </div>
+</div>
     );
   };
 

@@ -17,10 +17,10 @@ const { manager,position } = useISManager();
   const { employeeNumber, email, password } = inputFields;
  useEffect(()=>{
    if(employeeNumber.length===6){
-     setEmployeeNum(prev=>(prev=workersID.find(num => num==employeeNumber)))
-  manager(employeeNum)
+    setEmployeeNum(prev=>(prev=workersID.find(num => num==employeeNumber)))
+    manager(employeeNum)
 }
-},[employeeNumber,position])
+},[employeeNumber,position,password])
 const handleInput =(e)=>{
   const{name,value}=e.target
   setInputFields(prev=>({...prev,[name]:value}))

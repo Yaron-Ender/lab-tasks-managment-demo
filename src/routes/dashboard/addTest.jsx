@@ -46,7 +46,7 @@ const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
   const handleWorkers = (option) => {
     let workersArr = [];
     option.forEach((o) => {
-      workersArr.push(o.value);
+      workersArr.push({workerID:o.id,workerName:o.value});
     setWorkers(workersArr);
     });
      };
