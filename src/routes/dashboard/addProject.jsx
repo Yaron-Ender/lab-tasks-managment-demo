@@ -54,7 +54,7 @@ const deleteMonograph =(monoTitle)=>{
   }
   })
 }
-//Select project
+//Select project(the Select-box   at the top page)
 const handleChange = (option)=>{
   setProjName(option.value);
 }
@@ -74,7 +74,7 @@ Object.entries(testsObject).map((test)=>{
   //['kf', {…}]
 if(test[1]['workers'].length>0){
 test[1]['workers'].forEach((userIDAndNameObj)=>{
-//itrate throught userCollection and  
+//  grab the user id
 updateUsersAssignment(userIDAndNameObj,assignmentID)
 
 })
@@ -85,6 +85,7 @@ updateUsersAssignment(userIDAndNameObj,assignmentID)
 }
 });
 };
+// this is the main function:two action happed here. one:build the assignments collection. two: take the document's id of assignments collection and the buildProjectObj(actually this is the document) and fill the assignment property of the user by the assAssignmentToWorker  
 const handleSubmit=async(e)=>{
   e.preventDefault();
  const assignmentID = await addDocumentWithAnonymousID(buildProjectObj.current);

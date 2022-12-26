@@ -9,10 +9,10 @@ const { arrayOfDocID, error } = useCollection("assignments");
 <div>
 {(error)?<h3 className='error'>{error}</h3>:<h1> hI Hihsh isdfhs </h1>}
 {arrayOfDocID.length>0 &&
- arrayOfDocID.map((id)=>(
-<Projectspreview 
-assignmentDocID={id}
-/>
+ arrayOfDocID.map((id,index)=>(
+<div key={index}>
+<Projectspreview assignmentDocID={id}/>
+</div>
 ))}
 </div>
     );

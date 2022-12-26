@@ -21,11 +21,11 @@ myAssignmentObj.monograph=monoPlusTechArr[0]
 Object.entries(monoPlusTechArr[1][profession]).forEach((arr)=>{
  arr[1]['workers'].forEach((worker)=>{
 if(worker.workerID===userID){
-  //test state is for make the comp rerender
+  //rerender state is for make the comp rerender
   myAssignmentObj.test=[...myAssignmentObj.test,arr[0]]
   myAssignmentObj.duedate=arr[1].dueDate;
   myAssignmentObj.comments=arr[1].comments;
-  myAssignmentObj.supervisor=arr[1].supervisor;
+  myAssignmentObj.supervisor=arr[1].supervisor['name'];
   setRerender(arr[0]);
 }
 })

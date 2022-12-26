@@ -45,7 +45,7 @@ devide into 4 sections
 ** < AddProject/> - 
 -build array of options based on substance collection (selectProject state)-only once when it get called- this is the starter point of all the funcionality that come later
 
-- arrOfMonogrpaghsNames.current =[],evry time the Select box changes, the project name passed to addProjectMono comp and from there handleTestFeild get called
+- arrOfMonogrpaghsNames.current =[],evrey time the Select box changes, the project name passed to addProjectMono comp and from there handleTestFeild get called
 
 -handleTestFeild get called from two seperated comp:addProjectMono and addTest
 
@@ -58,8 +58,10 @@ the object store in firestore with anynomouse id
 
 
 
+WORK FLOW THAT ASSOSIATE WITH ASSIGNMET COLLECTION
 
-
+- addDocumentWithAnonymousID(buildProjectObj.current)==> build the assignments collection (AddProject comp)
+- update the assignments property in tne users collection with the assignment id addAssignmentToWorker(buildProjectObj.current, assignmentID);
  NOTE:
 
  

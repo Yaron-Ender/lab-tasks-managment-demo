@@ -7,7 +7,7 @@ const otherAssignmentObj = useRef({
   projectName: "",
   profession,
   test: [],
-  userName:'',
+  userName:[],
   duedate: "",
   monograph: "",
 }).current;
@@ -24,13 +24,15 @@ if(monoPlusTechArr[1]){
     Object.entries(monoPlusTechArr[1][profession]).forEach((arr) => {
    arr[1]["workers"].forEach((workerObj) => {
    if (workerObj.workerID !== userID) {
-     //test state is for make the comp rerender
-     otherAssignmentObj.test = [...otherAssignmentObj.test, arr[0]];
-     otherAssignmentObj.duedate = arr[1].dueDate;
-     otherAssignmentObj.comments = arr[1].comments;
-     otherAssignmentObj.supervisor = arr[1].supervisor;
-     otherAssignmentObj.userName = workerObj.workerName;
-     setRerender(arr[0]);
+  //rerender state is for make the comp rerender
+  otherAssignmentObj.test = [...otherAssignmentObj.test, arr[0]];
+  otherAssignmentObj.duedate = arr[1].dueDate;
+  otherAssignmentObj.comments = arr[1].comments;
+  otherAssignmentObj.supervisor = arr[1].supervisor['name'];
+  if(!otherAssignmentObj.userName.includes(workerObj.workerID)){
+    otherAssignmentObj.userName= [...otherAssignmentObj.userName,{workerName:workerObj.workerName,workerID:workerObj.workerID}]
+  }
+  setRerender(arr[0]);
 }
 });
 });
@@ -49,7 +51,10 @@ return (
 {otherAssignmentObj.projectName&&<h3>{otherAssignmentObj.projectName}</h3>}
 <h3>dueDate :{otherAssignmentObj.duedate} </h3>
 </div>
-<h3>{otherAssignmentObj.monograph} - {test} - {otherAssignmentObj.userName}</h3>
+<h3>{otherAssignmentObj.monograph} - {test}</h3>
+ {otherAssignmentObj.userName.length>0&&otherAssignmentObj.userName.map((worker,index)=>(
+  <h3 key={index}>{worker.workerName}</h3>
+ ))}
 <div>
 {(otherAssignmentObj.comments)?<h3>comments: {otherAssignmentObj.comments}</h3>:<span>no comments</span>}
 </div>

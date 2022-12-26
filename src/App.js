@@ -7,7 +7,6 @@ import Database from './routes/database/database';
 import Workers from './routes/workers/workers';
 import Assignment from './routes/dashboard/Assignment';
 import { useAuthContext } from'./hooks/useAuthContext';
-import { useCollection } from './hooks/useCollection';
 function App() {
 const navigate = useNavigate();
 const { user,AuthIsReady}=useAuthContext()

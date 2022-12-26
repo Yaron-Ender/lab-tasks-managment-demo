@@ -1,6 +1,5 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc} from "firebase/firestore";
-import { async } from "@firebase/util";
+import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc,runTransaction} from "firebase/firestore";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);
@@ -55,22 +54,23 @@ modifiedObj = {...origonalFullData, [o]:{...newData} }
   await batch.commit(); 
   };
 //has used by projectsPreview component
-  const generalDocUpdate =async(updatedObj,id)=>{
-    if(getDoc(doc(colRef,id))){
-    const document = await getDoc(doc(colRef,id));
-    const {projName,monograph,tech,test,option} = updatedObj;
-    const string = `${projName}.${monograph}.${tech}.${test}.supervisor`;
-    const value = option.value;
-    await updateDoc(doc(colRef, id), {
-    [string]:value
-      });
-    }
-  }
+const updateSupervisor = async (updatedObj, id) => {
+  const { projName, monograph, tech, test, option } = updatedObj;
+  const value = { name: option.value, id: option.id };
+const document = await getDoc(doc(colRef, id));
+if(document.exists()){
+const originalObject = document.data()
+originalObject[projName][monograph][tech][test]['supervisor']=value
+await setDoc(doc(colRef, id), {...originalObject}); 
+
+}
+};
+
 const updateUsersAssignment =async(userIDAndNameObj,assignmentID)=>{
 const docRef = doc(colRef, userIDAndNameObj["workerID"]);
 const docsnap = await getDoc(docRef);
 if(docsnap.exists()){
-  const userAssignmentsArr = docsnap.data().assignments;
+const userAssignmentsArr = docsnap.data().assignments;
 userAssignmentsArr.push(assignmentID)
 await updateDoc(docRef, { 'assignments':userAssignmentsArr});
 
@@ -81,7 +81,7 @@ await updateDoc(docRef, { 'assignments':userAssignmentsArr});
    updateMonographName,
    addDocument,
    addDocumentWithAnonymousID,
-   generalDocUpdate,
+   updateSupervisor,
    updateUsersAssignment,
  };
 }

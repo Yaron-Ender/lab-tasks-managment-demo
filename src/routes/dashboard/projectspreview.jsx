@@ -1,19 +1,19 @@
 import { useDocument } from "../../hooks/useDocument";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import { format } from "date-fns";
 import Select from 'react-select';
 import { useFriestore } from "../../hooks/useFirestore";
 import { useStyle } from "../../hooks/useStyle";
 const Projectspreview = ({ assignmentDocID }) => {
-  const { error: documentError, document } = useDocument("assignments",assignmentDocID);
-  const { error:professionError, document:professionDocument } = useDocument('profession','supervisor');
- const { selectCompDatabaseStyle } = useStyle();
- const { generalDocUpdate } = useFriestore('assignments');
+const { error: documentError, document } = useDocument("assignments",assignmentDocID);
+const { error:professionError, document:professionDocument } = useDocument('profession','supervisor');
+const { selectCompDatabaseStyle } = useStyle();
+const { updateSupervisor } = useFriestore("assignments");
 const [iterate,setIterate]=useState(0)
 const [dueDateArray,setDueDateArray]=useState([])
 //finde the latest date in assignment document
  const lastDuedate = ()=>{
-   Object.keys(document).forEach((substanceName)=>{
+  Object.keys(document).forEach((substanceName)=>{
   Object.keys(document[substanceName]).forEach((monographName)=>{
   Object.keys(document[substanceName][monographName]).forEach((tech)=>{
   Object.keys(document[substanceName][monographName][tech]).forEach((test)=>{
@@ -26,19 +26,24 @@ const [dueDateArray,setDueDateArray]=useState([])
 setIterate((prev) => ++prev);
 }
  ); //end forEach details
-  })
+})
 }) 
 })
 }) 
 setDueDateArray((prev)=>(prev.sort((a,b)=>b-a)))
-}
+}//end of last dueDate
+
 // update supervisor in assignment collection
-const handleSupervisor =async ( option,projName,monograph,tech,test )=>{
-if(tech){
+const handleSupervisor = useCallback(async( option,projName,monograph,tech,test)=>{
 const updatedObject = { option, projName, monograph, tech, test }; 
-await generalDocUpdate(updatedObject,assignmentDocID);
-}
-}
+ await updateSupervisor(updatedObject, assignmentDocID);
+},[])
+// const handleSupervisor = async ( option,projName,monograph,tech,test )=>{
+// if(tech){
+// const updatedObject = { option, projName, monograph, tech, test }; 
+// await updateSupervisor(updatedObject, assignmentDocID);
+// }
+// }
 useEffect(()=>{
 if(document){
 lastDuedate()
@@ -61,21 +66,22 @@ dueDateArray.length>0&&
 </div>
 {/* this div wrap the monograoh,tech,test,details of each test */}
 <div className="all-tests" style={{background:'lightgreen'}}>
-{Object.keys(document[projName]).map((monograph)=>(
+{Object.keys(document[projName]).sort().map((monograph)=>(
 <>
 {/* HPLC */}
 <h4 style={{color:'red'}}>HPLC TESTS</h4>
-{Object.keys(document[projName][monograph]).map((tech)=>(
+{Object.keys(document[projName][monograph]).sort().map((tech)=>(
 <>
 {(tech=='HPLC')&&document[projName][monograph]['HPLC']&&
-Object.keys(document[projName][monograph]['HPLC']).map((test)=>(
+Object.keys(document[projName][monograph]['HPLC']).sort().map((test)=>(
   <>
 <div className="whole-project">
-<main className="main-details" style={{border:'2px solid black'}}>
+<main className="main-details" style={{border:'10px solid black'}}>
 {/* shwo workers if there is one */}
-{Object.keys(document[projName][monograph]['HPLC'][test]).map((property)=>(
+{Object.keys(document[projName][monograph]['HPLC'][test]).sort().map((property)=>(
 (property==='workers')?(document[projName][monograph]['HPLC'][test][property].length>0)?
-<div className="workers-box"><h3>{document[projName][monograph]['HPLC'][test][property].toString()}</h3>
+<div className="workers-box">{document[projName][monograph]['HPLC'][test][property].sort().map((workerObj,index)=>
+(<h3 key={index}>{workerObj['workerName']}</h3>))}
 </div>:<h3>no workers are assigned</h3>
 :''
 ))}
@@ -85,7 +91,9 @@ Object.keys(document[projName][monograph]['HPLC']).map((test)=>(
 <Select
 styles={selectCompDatabaseStyle}
 onChange={(option)=>(handleSupervisor(option,projName,monograph,tech,test))}
-options={professionDocument['supervisor']}
+options={professionDocument['supervisor'].concat({label:'cancel choise',value:'',id:''})}
+placeholder='Select Supervisor'
+
 />
 </div>
 <svg witdh='20' height='20' fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="">
@@ -105,17 +113,18 @@ options={professionDocument['supervisor']}
 ))}
 {/*WET */}
 <h4 style={{color:'red'}}>WET TESTS</h4>
-{Object.keys(document[projName][monograph]).map((tech)=>(
+{Object.keys(document[projName][monograph]).sort().map((tech)=>(
 <>
 {(tech=='WET')&&document[projName][monograph]['WET']&&
-Object.keys(document[projName][monograph]['WET']).map((test)=>(
+Object.keys(document[projName][monograph]['WET']).sort().map((test)=>(
   <>
 <div className="whole-project">
 <main className="main-details" style={{border:'2px solid black'}}>
 {/* shwo workers if there is one */}
-{Object.keys(document[projName][monograph]['WET'][test]).map((property)=>(
+{Object.keys(document[projName][monograph]['WET'][test]).sort().map((property)=>(
 (property==='workers')?(document[projName][monograph]['WET'][test][property].length>0)?
-<div className="workers-box"><h3>{document[projName][monograph]['WET'][test][property].toString()}</h3>
+<div className="workers-box">{document[projName][monograph]['WET'][test][property].sort().map((workerObj,index)=>
+(<h3 key={index}>{workerObj['workerName']}</h3>))}
 </div>:<h3>no workers are assigned</h3>
 :''
 ))}
@@ -125,7 +134,8 @@ Object.keys(document[projName][monograph]['WET']).map((test)=>(
 <Select
 styles={selectCompDatabaseStyle}
 onChange={(option)=>(handleSupervisor(option,projName,monograph,tech,test))}
-options={professionDocument['supervisor']}
+options={professionDocument['supervisor'].concat({label:'cancel choise',value:'',id:''})}
+placeholder='Select Supervisor'
 />
 </div>
 <svg witdh='20' height='20' fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="">
@@ -145,17 +155,18 @@ options={professionDocument['supervisor']}
 ))}
 {/* GC */}
 <h4 style={{color:'red'}}>GC TESTS</h4>
-{Object.keys(document[projName][monograph]).map((tech)=>(
+{Object.keys(document[projName][monograph]).sort().map((tech)=>(
 <>
 {(tech=='GC')&&document[projName][monograph]['GC']&&
-Object.keys(document[projName][monograph]['GC']).map((test)=>(
+Object.keys(document[projName][monograph]['GC']).sort().map((test)=>(
   <>
 <div className="whole-project">
 <main className="main-details" style={{border:'2px solid black'}}>
 {/* shwo workers if there is one */}
-{Object.keys(document[projName][monograph]['GC'][test]).map((property)=>(
+{Object.keys(document[projName][monograph]['GC'][test]).sort().map((property)=>(
 (property==='workers')?(document[projName][monograph]['GC'][test][property].length>0)?
-<div className="workers-box"><h3>{document[projName][monograph]['GC'][test][property].toString()}</h3>
+<div className="workers-box"><h3>{document[projName][monograph]['GC'][test][property].sort().map((workerObj,index)=>
+(<h3 key={index}>{workerObj['workerName']}</h3>))}</h3>
 </div>:<h3>no workers are assigned</h3>
 :''
 ))}
@@ -165,7 +176,8 @@ Object.keys(document[projName][monograph]['GC']).map((test)=>(
 <Select
 styles={selectCompDatabaseStyle}
 onChange={(option)=>(handleSupervisor(option,projName,monograph,tech,test))}
-options={professionDocument['supervisor']}
+options={professionDocument['supervisor'].concat({label:'cancel choise',value:'',id:''})}
+placeholder='Select Supervisor'
 />
 </div>
 <svg witdh='20' height='20' fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="">

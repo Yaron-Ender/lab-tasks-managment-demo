@@ -6,6 +6,7 @@ import { Fragment, useEffect,useState } from "react";
 import WorkersMyAssignment from "./workersMyAssignment";
 import WorkersSameTechAssignment from "./workersSameTechAssignment";
 import WorkersOtherAssignments from "./workersOtherAssignments";
+import WorkerSupervisorAss from "./workerSupervisorAss";
 const WorkersAssignments = () => {
  const { arrayOfDocID, error } = useCollection("assignments");
  const { user } =useAuthContext(); 
@@ -15,36 +16,50 @@ const WorkersAssignments = () => {
  //!! the reason i devided the logic into three seperate comp( WorkersMyAssignment -- responsible to display my Assigntments, and workersSameTechAssignments-- assignments with the same thech WorkersOtherAssignmet-- responsible for all the other assignments.) is because My assignment comes from the users collection as opposed to other assignments that comes from assignments collection - the reason for that is because we don't want to allow all the users access to users collection
   useEffect(()=>{
   if(userDocuemnt){
+  //store the users's assignments array 
   setMyAssignments((prev) => (prev = userDocuemnt["assignments"]));
   Object.keys(userDocuemnt["position"]).map((pos) => {
   if(userDocuemnt["position"][pos])setProfession(pos);
   });
   }
   },[userDocuemnt])
- return (
-<div>
-<h1>Assignmets</h1>
-{myAssignments.length>0&&myAssignments.map((assignmentID,index)=>(
-<Fragment key={index}>
-<WorkersMyAssignment myAssignmentID={assignmentID}profession={profession} userName={userDocuemnt.userName}userID={userDocuemnt.id}/>
-</Fragment>
-))}
-<h2>{profession} Assignments</h2>
-{arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
-<div key={index}>
-<WorkersSameTechAssignment assignmentID={assignmentID}profession={profession} userID={userDocuemnt.id} />
-</div>
-))}
-<h2>Other Assignments</h2>
-{arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
-<div key={index}>
-<WorkersOtherAssignments assignmentID={assignmentID}profession={profession} userID={userDocuemnt.id} />
-</div>
-))
-
+if(profession !=='supervisor'&& profession !=='manager'){
+  return (
+ <div>
+ <h1>Assignmets</h1>
+ <h2>My Assignments</h2>
+ {myAssignments.length>0&&myAssignments.map((assignmentID,index)=>(
+ <Fragment key={index}>
+ <WorkersMyAssignment myAssignmentID={assignmentID}profession={profession} userName={userDocuemnt.userName}userID={userDocuemnt.id}/>
+ </Fragment>
+ ))}
+ <h2>{profession} Assignments</h2>
+ {arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
+ <div key={index}>
+ <WorkersSameTechAssignment assignmentID={assignmentID}profession={profession} userID={userDocuemnt.id} />
+ </div>
+ ))}
+ <h2>Other Assignments</h2>
+ {arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
+ <div key={index}>
+ <WorkersOtherAssignments assignmentID={assignmentID}profession={profession} userID={userDocuemnt.id} />
+ </div>
+ ))
+ }
+ </div>
+   );
 }
-</div>
-  );
+// if(profession === 'supervisor'){
+// return(
+// <div>
+//   {arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
+//   <div key={index}>
+//  <WorkerSupervisorAss assignmentID={assignmentID}/>
+//  </div>
+//   ))}
+// </div>
+// )
+// }
 };
 
 export default WorkersAssignments;

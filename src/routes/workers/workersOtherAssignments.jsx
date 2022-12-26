@@ -27,7 +27,10 @@ Object.entries(techAndTestArr[1]).forEach((testAdnDetArr)=>{
   otherAssignmentObj.comments = testAdnDetArr[1].comments;
   otherAssignmentObj.supervisor = testAdnDetArr[1].supervisor;
   testAdnDetArr[1]['workers'].forEach((workerObj)=>{
-    otherAssignmentObj.userName= [...otherAssignmentObj.userName,workerObj.workerName]
+  //check that the same user would not be twice
+  if(!otherAssignmentObj.userName.includes(workerObj.workerID)){
+    otherAssignmentObj.userName= [...otherAssignmentObj.userName,{workerName:workerObj.workerName,workerID:workerObj.workerID}]
+  }
   })
   setRerender(testAdnDetArr[0]);
 })
@@ -41,12 +44,18 @@ Object.entries(techAndTestArr[1]).forEach((testAdnDetArr)=>{
 return (
 <div>
 {otherAssignmentObj.test.length>0&&otherAssignmentObj.test.map((test,index)=>(
-<Fragment keys={index}>
+<Fragment key={index}>
  <div>
 {otherAssignmentObj.projectName&&<h3>{otherAssignmentObj.projectName}</h3>}
 <h3>dueDate :{otherAssignmentObj.duedate} </h3>
  </div>
-<h3>{otherAssignmentObj.monograph} -{test} - {otherAssignmentObj.userName.toString()}</h3>
+<h3>{otherAssignmentObj.monograph} -{test} </h3>
+ {otherAssignmentObj.userName.length>0&&otherAssignmentObj.userName.map((worker,index)=>(
+  <h3 key={index}>{worker.workerName}</h3>
+ ))}
+<div>
+{(otherAssignmentObj.supervisor)?<h3>supervisor:{otherAssignmentObj.supervisor}</h3>:<span>no supervisor has been set yet</span>}
+</div>
 </Fragment>
 ))
 }
