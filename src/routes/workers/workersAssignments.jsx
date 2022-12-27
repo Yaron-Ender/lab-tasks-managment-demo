@@ -6,14 +6,13 @@ import { Fragment, useEffect,useState } from "react";
 import WorkersMyAssignment from "./workersMyAssignment";
 import WorkersSameTechAssignment from "./workersSameTechAssignment";
 import WorkersOtherAssignments from "./workersOtherAssignments";
-import WorkerSupervisorAss from "./workerSupervisorAss";
 const WorkersAssignments = () => {
  const { arrayOfDocID, error } = useCollection("assignments");
  const { user } =useAuthContext(); 
  const { document:userDocuemnt, error: errorUser } = useDocument("users",user.uid);
  const [profession, setProfession] = useState(null);
  const [myAssignments,setMyAssignments] = useState([])
- //!! the reason i devided the logic into three seperate comp( WorkersMyAssignment -- responsible to display my Assigntments, and workersSameTechAssignments-- assignments with the same thech WorkersOtherAssignmet-- responsible for all the other assignments.) is because My assignment comes from the users collection as opposed to other assignments that comes from assignments collection - the reason for that is because we don't want to allow all the users access to users collection
+
   useEffect(()=>{
   if(userDocuemnt){
   //store the users's assignments array 
@@ -49,17 +48,7 @@ if(profession !=='supervisor'&& profession !=='manager'){
  </div>
    );
 }
-// if(profession === 'supervisor'){
-// return(
-// <div>
-//   {arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
-//   <div key={index}>
-//  <WorkerSupervisorAss assignmentID={assignmentID}/>
-//  </div>
-//   ))}
-// </div>
-// )
-// }
+
 };
 
 export default WorkersAssignments;

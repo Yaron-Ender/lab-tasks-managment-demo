@@ -10,10 +10,14 @@ const Navbar = () => {
   const { user } = useAuthContext()
   const { document,error:errorFromFirestore } =useDocument('users',user.uid)
   const navigate = useNavigate();
-  //workers immediatly direct to Workers comp
   useEffect(()=>{
-  if(document &&!document['position']['manager']){
-    navigate('/workers')
+  //supervisor immediatly direct to supervisor
+  if(document&&document['position']['supervisor']){
+    navigate('/workers/supervisor')
+  }
+//workers immediatly direct to Workers comp
+  if (document && !document["position"]["manager"] && !document["position"]['supervisor']) {
+    navigate("/workers");
   }
 
 },[document])
