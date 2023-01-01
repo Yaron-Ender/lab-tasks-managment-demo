@@ -65,6 +65,9 @@ WORK FLOW THAT ASSOSIATE WITH ASSIGNMET COLLECTION
  NOTE:
 
 
+
+
+
 workersAssignments.jsx
 
   the reason i devided the logic into three seperate comp( WorkersMyAssignment -- responsible to display my Assigntments, and workersSameTechAssignments-- assignments with the same thech WorkersOtherAssignmet-- responsible for all the other assignments.) is because My assignment comes from the users collection as opposed to other assignments that comes from assignments collection - the reason for that is because we don't want to allow all the users access to users collection

@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import { auth,db,storage } from '../firebase/firebase'
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc,setDoc, getDoc, collection,runTransaction } from "firebase/firestore";
+import { doc,setDoc, getDoc,runTransaction } from "firebase/firestore";
 import { ref,getDownloadURL } from "firebase/storage";
 import { useAuthContext } from './useAuthContext';
 export const useSignup = ()=>{
     const { dispatch } = useAuthContext()
 const [error, setError] = useState(null);
 const [isPending, setIsPending] = useState(false);
-const [professionObj,setProfessionObj]=useState(null)
  const signup = async(email,password,userName,employeeNum,position)=>
  {
   setIsPending(true)
@@ -33,7 +32,6 @@ const [professionObj,setProfessionObj]=useState(null)
 //update AuthContext
  dispatch({ type: "LOGIN", payload:{user,employeeNum,position}});
  //workers classification- proffesion collection
- const colRefProfession = collection(db, "profession");
  const selectProfession =async(prof)=>{
 await runTransaction(db,async(profession)=>{
   let newInfo=[];
@@ -41,12 +39,12 @@ const getInfo = await profession.get(doc(db,'profession',prof))
 if(!getInfo.exists()){
   console.log('doc does not exist') 
  await setDoc(doc(db, "profession", prof), {
-   [prof]: [{ value: userName, label: userName,id:user.uid,employeeNum }],
+   [prof]: [{ value: userName, label: userName,id:user.uid,employeeNum,photoURL }],
  });
 }
 if(getInfo.data()[prof]!==undefined){
   newInfo = getInfo.data()[prof]
-  newInfo.push({ value: userName, label: userName, id: user.uid, employeeNum }); 
+  newInfo.push({ value: userName, label: userName, id: user.uid, employeeNum,photoURL }); 
 }
  profession.update(doc(db, "profession",prof), { [prof]: newInfo });
 })

@@ -30,17 +30,21 @@ if(testAndDetArr[1].supervisor){
 {projectDetailsArr.length>0&&projectDetailsArr.map((supervisorObj,index)=>(
 <div key={index}>
 {supervisorObj.supervisor?
+<div>
 <h3>
 {supervisorObj.proj}
+</h3>
 
 {supervisorObj.workers.length>0&&supervisorObj.workers.map((workersObj,index)=>(
 <Fragment key={index}>
  <h3>{workersObj.workerName}</h3>   
 </Fragment>
 ))}
+<h3>
  -{supervisorObj.monograph} - {supervisorObj.test} -
 {supervisorObj.tech} - {supervisorObj.supervisor}
-</h3>:''
+</h3>
+</div>:''
 }
 <hr />
 </div>

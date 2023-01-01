@@ -1,0 +1,12 @@
+.user-avatar{
+display:inline-flex;
+height:3rem;
+width:3rem;
+border-radius:50%;
+ overflow: hidden;
+& img{
+ width:100%;
+ height:100%;
+
+}
+}

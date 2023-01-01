@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc,runTransaction} from "firebase/firestore";
+import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc} from "firebase/firestore";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);
@@ -56,11 +56,11 @@ modifiedObj = {...origonalFullData, [o]:{...newData} }
 //has used by projectsPreview component
 const updateSupervisor = async (updatedObj, id) => {
   const { projName, monograph, tech, test, option } = updatedObj;
-  const value = { name: option.value, id: option.id };
+  const value = { name: option.value, id: option.id,photoURL:option.photoURL };
 const document = await getDoc(doc(colRef, id));
 if(document.exists()){
 const originalObject = document.data()
-originalObject[projName][monograph][tech][test]['supervisor']=value
+originalObject[projName][monograph][tech][test]['supervisor']=value;
 await setDoc(doc(colRef, id), {...originalObject}); 
 
 }

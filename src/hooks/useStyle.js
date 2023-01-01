@@ -49,10 +49,24 @@ const selectCompCreateSunstanceStyle = {
     fontSize: isFocused ? "2rem" : "1.5rem",
   }),
 };
+const selectCompSupervisor = {
+  control: (styles, state) => ({
+    ...styles,
+    fontSize: state.isFocused ? "2rem" : "1rem",
+    transition: "all .5s",
+    border: "0",
+    boxShadow: "none",
+  }),
+ option:(styles, state)=>({
+...styles,
+ fontSize: state.isFocused ? "1.3rem" : "1.5rem",
+ })
+};
 return {
   openDatabaseNavbar,
   openDatabaseNavState,
   selectCompDatabaseStyle,
   selectCompCreateSunstanceStyle,
+  selectCompSupervisor,
 };
 }

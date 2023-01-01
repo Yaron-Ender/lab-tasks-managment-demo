@@ -3,7 +3,7 @@ import { useDocument } from '../../hooks/useDocument';
 import Select from 'react-select';
  import { useRef,useState,useEffect } from 'react';
 const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
-  const { document: professionDoc, error } = useDocument("profession", tech);
+  const { document: professionDoc } = useDocument("profession", tech);
   const [textArea, setTextArea] = useState("");
   const [workers,setWorkers] = useState([])
   const [date,setDate] =useState('')
@@ -46,7 +46,7 @@ const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
   const handleWorkers = (option) => {
     let workersArr = [];
     option.forEach((o) => {
-      workersArr.push({workerID:o.id,workerName:o.value});
+      workersArr.push({workerID:o.id,workerName:o.value,workerAvatar:o.photoURL});
     setWorkers(workersArr);
     });
      };

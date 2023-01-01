@@ -18,6 +18,8 @@ $nav-color-light:#742fcd;
 $green-primary:#1f9751;
 $green-shine:#19e635;
 $database-navbar:#f190d4;
+$black-400:#444;
+$black-300:#333;
 $black:#222;
 $black-font:#121212;
 $white:#fff;
@@ -73,6 +75,8 @@ $box-shadow-difution:
     6.4px 17.1px 16px -3.2px  rgba(0,0,0,0.05),
     9.2px 24.7px 23.1px -3.7px  rgba(0,0,0,0.03),
     12.8px 34.4px 32.2px -4.1px  rgba(0,0,0,0.02);
+  $box-shadow-test:
+  0 0.1rem 0.2rem rgba(0,0,0,0.19),0 0.6rem 0.6rem rgba(0,0,0,0.23);
 // font sizes
 $base-font-size: 1.6rem;
 $font-size-sm: $base-font-size * 0.75;
