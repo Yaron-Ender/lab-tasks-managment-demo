@@ -20,7 +20,7 @@ const selectCompDatabaseStyle = {
     ...styles,
     color: "$nav-color-light",
   }),
-  option: (styles, { data, isFocused, isDisable, isSelected }) => {
+  option: (styles, { data, isFocused,}) => {
     return {
       ...styles,
       fontSize: isFocused ? "2.4rem" : "2rem",
@@ -31,12 +31,12 @@ const selectCompDatabaseStyle = {
         : "",
     };
   },
-  dropdownIndicator: (style) => {
+  dropdownIndicator: () => {
     return { width: "calc(100% + 5rem)" };
   },
 };
 const selectCompCreateSunstanceStyle = {
-  control: (styles, state) => {
+  control: (styles) => {
     return {
       ...styles,
       fontSize: "2rem",
@@ -44,7 +44,7 @@ const selectCompCreateSunstanceStyle = {
       backgroundColor: "",
     };
   },
-  option: (styles, { data, isFocused, isDisable, isSelected }) => ({
+  option: (styles, {isFocused}) => ({
     ...styles,
     fontSize: isFocused ? "2rem" : "1.5rem",
   }),
@@ -52,15 +52,16 @@ const selectCompCreateSunstanceStyle = {
 const selectCompSupervisor = {
   control: (styles, state) => ({
     ...styles,
+    padding: "0rem",
     fontSize: state.isFocused ? "2rem" : "1rem",
     transition: "all .5s",
     border: "0",
     boxShadow: "none",
   }),
- option:(styles, state)=>({
-...styles,
- fontSize: state.isFocused ? "1.3rem" : "1.5rem",
- })
+  option: (styles, state) => ({
+    ...styles,
+    fontSize: state.isFocused ? "1.3rem" : "1.5rem",
+  }),
 };
 return {
   openDatabaseNavbar,

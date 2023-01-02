@@ -11,6 +11,7 @@ const { error:professionError, document:professionDocument } = useDocument('prof
 const { selectCompSupervisor } = useStyle();
 const { updateSupervisor } = useFriestore("assignments");
 const [dueDateArray,setDueDateArray]=useState([]);
+const [moveDown,setMoveDown]=useState(false)
 //finde the latest date in assignment document
  const lastDuedate = useCallback(()=>{
   Object.keys(document).forEach((substanceName)=>{
@@ -54,6 +55,17 @@ if (e.target.firstElementChild.classList.contains('open')) {
 //open tests box
 const handleOpenTechBox = (e)=>{
 e.target.classList.toggle('open')
+console.log(e.target)
+const allTestBox = e.target.parentElement.nextElementSibling
+const preview = allTestBox.parentElement;
+console.log(allTestBox)
+if(e.target.classList.contains('open')){
+  allTestBox.style.height ='100%';
+  // allTestBox.style.height =`calc(${preview.scrollHeight}px - ${allTestBox.scrollHeight}px)`;
+}
+if (!e.target.classList.contains("open")) {
+  allTestBox.style.height = "0";
+}
 }
 //open more details box
 const handleMoreDetailsBox = (e)=>{
@@ -62,16 +74,9 @@ const moreDetails =e.target.parentElement.nextElementSibling
 const wholeTest = e.target.parentElement.parentElement.parentElement;
 if ( e.target.classList.contains('open')) {
 wholeTest.style.height = `${wholeTest.scrollHeight}px`;
-console.log(
-  e.target.className,
-  wholeTest,
-  wholeTest.scrollHeight,
-  moreDetails.scrollHeight
-  );
 }
 if(! e.target.classList.contains('open')){
   wholeTest.style.height = `calc(${wholeTest.scrollHeight}px - ${moreDetails.scrollHeight}px)`;
-console.log(e.target.className,wholeTest);
 }
 }
 useEffect(()=>{
@@ -96,9 +101,11 @@ dueDateArray.length>0&&
 <div className="project-status">
 <h3>i'm the status box</h3>
 </div>
-<svg onClick={handleOpenTechBox} witdh='20' height='20' fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+<div className="chevron-open-tech-box" onClick={handleOpenTechBox}>  
+<svg  witdh='20' height='20' fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
 </svg>
+</div>
 </div>
 {/* this div wrap the monograoh,tech,test,details of each test */}
 <div className="project-all-tests">
@@ -116,7 +123,7 @@ dueDateArray.length>0&&
 Object.keys(document[projName][monograph]['HPLC']).sort().map((test,index)=>(
   <Fragment key={index}>
 <div className="whole-test">
-<main className="main-details" style={{border:'2px solid black'}}>
+<main className="main-details">
 <div className="workers-and-test-box">
 {/* shwo workers if there is one */}
 {Object.keys(document[projName][monograph]['HPLC'][test]).sort().map((property,index)=>(
@@ -132,31 +139,34 @@ Object.keys(document[projName][monograph]['HPLC']).sort().map((test,index)=>(
 </div>
 {professionDocument&&
 <div className="supervisor-box">
-<div>
+<div  className={`select-box ${moveDown ?'move-down':""}`}>
 <Select
 styles={selectCompSupervisor}
 onChange={(option)=>(handleSupervisor(option,projName,monograph,tech,test))}
 options={professionDocument['supervisor'].concat({label:'cancel choise',value:'',id:'',photoURL:''})}
 placeholder='Select Supervisor'
+onMenuOpen={()=>{setMoveDown(true)}}
+onMenuClose={()=>{setMoveDown(false)}}
 />
 </div>
 {document[projName][monograph]['HPLC'][test]['supervisor']['photoURL']?
 <Avatar src={document[projName][monograph]['HPLC'][test]['supervisor']['photoURL']} />
-  :<span>no supervisor has chosen</span>}
+  :<span>no supervisor is assign</span>}
 </div>
 }
 {professionError&&<h4>No Supervisor is register</h4>}
+<div className="chevron-more-details" onClick={handleMoreDetailsBox}>
 <svg witdh='20' height='20' fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" >
 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
 </svg>
+</div>
 </main>
-<div className="more-details" style={{border:'5px solid pink'}}>
-<h3>Comments: {document[projName][monograph]['HPLC'][test]['comments']}</h3>
-<h3>{tech}</h3>
-<h3>{monograph}</h3>
+<div className="more-details">
+<h4><span>dueDate:</span>{document[projName][monograph]['HPLC'][test]['dueDate']}</h4>
+<h4><span>Comments:</span>{document[projName][monograph]['HPLC'][test]['comments']}</h4>
+<h4><span> Monograph</span>{monograph}</h4>
 </div>
 </div>
-<hr style={{height:'25px',background:'red',width:'100%'}}></hr>
 </Fragment> 
 ))}
 </Fragment>
@@ -174,7 +184,7 @@ placeholder='Select Supervisor'
 Object.keys(document[projName][monograph]['WET']).sort().map((test,index)=>(
   <Fragment key={index}>
 <div className="whole-test">
-<main className="main-details" style={{border:'2px solid black'}}>
+<main className="main-details">
 <div className="workers-and-test-box">
 {/* shwo workers if there is one */}
 {Object.keys(document[projName][monograph]['WET'][test]).sort().map((property,index)=>(
@@ -190,31 +200,34 @@ Object.keys(document[projName][monograph]['WET']).sort().map((test,index)=>(
 </div>
 {professionDocument&&
 <div className="supervisor-box">
-<div>
+<div className={`select-box ${moveDown ?'move-down':""}`}>
 <Select
 styles={selectCompSupervisor}
 onChange={(option)=>(handleSupervisor(option,projName,monograph,tech,test))}
 options={professionDocument['supervisor'].concat({label:'cancel choise',value:'',id:'',photoURL:''})}
 placeholder='Select Supervisor'
+onMenuOpen={()=>{setMoveDown(true)}}
+onMenuClose={()=>{setMoveDown(false)}}
 />
 </div>
 {document[projName][monograph]['WET'][test]['supervisor']['photoURL']?
 <Avatar src={document[projName][monograph]['WET'][test]['supervisor']['photoURL']} />
-  :<span>no supervisor has chosen</span>}
+  :<span>no supervisor is assign</span>}
 </div>
 }
 {professionError&&<h4>No Supervisor is register</h4>}
+<div className="chevron-more-details" onClick={handleMoreDetailsBox}>
 <svg witdh='20' height='20' fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
 </svg>
+</div>
 </main>
-<div className="more-details" style={{border:'5px solid pink'}}>
-<h3>Comments: {document[projName][monograph]['WET'][test]['comments']}</h3>
-<h3>{tech}</h3>
-<h3>{monograph}</h3>
+<div className="more-details">
+<h4><span>dueDate:</span>{document[projName][monograph]['WET'][test]['dueDate']}</h4>
+<h4><span>Comments:</span>{document[projName][monograph]['WET'][test]['comments']}</h4>
+<h4><span> Monograph</span>{monograph}</h4>
 </div>
 </div>
-<hr style={{height:'25px',background:'red'}}></hr>
 </Fragment> 
 ))}
 </Fragment>
@@ -232,7 +245,7 @@ placeholder='Select Supervisor'
 Object.keys(document[projName][monograph]['GC']).sort().map((test,index)=>(
 <Fragment key={index}>
 <div className="whole-test">
-<main className="main-details" style={{border:'2px solid black'}}>
+<main className="main-details">
 <div className="workers-and-test-box">
 {/* shwo workers if there is one */}
 {Object.keys(document[projName][monograph]['GC'][test]).sort().map((property,index)=>(
@@ -248,17 +261,19 @@ Object.keys(document[projName][monograph]['GC']).sort().map((test,index)=>(
 </div>
 {professionDocument&&
 <div className="supervisor-box">
-<div>
+<div className={`select-box ${moveDown ?'move-down':""}`}>
 <Select
 styles={selectCompSupervisor}
 onChange={(option)=>(handleSupervisor(option,projName,monograph,tech,test))}
 options={professionDocument['supervisor'].concat({label:'cancel choise',value:'',id:'',photoURL:''})}
 placeholder='Supervisor'
+onMenuOpen={()=>{setMoveDown(true)}}
+onMenuClose={()=>{setMoveDown(false)}}
 />
 </div>
 {document[projName][monograph]['GC'][test]['supervisor']['photoURL']?
 <Avatar src={document[projName][monograph]['GC'][test]['supervisor']['photoURL']} />
-  :<span>no supervisor has chosen</span>}
+  :<span>no supervisor is assign</span>}
 </div>
 }
 {professionError&&<h4>No Supervisor is register</h4>}
@@ -272,10 +287,8 @@ placeholder='Supervisor'
 <h4><span>dueDate:</span>{document[projName][monograph]['GC'][test]['dueDate']}</h4>
 <h4><span>Comments:</span>{document[projName][monograph]['GC'][test]['comments']}</h4>
 <h4><span> Monograph</span>{monograph}</h4>
-
 </div>
 </div>
-{/* <hr style={{height:'25px',background:'red'}}></hr> */}
 </Fragment> 
 ))}
 </Fragment>
