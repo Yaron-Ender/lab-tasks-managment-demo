@@ -11,6 +11,7 @@ const Button = ({...otherProps}) => {
       addProject:'addProject',
       done:'done',
       remove:'remove',
+      deleteProject:'delete-project'
     };
 
     return (

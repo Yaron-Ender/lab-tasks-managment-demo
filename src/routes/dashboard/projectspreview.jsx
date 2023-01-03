@@ -1,17 +1,29 @@
 import { useDocument } from "../../hooks/useDocument";
 import { useState, useEffect, Fragment,useCallback } from "react";
-import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { format, set } from "date-fns";
 import Select from 'react-select';
 import { useFriestore } from "../../hooks/useFirestore";
 import { useStyle } from "../../hooks/useStyle";
+import Button from '../../component/button/button'
 import Avatar from "../../component/avatar/avatar";
+
 const Projectspreview = ({ assignmentDocID }) => {
 const { error: documentError, document } = useDocument("assignments",assignmentDocID);
 const { error:professionError, document:professionDocument } = useDocument('profession','supervisor');
 const { selectCompSupervisor } = useStyle();
-const { updateSupervisor } = useFriestore("assignments");
+const { updateSupervisor,deleteDocument } = useFriestore("assignments");
 const [dueDateArray,setDueDateArray]=useState([]);
 const [moveDown,setMoveDown]=useState(false)
+const navigate = useNavigate()
+
+//delete project
+const deleteProject =async () => {
+await deleteDocument(assignmentDocID);
+ navigate("/assignment");
+};
+
+
 //finde the latest date in assignment document
  const lastDuedate = useCallback(()=>{
   Object.keys(document).forEach((substanceName)=>{
@@ -40,43 +52,47 @@ const updatedObject = { option, projName, monograph, tech, test };
 await updateSupervisor(updatedObject, assignmentDocID);
 }
 }
-//open tests
-const handleOpenTech = (e) => {
-const element = e.target.nextElementSibling;
-e.target.firstElementChild.classList.toggle('open')
-const moreDetails = e.target.parentElement.lastChild.lastChild.lastChild;
-if (!e.target.firstElementChild.classList.contains("open")) {
-  element.style.height = `0px`;
-}
-if (e.target.firstElementChild.classList.contains('open')) {
-  element.style.height = `calc(${element.scrollHeight}px - ${moreDetails.scrollHeight}px`;
-}
-};
-//open tests box
+//open tech box
 const handleOpenTechBox = (e)=>{
 e.target.classList.toggle('open')
-console.log(e.target)
 const allTestBox = e.target.parentElement.nextElementSibling
-const preview = allTestBox.parentElement;
-console.log(allTestBox)
 if(e.target.classList.contains('open')){
   allTestBox.style.height ='100%';
-  // allTestBox.style.height =`calc(${preview.scrollHeight}px - ${allTestBox.scrollHeight}px)`;
 }
 if (!e.target.classList.contains("open")) {
   allTestBox.style.height = "0";
 }
 }
+//open single tech
+const handleOpenTech = (e) => {
+ e.target.firstElementChild.classList.toggle('open')
+const projectTech = e.target.nextElementSibling;
+const projectMain = projectTech.firstElementChild.firstElementChild
+const arrOfProjectTech = Array.from(projectTech.children)
+ const childernNum = projectTech.childElementCount;
+if (!e.target.firstElementChild.classList.contains("open")) {
+  projectTech.style.height = `0px`;
+}
+if (e.target.firstElementChild.classList.contains('open')) {
+  arrOfProjectTech.forEach((el) => {
+  el.lastElementChild.style.display='none'
+  });
+ projectTech.style.height = `calc((${childernNum} * ${projectMain.scrollHeight}px))`;
+}
+};
 //open more details box
 const handleMoreDetailsBox = (e)=>{
-e.target.classList.toggle('open')
-const moreDetails =e.target.parentElement.nextElementSibling
-const wholeTest = e.target.parentElement.parentElement.parentElement;
-if ( e.target.classList.contains('open')) {
-wholeTest.style.height = `${wholeTest.scrollHeight}px`;
+  e.target.classList.toggle('open')
+  const moreDetails =e.target.parentElement.nextElementSibling
+  const wholeTest = e.target.parentElement.parentElement.
+  parentElement;
+  if ( e.target.classList.contains('open')) {
+   moreDetails.style.display='block'
+ wholeTest.style.height = `calc(${wholeTest.scrollHeight}px)`;
 }
 if(! e.target.classList.contains('open')){
   wholeTest.style.height = `calc(${wholeTest.scrollHeight}px - ${moreDetails.scrollHeight}px)`;
+   moreDetails.style.display = "none";
 }
 }
 useEffect(()=>{
@@ -88,16 +104,19 @@ lastDuedate()
 return(
 <div className="project-preview">
 {documentError&&<h2 className="error" >{documentError}</h2>}
-{document&& Object.keys(document).map((projName,index)=>(
+{!documentError&&document&& Object.keys(document).map((projName,index)=>(
 <Fragment key={index}>
 <div className="project-header">
 <h2>{projName}</h2>
+<div className="delete-and-date-box">
 {dueDateArray &&
 dueDateArray.length>0&&
 <span>
 {format(new Date(dueDateArray[0]),'MM/dd/yyyy')}
 </span>
 }
+<Button type="button" children="Delete Project" buttontype="deleteProject" onClick={()=>{deleteProject()}}/>
+</div>
 <div className="project-status">
 <h3>i'm the status box</h3>
 </div>

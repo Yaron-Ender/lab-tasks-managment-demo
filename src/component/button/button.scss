@@ -116,5 +116,27 @@ margin-top: auto;
   color:$white;
   }
  }
+&.delete-project{
+ color:map-get($colors,'white');
+   border:$base-border-thickness solid currentcolor;
+   padding:$base-padding*0.25 $base-padding*0.5;
+   border-radius:$base-border-radius*0.2;
+   transition:$base-transition;
+   font: {
+    size:$base-font-size*0.7;
+    family:poppins, sans-serif;
+    weight:bold;
+   }
+   letter-spacing:0.1rem;
+   &:hover{
+   background-color:map-get($colors,'error');;
+  color:map-get($colors,'gray-bck');
+   border:$base-border-thickness solid $nav-color;
+   font: {
+    size:$base-font-size*0.8;
+   }
+   box-shadow:$box-shadow-test;
+   }  
+}
 }
 

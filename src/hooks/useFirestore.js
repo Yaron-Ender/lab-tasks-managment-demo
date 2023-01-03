@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc} from "firebase/firestore";
+import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc,deleteDoc} from "firebase/firestore";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);
@@ -76,6 +76,9 @@ await updateDoc(docRef, { 'assignments':userAssignmentsArr});
 
 }
   }
+const deleteDocument =async (id)=>{
+await deleteDoc(doc(colRef,id))
+}
  return {
    updateDocument,
    updateMonographName,
@@ -83,6 +86,7 @@ await updateDoc(docRef, { 'assignments':userAssignmentsArr});
    addDocumentWithAnonymousID,
    updateSupervisor,
    updateUsersAssignment,
+   deleteDocument,
  };
 }
 
