@@ -1,0 +1,62 @@
+.workers{
+font-family:Poppins,sans-serif;
+position: relative;
+height:100vh;
+@include grid(20% 1fr,1fr,2rem);
+& .worker-sidebar{
+background-color:$black-800;
+& nav{
+position:sticky;
+top:10rem;
+left:0;
+max-height:100%;
+@include flx-col(center,flex-end);
+& > li{
+@include flx-row(flex-end);
+margin-bottom:1rem;
+width:100%;
+& > a{
+font-size:$base-font-size;
+text-align: center;
+width:85%;
+color:$white;
+padding:0.5rem 0;
+&:hover{
+font-size:$base-font-size*1.1;
+background-color:$gray-primary;
+color:$nav-color-2;
+border-top-left-radius:10rem;
+border-bottom-left-radius:10rem;
+}
+}
+}
+}
+}//end of worker sidebar
+& .supervisor-container{
+@include flx-col(flex-start,flex-start);
+& .supervisor-assignments-list{
+width:100%;
+border:4px solid red;
+margin-left: auto;
+margin-right:1.5rem;
+@include flx-row(flex-start,flex-start);
+gap:2rem;
+& .supervisor-singel-proj{
+@include flx-row();
+gap:2rem;
+& .supervisor-singel-test{
+color:$gray-border;
+background-color:$black-800;
+border-radius:0.5rem;
+padding:1rem;
+}
+& .supervisor-card-date-proj-box{
+@include flx-col();
+}
+& .supervisor-card-workers{
+@include flx-row(flex-start);
+}
+}//end supervisor-single-card
+}//end of supervisor-assignments-list
+}
+}//end of workers

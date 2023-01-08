@@ -1,18 +1,24 @@
-
+import { useState,useEffect,useCallback } from "react";
 import WorkersSuperAssignmentsList from "./workersSuperAssignmentsList";
-const WorkersSupervisor = ({ arrayOfDocID,error }) => {
-
+const WorkersSupervisor = ({ arrayOfDocID,superId}) => {
+const [relavantid,setRelevantId] = useState([])
+// this function get called from workersAssignmentsList
+const relevantIdFunction = useCallback((relevantID)=>{
+ setRelevantId((prev) => (prev = [...prev,relevantID]));
+},[relavantid])
+useEffect(() => {
+  setRelevantId([]);
+}, []);
 
 return (
-  <div>
-  <h1>hai supervisor</h1>
-  {error&&<h2>{error}</h2>}
+  <div className="supervisor-container">
+  {relavantid&&<h2>you have {relavantid.length} projects</h2>}
+  <div className="supervisor-assignments-list" >
   {arrayOfDocID.length > 0 &&
   arrayOfDocID.map((assignmentID,index)=>(
-  <div key={index}>
-  <WorkersSuperAssignmentsList assignmentID={assignmentID} />
-  </div>
+  <WorkersSuperAssignmentsList key={index} assignmentID={assignmentID} superId={superId} relevantIdFunction={relevantIdFunction} />
   ))}
+  </div>
   </div>
 );
 };

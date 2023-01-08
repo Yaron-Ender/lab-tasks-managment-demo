@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc,deleteDoc} from "firebase/firestore";
+import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc,deleteDoc, deleteField} from "firebase/firestore";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);
@@ -56,16 +56,24 @@ modifiedObj = {...origonalFullData, [o]:{...newData} }
 //has used by projectsPreview component
 const updateSupervisor = async (updatedObj, id) => {
   const { projName, monograph, tech, test, option } = updatedObj;
-  const value = { name: option.value, id: option.id,photoURL:option.photoURL };
+  const value = { name: option.value, id: option.id,photoURL:option.photoURL,dueDate:'' };
 const document = await getDoc(doc(colRef, id));
 if(document.exists()){
 const originalObject = document.data()
 originalObject[projName][monograph][tech][test]['supervisor']=value;
 await setDoc(doc(colRef, id), {...originalObject}); 
-
 }
 };
+const updateSupervisorDuedate = async (updatedObject,id) => {
+const { projName, monograph, tech, test, date } = updatedObject;
+const document = await getDoc(doc(colRef, id));
+if(document.exists()){
+ const originalObject = document.data();
+originalObject[projName][monograph][tech][test]["supervisor"]['dueDate'] = date
+await setDoc(doc(colRef,id),{...originalObject})
+}
 
+};
 const updateUsersAssignment =async(userIDAndNameObj,assignmentID)=>{
 const docRef = doc(colRef, userIDAndNameObj["workerID"]);
 const docsnap = await getDoc(docRef);
@@ -79,14 +87,25 @@ await updateDoc(docRef, { 'assignments':userAssignmentsArr});
 const deleteDocument =async (id)=>{
 await deleteDoc(doc(colRef,id))
 }
+const deleteTest = async (id, projName, monograph, tech, test) => {
+const document = await getDoc(doc(colRef, id));
+if (document.exists()) {
+  const originalObject = document.data();
+ delete originalObject[projName][monograph][tech][test]
+  console.log(originalObject)
+   await setDoc(doc(colRef, id), { ...originalObject });
+}
+};
  return {
    updateDocument,
    updateMonographName,
    addDocument,
    addDocumentWithAnonymousID,
    updateSupervisor,
+   updateSupervisorDuedate,
    updateUsersAssignment,
    deleteDocument,
+   deleteTest,
  };
 }
 

@@ -81,6 +81,11 @@ margin-top: auto;
   color:map-get($colors,'gray-bck');
    border:$base-border-thickness solid $nav-color;
    font-weight:bold;
+   box-shadow:$base-box-shadow-middle;
+  }
+  &:active{
+  box-shadow:$base-box-shadow;
+  transform:translateY(0.15rem);  
    }
  }
  &.done{
@@ -135,7 +140,7 @@ margin-top: auto;
    font: {
     size:$base-font-size*0.8;
    }
-   box-shadow:$box-shadow-test;
+   box-shadow:$box-shadow-blur-modarate;
    }  
 }
 }

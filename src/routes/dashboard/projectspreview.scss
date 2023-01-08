@@ -102,9 +102,20 @@ border-top:0.1rem solid $gray-border;
 }
 & .supervisor-box{
 @include flx-row(space-between);
-padding:1rem 1rem;
-// margin-bottom: 2.5rem;
-transition: all $base-transition-slow;
+padding:2rem 1rem;
+transition: all $base-transition-slow;;
+& >  label >input{
+max-width:5rem;
+background-color: transparent;
+border:none;
+display:none;
+&::-webkit-calendar-picker-indicator {
+color:$gray-border;
+background-color:$gray-border;
+border-radius:0.5rem;
+cursor: pointer;
+}
+}
 & > .select-box.move-down{
   transform: translateY(-150%);
 }

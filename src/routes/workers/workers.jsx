@@ -1,30 +1,27 @@
-import { Routes, Route,NavLink } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import WorkersAssignments from "./workersAssignments";
 import WorkersSidebar from "./workersSidebar";
 import WorkersSupervisor from "./workersSupervisor";
 import { useCollection } from "../../hooks/useCollection";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { useDocument } from "../../hooks/useDocument";
 const Workers = () => {
-const { arrayOfDocID, error } = useCollection("assignments");
-
+const { arrayOfDocID} = useCollection("assignments");
+const { user } = useAuthContext();
+const { document,error:errorFromFirestore } =useDocument('users',user.uid)
 return (
-  <div>
-    <h2>workers</h2>
-    <NavLink to="/workers">
-      <span>workers hom page</span>
-    </NavLink>
-    <br></br>
-    <NavLink to="workers/workersAssignments">
-      <span>Add project</span>
-    </NavLink>
-    <WorkersSidebar />
+  <div className="workers">
+  {!errorFromFirestore&&document&&
+  <WorkersSidebar userDoc={document}/>
+  }
     <Routes>
       <Route
-        path="workers/workersAssignments"
+        path="/workersAssignments"
         element={<WorkersAssignments />}
       />
       <Route
         path="/supervisor"
-        element={<WorkersSupervisor arrayOfDocID={arrayOfDocID} error={error} />}
+        element={document&&<WorkersSupervisor arrayOfDocID={arrayOfDocID} superId={document.id} />}
       />
     </Routes>
   </div>

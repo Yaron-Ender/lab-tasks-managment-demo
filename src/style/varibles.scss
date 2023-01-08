@@ -18,6 +18,8 @@ $nav-color-light:#742fcd;
 $green-primary:#1f9751;
 $green-shine:#19e635;
 $database-navbar:#f190d4;
+$black-800:#888;
+$black-700:#777;
 $black-600:#666;
 $black-500:#555;
 $black-400:#444;
@@ -62,6 +64,7 @@ $base-border-radius:2rem;
 
 // box-shadow
 $base-box-shadow:0.1rem 0.3rem 0.5rem rgba(0,0,0,0.1);
+$base-box-shadow-middle:0.1rem 0.3rem 0.5rem rgba(0,0,0,0.5);
 $base-box-shadow-strong:0.1rem 0.3rem 0.5rem rgba(0,0,0,1);
 $box-shadow-card:2.5rem 3.75rem 3rem -3rem #48556a;
 $box-shadow-change-mono:0 0 0.1rem rgba(0,0,0,0.2), 0 0.1rem 0.2rem rgba(0,0,0,0.2);
@@ -77,7 +80,7 @@ $box-shadow-difution:
     6.4px 17.1px 16px -3.2px  rgba(0,0,0,0.05),
     9.2px 24.7px 23.1px -3.7px  rgba(0,0,0,0.03),
     12.8px 34.4px 32.2px -4.1px  rgba(0,0,0,0.02);
-  $box-shadow-test:
+  $box-shadow-blur-modarate:
   0 0.1rem 0.2rem rgba(0,0,0,0.19),0 0.6rem 0.6rem rgba(0,0,0,0.23);
 // font sizes
 $base-font-size: 1.6rem;

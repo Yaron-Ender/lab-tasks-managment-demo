@@ -1,18 +1,23 @@
-import { Fragment} from 'react';
+import { useEffect } from 'react';
+import { Fragment,useState,useCallback} from 'react';
 import { useCollection } from '../../hooks/useCollection';
 import Projectspreview from './projectspreview';
 
-const ProjectDashboard = () => {
-// const [assignmentDocID,setAssignmentDocID] =useState('')
+const ProjectDashboard = ({ projWasDeleted }) => {
+const [counter,setCounter] =useState(0)
 const { arrayOfDocID, error } = useCollection("assignments");
+
+useEffect(()=>{
+setCounter((prev)=>(arrayOfDocID.length))
+},[arrayOfDocID])
     return (
 <div className='project-dashboard'>
-{(error)?<h3 className='error'>{error}</h3>:<h2> you have {arrayOfDocID.length} project runing</h2>}
+{(error)?<h3 className='error'>{error}</h3>:<h2> you have {counter} project runing</h2>}
 <div className='projects-preview-container'>
 {arrayOfDocID.length>0 &&
- arrayOfDocID.map((id,index)=>(
+ arrayOfDocID.sort().map((id,index)=>(
 <Fragment key={index}>
-<Projectspreview assignmentDocID={id}/>
+<Projectspreview assignmentDocID={id} />
 </Fragment>
 ))}
 </div>

@@ -12,7 +12,8 @@ const Projectspreview = ({ assignmentDocID }) => {
 const { error: documentError, document } = useDocument("assignments",assignmentDocID);
 const { error:professionError, document:professionDocument } = useDocument('profession','supervisor');
 const { selectCompSupervisor } = useStyle();
-const { updateSupervisor,deleteDocument } = useFriestore("assignments");
+const { updateSupervisor, updateSupervisorDuedate,deleteDocument, deleteTest } =
+  useFriestore("assignments");
 const [dueDateArray,setDueDateArray]=useState([]);
 const [moveDown,setMoveDown]=useState(false)
 const navigate = useNavigate()
@@ -21,9 +22,14 @@ const navigate = useNavigate()
 const deleteProject =async () => {
 await deleteDocument(assignmentDocID);
  navigate("/assignment");
+setTimeout(()=>{
+  navigate("/assignment/projectsDashboard");
+},200)
 };
-
-
+//delete test
+const deleteSingleTest = async(projName, monograph, tech, test) => {
+await deleteTest(assignmentDocID,projName, monograph, tech, test);
+};
 //finde the latest date in assignment document
  const lastDuedate = useCallback(()=>{
   Object.keys(document).forEach((substanceName)=>{
@@ -46,12 +52,25 @@ await deleteDocument(assignmentDocID);
    //end of last dueDate
 },[document]) 
 // update supervisor in assignment collection
-const handleSupervisor = async ( option,projName,monograph,tech,test )=>{
-if(tech){
-const updatedObject = { option, projName, monograph, tech, test }; 
-await updateSupervisor(updatedObject, assignmentDocID);
+const handleSupervisor = async ( option,projName,monograph,tech,test)=>{
+  if(tech){
+  const updatedObject = { option, projName, monograph, tech, test }; 
+  await updateSupervisor(updatedObject, assignmentDocID);
+  const dateElement = window.document.querySelector(`.${projName}-${monograph}-${tech}-${test}`);
+  console.log(dateElement,option)
+if(option.value){
+  dateElement.style.display='block' 
+}else{  
+  dateElement.style.display='none' 
 }
 }
+}
+const handlsupervisorDuedate =async(projName, monograph, tech, test, e) => {
+ const date =  e.target.value;
+ const updatedObject = { projName, monograph, tech, test,date }; 
+ await updateSupervisorDuedate(updatedObject,assignmentDocID)
+
+};
 //open tech box
 const handleOpenTechBox = (e)=>{
 e.target.classList.toggle('open')
@@ -66,18 +85,20 @@ if (!e.target.classList.contains("open")) {
 //open single tech
 const handleOpenTech = (e) => {
  e.target.firstElementChild.classList.toggle('open')
-const projectTech = e.target.nextElementSibling;
-const projectMain = projectTech.firstElementChild.firstElementChild
-const arrOfProjectTech = Array.from(projectTech.children)
+ const projectTech = e.target.nextElementSibling;
+ const arrOfProjectTech = Array.from(projectTech.children)
  const childernNum = projectTech.childElementCount;
-if (!e.target.firstElementChild.classList.contains("open")) {
-  projectTech.style.height = `0px`;
-}
-if (e.target.firstElementChild.classList.contains('open')) {
+ if (!e.target.firstElementChild.classList.contains("open")) {
+   projectTech.style.height = `0px`;
+  }
+  if (e.target.firstElementChild.classList.contains('open')) {
+  if (projectTech.firstElementChild) {
+  const projectMain = projectTech.firstElementChild.firstElementChild
   arrOfProjectTech.forEach((el) => {
-  el.lastElementChild.style.display='none'
+  el.lastElementChild.style.display = "none";
   });
- projectTech.style.height = `calc((${childernNum} * ${projectMain.scrollHeight}px))`;
+  projectTech.style.height = `calc((${childernNum} * ${projectMain.scrollHeight}px))`;
+}
 }
 };
 //open more details box
@@ -103,7 +124,7 @@ lastDuedate()
 ////////////////////////////////////////////////////
 return(
 <div className="project-preview">
-{documentError&&<h2 className="error" >{documentError}</h2>}
+{documentError&&<h2 className="error" >Project was deleted</h2>}
 {!documentError&&document&& Object.keys(document).map((projName,index)=>(
 <Fragment key={index}>
 <div className="project-header">
@@ -141,6 +162,7 @@ dueDateArray.length>0&&
 {(tech==='HPLC')&&document[projName][monograph]['HPLC']&&
 Object.keys(document[projName][monograph]['HPLC']).sort().map((test,index)=>(
   <Fragment key={index}>
+{document[projName][monograph]['HPLC'][test]&&
 <div className="whole-test">
 <main className="main-details">
 <div className="workers-and-test-box">
@@ -155,6 +177,7 @@ Object.keys(document[projName][monograph]['HPLC']).sort().map((test,index)=>(
 :''
 ))}
 <h4>{test}</h4>
+<Button type="button" children="Delete Test" buttontype="deleteProject" onClick={()=>{deleteSingleTest(projName, monograph, tech, test);}}/>
 </div>
 {professionDocument&&
 <div className="supervisor-box">
@@ -168,6 +191,14 @@ onMenuOpen={()=>{setMoveDown(true)}}
 onMenuClose={()=>{setMoveDown(false)}}
 />
 </div>
+  <label>
+  <input
+  className={`${projName}-${monograph}-${tech}-${test}`}
+  name='date'
+  type="date"
+ onChange={(e) =>handlsupervisorDuedate(projName,monograph,tech,test,e)}
+  />
+</label>
 {document[projName][monograph]['HPLC'][test]['supervisor']['photoURL']?
 <Avatar src={document[projName][monograph]['HPLC'][test]['supervisor']['photoURL']} />
   :<span>no supervisor is assign</span>}
@@ -186,6 +217,7 @@ onMenuClose={()=>{setMoveDown(false)}}
 <h4><span> Monograph</span>{monograph}</h4>
 </div>
 </div>
+}
 </Fragment> 
 ))}
 </Fragment>
@@ -202,6 +234,7 @@ onMenuClose={()=>{setMoveDown(false)}}
 {(tech==='WET')&&document[projName][monograph]['WET']&&
 Object.keys(document[projName][monograph]['WET']).sort().map((test,index)=>(
   <Fragment key={index}>
+{document[projName][monograph]['WET'][test]&&
 <div className="whole-test">
 <main className="main-details">
 <div className="workers-and-test-box">
@@ -216,6 +249,7 @@ Object.keys(document[projName][monograph]['WET']).sort().map((test,index)=>(
 :''
 ))}
 <h4>{test}</h4>
+<Button type="button" children="Delete Test" buttontype="deleteProject" onClick={()=>{deleteSingleTest(projName, monograph, tech, test);}}/>
 </div>
 {professionDocument&&
 <div className="supervisor-box">
@@ -247,6 +281,8 @@ onMenuClose={()=>{setMoveDown(false)}}
 <h4><span> Monograph</span>{monograph}</h4>
 </div>
 </div>
+
+}
 </Fragment> 
 ))}
 </Fragment>
@@ -263,6 +299,7 @@ onMenuClose={()=>{setMoveDown(false)}}
 {(tech==='GC')&&document[projName][monograph]['GC']&&
 Object.keys(document[projName][monograph]['GC']).sort().map((test,index)=>(
 <Fragment key={index}>
+{document[projName][monograph]['GC'][test]&&
 <div className="whole-test">
 <main className="main-details">
 <div className="workers-and-test-box">
@@ -277,6 +314,7 @@ Object.keys(document[projName][monograph]['GC']).sort().map((test,index)=>(
 :''
 ))}
 <h4>{test}</h4>
+<Button type="button" children="Delete Test" buttontype="deleteProject" onClick={()=>{deleteSingleTest(projName, monograph, tech, test);}}/>
 </div>
 {professionDocument&&
 <div className="supervisor-box">
@@ -308,6 +346,8 @@ onMenuClose={()=>{setMoveDown(false)}}
 <h4><span> Monograph</span>{monograph}</h4>
 </div>
 </div>
+
+}
 </Fragment> 
 ))}
 </Fragment>
