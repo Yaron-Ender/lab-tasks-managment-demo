@@ -1,62 +1,117 @@
 .homepage{
+  @include flx-col();
+  background: linear-gradient(235deg, #BABC4A 0%, #000000 100%), linear-gradient(235deg, #0026AC 0%, #282534 100%), linear-gradient(235deg, #00FFD1 0%, #000000 100%), radial-gradient(120% 185% at 25% -25%, #EEEEEE 0%, #EEEEEE 40%, #7971EA calc(40% + 1px), #7971EA 50%, #393E46 calc(50% + 1px), #393E46 70%, #222831 calc(70% + 1px), #222831 100%), radial-gradient(70% 140% at 90% 10%, #F5F5C6 0%, #F5F5C6 30%, #7DA87B calc(30% + 1px), #7DA87B 60%, #326765 calc(60% + 1px), #326765 80%, #27253D calc(80% + 1px), #27253D 100%);
+background-blend-mode: overlay, lighten, overlay, color-burn, normal;
 height:100vh;
-max-width:80%;
- position:relative;
- @include flx-col();
-border:0.1rem solid red;
- & .hero-img{
-text-align: center;
-margin-bottom: auto;
-height: 80%;
- }
- & img{
 width:100%;
-height:100%;
- }
+ position:relative;
+& > .login-page-effect{
+margin-top:3rem;
+width:90vw;
+height:10rem;
+@include flx-row();
+position: relative;
+overflow-x: hidden;
+& h1{
+text-transform:uppercase;
+letter-spacing:0.5rem;
+font-family:Arapey;
+font-size:$font-size-xxl*1.5;
+color:transparent;
+ -webkit-text-stroke:0.01rem $green-shine;
+text-align: center;
+width:100%;
+position: absolute;
+top:0;
+left:0;
+}
+& h1.top-half{
+clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+animation: split 3s  infinite;
+}
+& h1.bottom-half{
+clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+animation: split 3s reverse infinite;
+}
+}
+@keyframes split{
+  0%{transform:translateX(100%);}
+  30%{transform:translateX(0px);}
+  70%{transform:translateX(0px);}
+  100%{transform:translateX(-100%)}
+
+}
  .login-navbar{
-   margin-bottom:auto;
-    width:100%;
-  background:#effaf0;
-    padding:2rem 1rem;
-   & .login-navbar-container{
-    position: relative;
-    width:90%;
-   text-align:end;
-   margin:0 auto;
-   & a.login-link{
-   display:inline-block;
-    text-decoration: none;
-   color:map-get($colors,'green');
-   border:$base-border-thickness solid $green-primary;
-   padding:$base-padding*0.8 $padding-medium*1.3;
-   border-radius:$base-border-radius*0.3;
-    box-shadow: 3px 3px 3px $green-primary;
-   transition:$base-transition;
-   font: {
-    size:$font-size-lg;
-    weight:700;
-   }
-   &:hover{
-   background-color:map-get($colors,'green');
-    color:#fff;
-   border:$base-border-thickness solid $nav-color;
-    box-shadow: 3px 3px 5px 5px $gray-primary;
-   }
+  margin-bottom:auto;
+  width:100%;
+  padding:2rem 1rem;
+  & .login-navbar-container{
+  position: relative;
+  width:60%;
+ @include flx-row(space-between,center);
+  margin:0 auto;
+  & a.login-link,a.signup-link{
+  text-decoration: none;
+  color:$green-home-300;
+  border:$base-border-thickness solid $green-home-300;
+  padding:$base-padding*0.8 $padding-medium*1.3;
+  border-radius:$base-border-radius*0.3;
+  box-shadow: 0.3rem 0.2rem 0.3rem $green-home-100;
+  transition:$base-transition;
+  animation: login 2s ease-in-out infinite;
+  font: {
+  size:$font-size-lg;
+  weight:700;
+  }
+  &:hover{
+  animation: login 0s linear infinite;
+  background-color:$green-home-200;
+  color:$black;
+  border:$base-border-thickness solid $black;
+  box-shadow: 0.3rem 0.2rem 0.6rem 0.2rem $green-home-100;
+  }
+  &:active{
+  transform: translateY(0.2rem);
+  box-shadow: 0.1rem 0.1rem 0.3rem  $green-home-100;  
+  }
  }
  & a.signup-link{
-position: absolute;
-top:4rem;
-left:0;
- color:map-get($colors,'green');
- transition:$base-transition; 
- font: {
-  size:$base-font-size;
- }
- &:hover{
-   color:#fff;
- }
+animation: signup 2s ease-in-out infinite;
+color:$blue-dark-200;
+border:$base-border-thickness solid $blue-dark-200;
+&:hover{
+color:$green-home-100;
+background-color:$green-home-400;
+box-shadow:0.3rem 0.2rem 0.6rem 0.2rem$blue-dark-200
 }
-   }
-   
+&:active{
+box-shadow:0.1rem 0.1rem 0.3rem  $blue-dark-200
+}
+}
+} 
+ }
+ @keyframes login {
+0%{
+transform:translateY(0rem); box-shadow: 0.3rem 0.2rem 0.3rem $green-home-100;
+}
+50%{
+transform:translateY(.3rem);  box-shadow: 0.1rem 0.1rem 0.2rem $green-home-200;
+
+}
+100%{
+transform:translateY(0rem);  box-shadow: 0.3rem 0.2rem 0.3rem $green-home-100;
+}  
+ }
+ @keyframes signup {
+0%{
+transform:translateY(0rem); box-shadow: 0.3rem 0.2rem 0.3rem $blue-dark-100;
+}
+50%{
+transform:translateY(.3rem);  box-shadow: 0.1rem 0.1rem 0.2rem $blue-dark-200;
+}
+100%{
+transform:translateY(0rem);  box-shadow: 0.3rem 0.2rem 0.3rem $blue-dark-100;
+
+}  
  }
 }

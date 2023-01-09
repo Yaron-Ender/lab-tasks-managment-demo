@@ -13,10 +13,17 @@ $border-color:#d4d4d4;
 $nav-color:#9c88ff;
 $nav-color-shining:#8c76fe;
 $nav-color-2:#58249c;
-$nav-color-dark:#3f1a71;
 $nav-color-light:#742fcd;
+$nav-color-dark:#3f1a71;
+$blue-dark-100:#0E3F2C;
+$blue-dark-200:#0F1A1D;
 $green-primary:#1f9751;
 $green-shine:#19e635;
+$green-home-100:#D9F4B4;
+$green-home-200:#BEF76B;
+$green-home-300:#81F065;
+$green-home-400:#0EAB2B;
+$green-home-500:#0E3F2C;
 $database-navbar:#f190d4;
 $black-800:#888;
 $black-700:#777;
@@ -42,6 +49,7 @@ $colors:(
   "nav-light":$nav-color-light,
   "green":$green-primary,
   "green-shine":$green-shine,
+  "green-home":$green-home-400,
   "database-navbar":$database-navbar,
   "orange": #ffa600,
   "purple": #9900ff,

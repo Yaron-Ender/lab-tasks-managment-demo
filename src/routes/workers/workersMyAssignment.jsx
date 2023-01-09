@@ -1,9 +1,9 @@
 import { useEffect,useState,useRef,Fragment } from "react";
 import { useDocument } from "../../hooks/useDocument";
-
-const WorkersMyAssignment = ({myAssignmentID,profession,userName,userID }) => {
-const { document,error } =useDocument('assignments',myAssignmentID);
-const [rerender,setRerender]=useState('');
+import { format } from "date-fns";
+const WorkersMyAssignment = ({myAssignmentID,profession,userID }) => {
+const { document } =useDocument('assignments',myAssignmentID);
+const [,setRerender]=useState('');
 const myAssignmentObj = useRef({projectName:'',profession,test:[],duedate:"",monograph:''}).current
 useEffect(()=>{
 if(document){
@@ -36,26 +36,24 @@ if(worker.workerID===userID){
 }
 },[document])
   return (
-<div>
-<h1>My Assignment</h1>
+<div className="workers-singel-test-container">
+<>
 {myAssignmentObj.test.length>0&&myAssignmentObj.test.map((test,index)=>(
 <Fragment key={index}>
-<div>
-{myAssignmentObj.projectName&&<h3>{myAssignmentObj.projectName}</h3>}
-<h3>dueDate :{myAssignmentObj.duedate} </h3>
+<div className="workers-singel-test-card">
+<h4>{format(new Date(myAssignmentObj.duedate), 'EEEE - MM/dd/yyyy')} </h4>
+<div className="myAssignments-proj-test-box">
+{myAssignmentObj.projectName&&<h4>{myAssignmentObj.projectName}</h4>}
+<h4>{test}</h4>
 </div>
-<h3>{myAssignmentObj.monograph} - {test} - {userName}</h3>
-<div>
-{(myAssignmentObj.comments)?<h3>comments: {myAssignmentObj.comments}</h3>:<span>no comments</span>}
-</div>
-<div>
-{(myAssignmentObj.supervisor)?<h3>supervisor:{myAssignmentObj.supervisor}</h3>:<span>no supervisor has been set yet</span>}
+<h4><span>methode : </span>{myAssignmentObj.monograph}</h4>
+{(myAssignmentObj.comments)?<h4><span>comments : </span>{myAssignmentObj.comments}</h4>:<span>no comments</span>}
+{(myAssignmentObj.supervisor)?<h4> <span>supervisor : </span>{myAssignmentObj.supervisor}</h4>:<span>no supervisor has been set yet</span>}
 </div>
 </Fragment>
 )) 
 }
-
-<hr />
+</>
 </div>
   );
 };

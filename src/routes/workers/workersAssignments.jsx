@@ -24,27 +24,32 @@ const WorkersAssignments = () => {
   },[userDocuemnt])
 if(profession !=='supervisor'&& profession !=='manager'){
   return (
- <div>
+ <div className="workers-container">
+{errorUser&&<h2>user does not exsist</h2>}
  <h1>Assignmets</h1>
- <h2>My Assignments</h2>
- {myAssignments.length>0&&myAssignments.map((assignmentID,index)=>(
- <Fragment key={index}>
- <WorkersMyAssignment myAssignmentID={assignmentID}profession={profession} userName={userDocuemnt.userName}userID={userDocuemnt.id}/>
- </Fragment>
- ))}
+ <div className="workers-my-assignments">
+  <h2>My Assignments</h2>
+ {myAssignments.length>0?myAssignments.map((assignmentID,index)=>(
+ <WorkersMyAssignment  key={index} myAssignmentID={assignmentID}profession={profession} userID={userDocuemnt.id}/>
+ )):<h3>No project has been assigned</h3>}
+ </div>
+ <div className="workers-same-tech-container">
  <h2>{profession} Assignments</h2>
+ <div className="workers-same-tech-tests-container">
  {arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
- <div key={index}>
- <WorkersSameTechAssignment assignmentID={assignmentID}profession={profession} userID={userDocuemnt.id} />
- </div>
+ <WorkersSameTechAssignment key={index} assignmentID={assignmentID}profession={profession} userID={userDocuemnt.id} />
  ))}
- <h2>Other Assignments</h2>
- {arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
- <div key={index}>
- <WorkersOtherAssignments assignmentID={assignmentID}profession={profession} userID={userDocuemnt.id} />
  </div>
+ </div>
+ <div className="workers-other-container">
+ <h2>Other workers Assignments</h2>
+ <div className="workers-other-tests-container">
+ {arrayOfDocID.length>0&&arrayOfDocID.map((assignmentID,index)=>(
+ <WorkersOtherAssignments key={index} assignmentID={assignmentID}profession={profession} userID={userDocuemnt.id} />
  ))
- }
+}
+</div>
+ </div>
  </div>
    );
 }

@@ -1,5 +1,7 @@
 import { useEffect,useRef,useState,Fragment } from "react";
 import { useDocument } from "../../hooks/useDocument";
+import { format } from "date-fns";
+
 const WorkersSameTechAssignment = ({ assignmentID,profession,userID }) => {
 const { document} = useDocument('assignments',assignmentID)
 const [rerender, setRerender] = useState("");
@@ -23,7 +25,6 @@ Object.entries(monographesObj).forEach((monoPlusTechArr)=>{
     otherAssignmentObj.monograph=monoPlusTechArr[0]
     if (monoPlusTechArr[1][profession]){
       Object.entries(monoPlusTechArr[1][profession]).forEach((arr) => {
-      console.log(arr)
    arr[1]["workers"].forEach((workerObj) => {
    if (workerObj.workerID !== userID) {
   //rerender state is for make the comp rerender
@@ -32,7 +33,6 @@ Object.entries(monographesObj).forEach((monoPlusTechArr)=>{
   otherAssignmentObj.comments = arr[1].comments;
   otherAssignmentObj.supervisor = arr[1].supervisor['name'];
   otherAssignmentObj.userName=[...otherAssignmentObj.userName,{[arr[0]]:arr[1]['workers']}]
-  console.log(otherAssignmentObj.userName)
   setRerender(arr[0]);
 }
 });
@@ -44,35 +44,30 @@ Object.entries(monographesObj).forEach((monoPlusTechArr)=>{
 }
 },[document])
 return (
-<div>
-
+<>
 {rerender&&otherAssignmentObj.test.length>0&&otherAssignmentObj.test.map((test,index)=>(
 <Fragment key={index}>
-<div>
-{otherAssignmentObj.projectName&&<h3>{otherAssignmentObj.projectName}</h3>}
-<h3>dueDate :{otherAssignmentObj.duedate} </h3>
+<div className="workers-same-tech-singel-test-card">
+<h4>{format(new Date(otherAssignmentObj.duedate),'EEEE - MM/dd/yyyy')}</h4>
+<div className="same-tech-Assignments-proj-test-box">
+{otherAssignmentObj.projectName&&<h4>{otherAssignmentObj.projectName}</h4>}
+<h4>{test}</h4>
 </div>
-<h3>{otherAssignmentObj.monograph} - {test}</h3>
-
+<h4><span>methode : </span>{otherAssignmentObj.monograph}</h4>
  {otherAssignmentObj.userName.length>0&&otherAssignmentObj.userName.map((testAndWorkerObj,index)=>(
 <Fragment key={index}>
 {testAndWorkerObj[test]&&testAndWorkerObj[test].map((nameObj,index)=>(
-<h3 key={index}>{nameObj.workerName}</h3>
+<h4 key={index}><span>worker : </span>{nameObj.workerName}</h4>
 ))}
 </Fragment>
  ))}
-<div>
-{(otherAssignmentObj.comments)?<h3>comments: {otherAssignmentObj.comments}</h3>:<span>no comments</span>}
-</div>
-<div>
-{(otherAssignmentObj.supervisor)?<h3>supervisor:{otherAssignmentObj.supervisor}</h3>:<span>no supervisor has been set yet</span>}
+{(otherAssignmentObj.comments)?<h4><span>comments : </span>{otherAssignmentObj.comments}</h4>:<span>no comments</span>}
+{(otherAssignmentObj.supervisor)?<h4><span>supervisor : </span>{otherAssignmentObj.supervisor}</h4>:<span>no supervisor has been set yet</span>}
 </div>
 </Fragment>
 )) 
 }
-
-<hr />
-</div>
+</>
   );
 };
 

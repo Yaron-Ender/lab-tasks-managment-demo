@@ -44,15 +44,6 @@ const handleSubmit = (e)=>{
             required
           />
           <FormInput
-            id="Employee Number"
-            label="Employee Number"
-            type="number"
-            name="employeeNumber"
-            value={employeeNumber}
-            onChange={handleInput}
-            required
-          />
-          <FormInput
             id="password"
             label="password"
             type="password"

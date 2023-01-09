@@ -10,9 +10,9 @@
   cursor: pointer;
   font-size:2rem;
   &.login{
-    color:map-get($colors,'green' );
+  color:map-get($colors,'green-home' );
     &:hover{
-  background:map-get($colors,'green' );
+  background:map-get($colors,'green-home' );
   color:map-get($colors,'white' );
   border:none;
   transition:$base-transition;
