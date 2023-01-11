@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase"
-import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc,deleteDoc, deleteField} from "firebase/firestore";
+import { collection, doc,getDoc,writeBatch,setDoc,addDoc,updateDoc,deleteDoc} from "firebase/firestore";
 export const useFriestore = (_collection)=>{
   const batch = writeBatch(db);
   const colRef = collection(db, _collection);
@@ -56,7 +56,7 @@ modifiedObj = {...origonalFullData, [o]:{...newData} }
 //has used by projectsPreview component
 const updateSupervisor = async (updatedObj, id) => {
   const { projName, monograph, tech, test, option } = updatedObj;
-  const value = { name: option.value, id: option.id,photoURL:option.photoURL,dueDate:'' };
+  const value = { name: option.value, id: option.id,photoURL:option.photoURL,dueDate:'',status:{done:false,issue:false} };
 const document = await getDoc(doc(colRef, id));
 if(document.exists()){
 const originalObject = document.data()
@@ -72,7 +72,17 @@ if(document.exists()){
 originalObject[projName][monograph][tech][test]["supervisor"]['dueDate'] = date
 await setDoc(doc(colRef,id),{...originalObject})
 }
-
+};
+//update project's status by supervisor
+const updateProjectStatusBySupervisor = async (supervisorObj, id) => {
+  const {proj,monograph,tech,test,status} = supervisorObj
+const docRef = doc(colRef,id)
+ const document = await getDoc(docRef);
+ if(document.exists()){
+  const originalObject = document.data();
+originalObject[proj][monograph][tech][test]["supervisor"]["status"] = {...status};
+await setDoc(docRef,{...originalObject})
+}   
 };
 const updateUsersAssignment =async(userIDAndNameObj,assignmentID)=>{
 const docRef = doc(colRef, userIDAndNameObj["workerID"]);
@@ -103,6 +113,7 @@ if (document.exists()) {
    addDocumentWithAnonymousID,
    updateSupervisor,
    updateSupervisorDuedate,
+   updateProjectStatusBySupervisor,
    updateUsersAssignment,
    deleteDocument,
    deleteTest,

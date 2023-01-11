@@ -1,7 +1,7 @@
 import { useDocument } from "../../hooks/useDocument";
-import { useState, useEffect, Fragment,useCallback } from "react";
+import { useState, useEffect,useRef, Fragment,useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import Select from 'react-select';
 import { useFriestore } from "../../hooks/useFirestore";
 import { useStyle } from "../../hooks/useStyle";
@@ -15,9 +15,9 @@ const { selectCompSupervisor } = useStyle();
 const { updateSupervisor, updateSupervisorDuedate,deleteDocument, deleteTest } =
   useFriestore("assignments");
 const [dueDateArray,setDueDateArray]=useState([]);
-const [moveDown,setMoveDown]=useState(false)
-const navigate = useNavigate()
-
+const [moveDown,setMoveDown]=useState(false);
+const [testsArray,setTestsArray] = useState([]);
+const navigate = useNavigate();
 //delete project
 const deleteProject =async () => {
 await deleteDocument(assignmentDocID);
@@ -57,7 +57,7 @@ const handleSupervisor = async ( option,projName,monograph,tech,test)=>{
   const updatedObject = { option, projName, monograph, tech, test }; 
   await updateSupervisor(updatedObject, assignmentDocID);
   const dateElement = window.document.querySelector(`.${projName}-${monograph}-${tech}-${test}`);
-  console.log(dateElement,option)
+  console.log(dateElement)
 if(option.value){
   dateElement.style.display='block' 
 }else{  
@@ -118,9 +118,32 @@ if(! e.target.classList.contains('open')){
 }
 useEffect(()=>{
 if(document){
-lastDuedate()
-  }    
+  lastDuedate();
+ setTestsArray((prev)=>(prev=[]))
+  Object.keys(document[Object.keys(document)[0]]).sort().forEach((mono) => {
+  let arr=[]
+  let arr2=[]
+  let object={}
+  Object.entries(document[Object.keys(document)[0]][mono]).sort().forEach((techAndTestArr)=>{
+  //  console.log(techAndTestArr[1])
+   arr.push(techAndTestArr[1])
+
+  //  Object.keys(techAndTestArr[1]).sort().forEach((test)=>{
+  //   console.log(test)
+  //     arr.push(test)
+  //   });
+   })
+  arr =arr.map((objOftestAdnDetails)=>{
+  console.log(objOftestAdnDetails)
+ Object.assign(object,objOftestAdnDetails)
+ })
+ arr2.push(object)
+setTestsArray((prev) => [...prev, { [mono]:{...arr2} }]);
+  });
+
+}    
 },[document,lastDuedate])
+  console.log(testsArray)
 ////////////////////////////////////////////////////
 return(
 <div className="project-preview">
@@ -133,13 +156,35 @@ return(
 {dueDateArray &&
 dueDateArray.length>0&&
 <span>
-{format(new Date(dueDateArray[0]),'MM/dd/yyyy')}
+{format(new Date(dueDateArray[0]),'EEEE MM/dd/yyyy')}
 </span>
 }
 <Button type="button" children="Delete Project" buttontype="deleteProject" onClick={()=>{deleteProject()}}/>
 </div>
 <div className="project-status">
-<h3>i'm the status box</h3>
+<h4>Tests Status</h4>
+<div className="all-tests-status-box">
+{testsArray.length>0&&testsArray.sort().map((obj)=>(
+// obj=>{monograph:{ imp:{},assay:{},ir:{} }}
+Object.entries(obj).sort().map((m)=>(
+//ih-eur: {0: {…}}
+Object.entries(m[1]).sort().map((testArr)=>(
+//m[1]==>{0:{...}}
+Object.entries(testArr[1]).sort().map((test,index)=>(
+//testArr[1]==> {organic: {…}, imp: {…}, assay: {…}}
+<div key={index} className="one-test" >
+  {test[1]['supervisor']&&
+ <div className={`status-box ${(test[1]['supervisor']['status']['done']) ? 'done' :''} ${(test[1]['supervisor']['status']['issue']) ? 'issue' :''} `}></div>}
+ {!test[1]['supervisor']&&<div className="status-box"></div>}
+<h4>{test[0]}</h4>
+<span>{m[0]}</span>
+</div>
+   ))
+  ))
+))
+))
+}
+</div>
 </div>
 <div className="chevron-open-tech-box" onClick={handleOpenTechBox}>  
 <svg  witdh='20' height='20' fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -263,6 +308,14 @@ onMenuOpen={()=>{setMoveDown(true)}}
 onMenuClose={()=>{setMoveDown(false)}}
 />
 </div>
+ <label>
+  <input
+  className={`${projName}-${monograph}-${tech}-${test}`}
+  name='date'
+  type="date"
+ onChange={(e) =>handlsupervisorDuedate(projName,monograph,tech,test,e)}
+  />
+</label>
 {document[projName][monograph]['WET'][test]['supervisor']['photoURL']?
 <Avatar src={document[projName][monograph]['WET'][test]['supervisor']['photoURL']} />
   :<span>no supervisor is assign</span>}
@@ -328,6 +381,14 @@ onMenuOpen={()=>{setMoveDown(true)}}
 onMenuClose={()=>{setMoveDown(false)}}
 />
 </div>
+ <label>
+  <input
+  className={`${projName}-${monograph}-${tech}-${test}`}
+  name='date'
+  type="date"
+ onChange={(e) =>handlsupervisorDuedate(projName,monograph,tech,test,e)}
+  />
+</label>
 {document[projName][monograph]['GC'][test]['supervisor']['photoURL']?
 <Avatar src={document[projName][monograph]['GC'][test]['supervisor']['photoURL']} />
   :<span>no supervisor is assign</span>}

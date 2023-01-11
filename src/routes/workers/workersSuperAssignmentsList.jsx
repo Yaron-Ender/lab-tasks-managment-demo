@@ -1,5 +1,5 @@
 import { useDocument } from "../../hooks/useDocument";
-import { useState,useEffect} from 'react';
+import { useState,useEffect, Fragment} from 'react';
 import WorkersSupervisorOneAssignment from "./workersSupervisorOneAssignment";
 const WorkersSuperAssignmentsList = ({ assignmentID,superId,relevantIdFunction}) => {
 const { document } = useDocument("assignments", assignmentID);
@@ -25,7 +25,8 @@ if(testAndDetArr[1].supervisor.id===superId){
       monograph: monoPlusTechArr[0],
       test: testAndDetArr[0],
       workers: testAndDetArr[1]["workers"],
-      supervisor: testAndDetArr[1].supervisor["name"],
+      status: testAndDetArr[1].supervisor["status"],
+      supervisor:testAndDetArr[1].supervisor["name"],
       dueDate: testAndDetArr[1].supervisor["dueDate"],
       comments: testAndDetArr[1].comments,
     },
@@ -41,13 +42,14 @@ if(testAndDetArr[1].supervisor.id===superId){
   return (
 <div className="supervisor-singel-proj">
 {projectDetailsArr.length>0&&projectDetailsArr.map((supervisorObj,index)=>(
-<>
+<Fragment  key={index} >
 {supervisorObj.supervisor?
 <div>
-< WorkersSupervisorOneAssignment key={index} supervisorObj={supervisorObj} />
+< WorkersSupervisorOneAssignment supervisorObj={supervisorObj}  assignmentID={ assignmentID} />
 </div>:''
 }
-</>
+</Fragment>
+
 ))}
 </div>
   );

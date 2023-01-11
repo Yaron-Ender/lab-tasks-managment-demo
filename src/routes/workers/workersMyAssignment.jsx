@@ -5,6 +5,7 @@ const WorkersMyAssignment = ({myAssignmentID,profession,userID }) => {
 const { document } =useDocument('assignments',myAssignmentID);
 const [,setRerender]=useState('');
 const myAssignmentObj = useRef({projectName:'',profession,test:[],duedate:"",monograph:''}).current
+console.log(document)
 useEffect(()=>{
 if(document){
 myAssignmentObj.projectName = Object.keys(document)[0]
