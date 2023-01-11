@@ -15,7 +15,7 @@ return (
   {relavantid&&<h2>you have {relavantid.length} projects</h2>}
   <div className="supervisor-assignments-list" >
   {arrayOfDocID.length > 0 &&
-  arrayOfDocID.map((assignmentID,index)=>(
+  arrayOfDocID.sort().map((assignmentID,index)=>(
   <WorkersSuperAssignmentsList key={index} assignmentID={assignmentID} superId={superId} relevantIdFunction={relevantIdFunction} />
   ))}
   </div>

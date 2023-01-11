@@ -41,7 +41,7 @@ if(testAndDetArr[1].supervisor.id===superId){
 },[document])
   return (
 <div className="supervisor-singel-proj">
-{projectDetailsArr.length>0&&projectDetailsArr.map((supervisorObj,index)=>(
+{projectDetailsArr.length>0&&projectDetailsArr.sort().map((supervisorObj,index)=>(
 <Fragment  key={index} >
 {supervisorObj.supervisor?
 <div>

@@ -57,7 +57,7 @@ return (
   <div className="supervisor-card-workers">
   <span>workers : </span>
   {workers.length > 0 &&
-  workers.map((workersObj, index) => (
+  workers.sort().map((workersObj, index) => (
       <Fragment key={index}>
       <h4>{workersObj.workerName}</h4>
       </Fragment>

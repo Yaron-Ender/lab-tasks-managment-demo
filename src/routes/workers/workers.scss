@@ -160,6 +160,7 @@ gap:1rem;
 }
 //SAME_TECH
 & .workers-same-tech-container{
+width:100%;
 position: relative;
 border:3px solid $black-800;
 margin-bottom: 3rem;
@@ -172,10 +173,11 @@ background-color:$gray-primary;
 padding:0 1rem;
 }
 & .workers-same-tech-tests-container{
-@include flx-col(flex-start,flex-start);
+@include flx-row(flex-start,flex-start);
+width:100%;
 & .workers-same-tech-singel-test-card{
 max-width:20rem;
-margin-left:2rem;
+margin:0 2rem 2rem 0;
 color:$gray-border;
 background-color:$black-800;
 border-radius:0.5rem;
@@ -197,7 +199,7 @@ font-size:$font-size-sm;
 & .same-tech-Assignments-proj-test-box{
 @include flx-row(); 
 padding:0.5rem 0;
-gap:1rem
+gap:1rem;
 }
 }
 }

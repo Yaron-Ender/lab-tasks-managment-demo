@@ -2,9 +2,10 @@ import { useEffect,useRef,useState,Fragment } from "react";
 import { useDocument } from "../../hooks/useDocument";
 import { format } from "date-fns";
 
-const WorkersSameTechAssignment = ({ assignmentID,profession,userID }) => {
+const WorkersSameTechAssignment = ({ assignmentID,profession,userID,docNum }) => {
 const { document} = useDocument('assignments',assignmentID)
 const [rerender, setRerender] = useState("");
+const [restrictUseEffectIteration,setRestrictUseEffectIteration]=useState(0)
 const otherAssignmentObj = useRef({
   projectName: "",
   profession,
@@ -16,7 +17,10 @@ const otherAssignmentObj = useRef({
 }).current;
 
 useEffect(()=>{
-  if(document){
+  if(document&&restrictUseEffectIteration<=docNum){
+  for (let i = 0; i <= docNum; i++) {
+  setRestrictUseEffectIteration((prev) => ++prev);
+}
 otherAssignmentObj.projectName = Object.keys(document)
 Object.values(Object.values(document)).forEach((monographesObj)=>{
 Object.entries(monographesObj).forEach((monoPlusTechArr)=>{
