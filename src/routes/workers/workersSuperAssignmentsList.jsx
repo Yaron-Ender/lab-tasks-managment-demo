@@ -1,7 +1,7 @@
 import { useDocument } from "../../hooks/useDocument";
 import { useState,useEffect, Fragment} from 'react';
 import WorkersSupervisorOneAssignment from "./workersSupervisorOneAssignment";
-const WorkersSuperAssignmentsList = ({ assignmentID,superId,relevantIdFunction}) => {
+const WorkersSuperAssignmentsList = ({ assignmentID,superId}) => {
 const { document } = useDocument("assignments", assignmentID);
 const [projectDetailsArr, setProjectDetailsArr] = useState([]);
 useEffect(()=>{
@@ -16,7 +16,6 @@ if(monoPlusTechArr[1]){
 //['GC', {…}]
 Object.entries(techAndTestArr[1]).forEach((testAndDetArr)=>{
 if(testAndDetArr[1].supervisor.id===superId){
-  relevantIdFunction(assignmentID)
   setProjectDetailsArr((prev) => [
     ...prev,
     {

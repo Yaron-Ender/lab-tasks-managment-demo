@@ -45,7 +45,9 @@ if(worker.workerID===userID){
 {myAssignmentObj.test.length>0&&myAssignmentObj.test.map((test,index)=>(
 <Fragment key={index}>
 <div className="workers-singel-test-card">
+{myAssignmentObj.duedate&&
 <h4>{format(new Date(myAssignmentObj.duedate), 'EEEE - MM/dd/yyyy')} </h4>
+}
 <div className="myAssignments-proj-test-box">
 {myAssignmentObj.projectName&&<h4>{myAssignmentObj.projectName}</h4>}
 <h4>{test}</h4>

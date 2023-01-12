@@ -1,24 +1,18 @@
 .assignment{
-// position:fixed;
-// top:0;
-// left:0;
-// right:0;
-// bottom:0;
-// height: 100vh;
-@include grid(minmax(17rem,1fr) 5fr);
+// @include grid(minmax(17rem,1fr) 5fr);
+min-height:100vh;
+@include grid(15% 1fr,1fr);
+background-color: aquamarine;
 & .main-sidebar{
+border: 5px solid red;;
+max-height:100%;
 padding-left:1rem;
-@include grid(1fr,1fr 4fr,0);
 background: map-get($colors,'gray-assignment');
-// border:2px solid red;
 & nav{
 position:sticky;
- top:0;
+top:10rem;
 left:0;
  & ul{
-position:sticky;
-top:20%;
-left:0;
 @include flx-col();
  & li{
 margin: 0;

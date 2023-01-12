@@ -52,7 +52,9 @@ return (
 {rerender&&otherAssignmentObj.test.length>0&&otherAssignmentObj.test.map((test,index)=>(
 <Fragment key={index}>
 <div className="workers-same-tech-singel-test-card">
+{otherAssignmentObj.duedate&&
 <h4>{format(new Date(otherAssignmentObj.duedate),'EEEE - MM/dd/yyyy')}</h4>
+}
 <div className="same-tech-Assignments-proj-test-box">
 {otherAssignmentObj.projectName&&<h4>{otherAssignmentObj.projectName}</h4>}
 <h4>{test}</h4>

@@ -1,14 +1,15 @@
 
-import {useState,Fragment,useEffect } from "react";
+import {Fragment,useState } from "react";
 import { format } from "date-fns";
+import chevron from '../../asstes/chevron.svg'
 import { useFriestore } from "../../hooks/useFirestore";
 const WorkersSupervisorOneAssignment = ({ supervisorObj, assignmentID }) => {
 const { updateProjectStatusBySupervisor } = useFriestore('assignments');
+const [open,setOpen]=useState(false)
 const {proj,test,monograph,workers,comments,dueDate,status} = supervisorObj
 const handelFirestore = async (supervisorObj) => {
   await updateProjectStatusBySupervisor(supervisorObj,assignmentID);
 };
-
 const handleStatus = (e)=>{
 const { name } =e.target;
 switch(name){
@@ -33,8 +34,8 @@ break;
 default:
 break;
 }
-
 }
+
 return (
   <div className="supervisor-singel-test">
   <div className="supervisor-card-date-proj-box">
@@ -63,10 +64,13 @@ return (
       </Fragment>
   ))}
 </div>
-<fieldset className="supervisor-check-status">
-<legend>Project Status</legend>
-<form>
-<div className="form-check">
+<div className={`supervisor-chevron-icon-box ${open? 'open-status-box':''}`}>
+<img src={chevron} alt='chevron-icon' onClick={()=>{setOpen(prev=>!prev)}} />
+</div>
+<div className="supervisor-check-status">
+<h3>Project Status</h3>
+
+<div className="checkbox-container">
 <label>
 <input
 type="checkbox"
@@ -88,8 +92,7 @@ checked={status.issue}
 ISSUE
 </label>
 </div>
-</form>
-</fieldset>
+</div>
   </div>
 );
 };
