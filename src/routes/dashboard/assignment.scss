@@ -2,9 +2,7 @@
 // @include grid(minmax(17rem,1fr) 5fr);
 min-height:100vh;
 @include grid(15% 1fr,1fr);
-background-color: aquamarine;
 & .main-sidebar{
-border: 5px solid red;;
 max-height:100%;
 padding-left:1rem;
 background: map-get($colors,'gray-assignment');
@@ -45,7 +43,6 @@ primary);
 }//nav
 }//end main-slider
 & > .assign-project-container{
-// border:3px solid green;
 & > form.select-proj-and-mono-container{
 @include grid(repeat(4,1fr),minmax(10rem,auto));
 // border:5px solid red;

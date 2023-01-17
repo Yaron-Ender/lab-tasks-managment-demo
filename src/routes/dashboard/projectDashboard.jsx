@@ -12,7 +12,7 @@ setCounter((prev)=>(arrayOfDocID.length))
 },[arrayOfDocID])
     return (
 <div className='project-dashboard'>
-{(error)?<h3 className='error'>{error}</h3>:<h2> you have {counter} project runing</h2>}
+{(error)?<h3 className='error'>your projects dashboard is empty</h3>:<h2> you have {counter} project running</h2>}
 <div className='projects-preview-container'>
 {arrayOfDocID.length>0 &&
  arrayOfDocID.sort().map((id,index)=>(

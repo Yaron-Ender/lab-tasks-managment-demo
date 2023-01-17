@@ -97,15 +97,6 @@ await updateDoc(docRef, { 'assignments':userAssignmentsArr});
 const deleteDocument =async (id)=>{
 await deleteDoc(doc(colRef,id))
 }
-const deleteTest = async (id, projName, monograph, tech, test) => {
-const document = await getDoc(doc(colRef, id));
-if (document.exists()) {
-  const originalObject = document.data();
- delete originalObject[projName][monograph][tech][test]
-  console.log(originalObject)
-   await setDoc(doc(colRef, id), { ...originalObject });
-}
-};
  return {
    updateDocument,
    updateMonographName,
@@ -116,7 +107,6 @@ if (document.exists()) {
    updateProjectStatusBySupervisor,
    updateUsersAssignment,
    deleteDocument,
-   deleteTest,
  };
 }
 

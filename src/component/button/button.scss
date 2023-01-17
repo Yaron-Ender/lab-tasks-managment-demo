@@ -122,7 +122,7 @@ margin-top: auto;
   }
  }
 &.delete-project{
- color:map-get($colors,'white');
+ color:map-get($colors,'error');
    border:$base-border-thickness solid currentcolor;
    padding:$base-padding*0.25 $base-padding*0.5;
    border-radius:$base-border-radius*0.2;

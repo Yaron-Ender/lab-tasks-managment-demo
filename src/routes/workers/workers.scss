@@ -95,8 +95,7 @@ width:100%;
 cursor: pointer;
 width:2rem;
 height:2rem;
-color:$nav-color-2;
-transition: all $base-transition;
+transition:all $base-transition;
 }
 &.open-status-box > img{
  transform:rotate(180deg);   
