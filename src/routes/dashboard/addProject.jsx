@@ -7,7 +7,7 @@ import { useFriestore } from '../../hooks/useFirestore';
 import { useNavigate} from 'react-router-dom';
 const AddProject = () => {
 const { addDocumentWithAnonymousID } = useFriestore('assignments')
-const { arrayOfDocID, error } = useCollection("substances");
+const { arrayOfDocID} = useCollection("substances");
 const { updateUsersAssignment } =useFriestore('users')
 const [selectProject,setSelectProject]=useState([]);
 const [projName,setProjName ]=useState(null);
@@ -63,7 +63,7 @@ const addAssignmentToWorker = (assignmentObj,assignmentID) => {
 //assignmentObj--> is the assignment object
 //assignmetID --> is the id's asssignment document
   //reach to monographes
-Object.values(Object.values(assignmentObj)).map((monographesObj, index) => {
+Object.values(Object.values(assignmentObj)).map((monographesObj) => {
 //monographesObj --> {ih-eur: {…}, ih-jp: {…}, ih-usa: ''}
  if (monographesObj) {
   Object.values(monographesObj).map((tech)=>{
@@ -89,7 +89,7 @@ updateUsersAssignment(userIDAndNameObj,assignmentID)
 const handleSubmit=async(e)=>{
   e.preventDefault();
  const assignmentID = await addDocumentWithAnonymousID(buildProjectObj.current);
-addAssignmentToWorker(buildProjectObj.current, assignmentID);
+addAssignmentToWorker(buildProjectObj.current,assignmentID);
 navigate('/assignment/projectsDashboard');
 }
 /////////////////////////////////////////////////////////

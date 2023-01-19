@@ -1,15 +1,30 @@
 
-import {Fragment,useState } from "react";
+import {Fragment,useState,useRef,useEffect, useCallback  } from "react";
 import { format } from "date-fns";
 import chevron from '../../asstes/chevron.svg'
 import { useFriestore } from "../../hooks/useFirestore";
+
 const WorkersSupervisorOneAssignment = ({ supervisorObj, assignmentID }) => {
 const { updateProjectStatusBySupervisor } = useFriestore('assignments');
 const [open,setOpen]=useState(false)
 const {proj,test,monograph,workers,comments,dueDate,status} = supervisorObj
 const handelFirestore = async (supervisorObj) => {
-  await updateProjectStatusBySupervisor(supervisorObj,assignmentID);
+await updateProjectStatusBySupervisor(supervisorObj,assignmentID);
 };
+const statusPannel=useRef()
+
+const handleStatusbox =useCallback(()=>{
+setOpen((prev) => !prev);
+},[open]) 
+
+useEffect(()=>{
+  if (open) {
+    statusPannel.current.style.height = `${statusPannel.current.scrollHeight}px`;
+  }
+  if (!open) {
+    statusPannel.current.style.height = "0";
+  }
+},[open])
 const handleStatus = (e)=>{
 const { name } =e.target;
 switch(name){
@@ -65,9 +80,10 @@ return (
   ))}
 </div>
 <div className={`supervisor-chevron-icon-box ${open? 'open-status-box':''}`}>
-<img src={chevron} alt='chevron-icon' onClick={()=>{setOpen(prev=>!prev)}} />
+<img src={chevron} alt='chevron-icon' onClick={(e)=>{handleStatusbox(e)}} />
+
 </div>
-<div className="supervisor-check-status">
+<div ref={statusPannel} className="supervisor-check-status">
 <h3>Project Status</h3>
 
 <div className="checkbox-container">

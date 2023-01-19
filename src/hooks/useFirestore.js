@@ -84,6 +84,7 @@ originalObject[proj][monograph][tech][test]["supervisor"]["status"] = {...status
 await setDoc(docRef,{...originalObject})
 }   
 };
+//get called from addProject
 const updateUsersAssignment =async(userIDAndNameObj,assignmentID)=>{
 const docRef = doc(colRef, userIDAndNameObj["workerID"]);
 const docsnap = await getDoc(docRef);
@@ -91,11 +92,18 @@ if(docsnap.exists()){
 const userAssignmentsArr = docsnap.data().assignments;
 userAssignmentsArr.push(assignmentID)
 await updateDoc(docRef, { 'assignments':userAssignmentsArr});
-
 }
-  }
+}
 const deleteDocument =async (id)=>{
 await deleteDoc(doc(colRef,id))
+}
+//
+const correctAssginments = async(correctAssignmentsArr,id)=>{
+const docRef = doc(colRef,id);
+const docsnap = await getDoc(docRef);
+if(docsnap.exists()){
+await updateDoc(docRef, { 'assignments': correctAssignmentsArr });
+}
 }
  return {
    updateDocument,
@@ -107,6 +115,7 @@ await deleteDoc(doc(colRef,id))
    updateProjectStatusBySupervisor,
    updateUsersAssignment,
    deleteDocument,
+  correctAssginments,
  };
 }
 

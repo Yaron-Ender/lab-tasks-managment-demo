@@ -4,16 +4,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './context/authContext';
-import { AssignProjContextProvider } from "./context/AssignProjContext";
-
+import { IDProvider } from './context/deleteAssignmentIDContex';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
   <BrowserRouter>
   <AuthContextProvider>
-<AssignProjContextProvider>
+  <IDProvider>
     <App />
-</AssignProjContextProvider>
+  </IDProvider>
   </AuthContextProvider>
   </BrowserRouter>
   </React.StrictMode>

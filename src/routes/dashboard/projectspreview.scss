@@ -186,7 +186,7 @@ grid-column: span 2;
 }
 // in the jsx the last item in the iteration is for example mono:'ih-usa', i had to ommit it here
 & > .tests-with-details-inner-container:last-child{
-display:none;
+// display:none;
 }
 
 }//tests-with-details-container

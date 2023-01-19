@@ -1,5 +1,5 @@
 import { useDocument } from "../../hooks/useDocument";
-import { useState, useEffect,Fragment,useCallback } from "react";
+import { useState, useEffect,Fragment,useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import Select from 'react-select';
@@ -8,8 +8,8 @@ import { useStyle } from "../../hooks/useStyle";
 import Button from '../../component/button/button'
 import Avatar from "../../component/avatar/avatar";
 import chevron from '../../asstes/chevron.svg'
-
-const Projectspreview = ({ assignmentDocID }) => {
+// export const DeleteAssignmentIDContex = createContext();
+const Projectspreview = ({ assignmentDocID,usersCollectionArray }) => {
 const { error: documentError, document } = useDocument("assignments",assignmentDocID);
 const { document:professionDocument } = useDocument('profession','supervisor');
 const { selectCompSupervisor } = useStyle();
@@ -17,13 +17,14 @@ const { updateSupervisor, updateSupervisorDuedate,deleteDocument } =
   useFriestore("assignments");
 const [dueDateArray,setDueDateArray]=useState([]);
 const [testsArray,setTestsArray] = useState([]);
-const [technologyArr,setTechnologyArr]=useState([])
-const [techWithTests,setTechWithTests]=useState([])
+const [technologyArr,setTechnologyArr]=useState([]);
+const [techWithTests,setTechWithTests]=useState([]);
+const [usersArray,setUsersArray]=useState([]);
 const navigate = useNavigate();
 //delete project
 const deleteProject =async () => {
 await deleteDocument(assignmentDocID);
- navigate("/assignment");
+navigate("/assignment");
 setTimeout(()=>{
   navigate("/assignment/projectsDashboard");
 },200)
@@ -64,7 +65,6 @@ if(option.value){
 }
 const handlsupervisorDuedate =async(projName, monograph, tech, test, e) => {
  const date =  e.target.value;
- console.log(e.target.parentElement.lastElementChild.innerHTML);
  const updatedObject = { projName, monograph, tech, test,date }; 
  await updateSupervisorDuedate(updatedObject,assignmentDocID)
 
@@ -130,6 +130,12 @@ if(techArr.length>0){
 }) 
 }
 },[document])
+
+useEffect(()=>{
+if(usersCollectionArray.length){
+  setUsersArray(usersCollectionArray)
+}
+},[usersCollectionArray])
 
 ////////////////////////////////////////////////////
 return(
@@ -258,5 +264,4 @@ placeholder='Select Supervisor'
 </div>
   ) 
 };
-
 export default Projectspreview;

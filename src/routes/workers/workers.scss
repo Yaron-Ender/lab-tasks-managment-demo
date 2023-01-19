@@ -98,19 +98,19 @@ height:2rem;
 transition:all $base-transition;
 }
 &.open-status-box > img{
- transform:rotate(180deg);   
+ transform:rotate(180deg);
+ margin-bottom: 1rem;   
 }
 }
 &:has(.supervisor-chevron-icon-box.open-status-box) > .supervisor-check-status{
-@include flx-col();
-height:100%;
-opacity:1;
 box-shadow:$box-shadow-gentle;
 }
 & > .supervisor-check-status{
+ transition:all $base-transition*3;
+  overflow: hidden;
  height:0;
-opacity:0;
 & > h3{
+text-align: center;
 font-weight: 300;
 }
 &  >.checkbox-container{
@@ -171,21 +171,23 @@ padding:0 1rem;
 .workers-singel-test-container{
 @include flx-row(flex-start);
 .workers-singel-test-card{
-max-width:20rem;
-margin-left:2rem;
-margin-bottom:2rem;
-color:$gray-border;
-background-color:$black-800;
-border-radius:0.5rem;
+width:27rem;
+color:$nav-color-2;
+background-color:$gray-border;
+border-block-start:0.7rem solid $black-500;
+border-radius:0.7rem;
 padding:1rem;
-box-shadow:$box-shadow-blur-modarate;
-gap:1rem;
-& > h4{
-padding: 0.5rem 0;
-& > span{
+box-shadow:$box-shadow-blur-modarate-plus;
+& > h4:first-child{
+@include flx-row();
+}
+& >h4{
+@include flx-row(space-between);
+padding:1rem 0; 
+& >span{
 font: {
 size:$font-size-sm;
-weight:300;
+weight:900;
 }
 letter-spacing:0.2rem;
 }
@@ -219,25 +221,31 @@ padding:0 1rem;
 & .workers-same-tech-tests-container{
 @include flx-row(flex-start,flex-start);
 width:100%;
+gap:2rem;
 & .workers-same-tech-singel-test-card{
-max-width:20rem;
-margin:0 2rem 2rem 0;
-color:$gray-border;
-background-color:$black-800;
-border-radius:0.5rem;
+width:27rem;
+color:$nav-color-2;
+background-color:$gray-border;
+border-block-start:0.7rem solid $black-500;
+border-radius:0.7rem;
 padding:1rem;
-box-shadow:$box-shadow-blur-modarate;
-& > h4{
-padding: 0.5rem 0;
-& > span{
+box-shadow:$box-shadow-blur-modarate-plus;
+& > h4:first-child{
+@include flx-row();
+}
+& >h4{
+@include flx-row(space-between);
+padding:1rem 0; 
+& >span{
 font: {
 size:$font-size-sm;
-weight:300;
+weight:900;
 }
 letter-spacing:0.2rem;
 }
 }
 & > span:last-child{
+display: flex;
 font-size:$font-size-sm;
 }
 & .same-tech-Assignments-proj-test-box{
@@ -263,20 +271,25 @@ padding:0 1rem;
 }
 & .workers-other-tests-container{
 @include flx-row(flex-start,flex-start);
+gap:2rem;
 & .workers-other-tech-singel-test-card{
-max-width:20rem;
-margin-left:2rem;
-color:$gray-border;
-background-color:$black-800;
-border-radius:0.5rem;
+width:27rem;
+color:$nav-color-2;
+background-color:$gray-border;
+border-block-start:0.7rem solid $black-500;
+border-radius:0.7rem;
 padding:1rem;
-box-shadow:$box-shadow-blur-modarate;
-& > h4{
-padding: 0.5rem 0;
-& > span{
+box-shadow:$box-shadow-blur-modarate-plus;
+& > h4:first-child{
+@include flx-row();
+}
+& >h4{
+@include flx-row(space-between);
+padding:1rem 0; 
+& >span{
 font: {
 size:$font-size-sm;
-weight:300;
+weight:900;
 }
 letter-spacing:0.2rem;
 }
