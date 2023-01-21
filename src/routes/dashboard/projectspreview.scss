@@ -114,18 +114,19 @@ transition:all $base-transition;
 &:has(img.open-tech-pannel){
 transition: all $base-transition-slow;
 background-size: 0;
+padding:1rem 0.3rem;
 }
 }
 & .tests-with-details-container{
-  height:0;
+height:0;
 transition:all $base-transition-slow;
 visibility:hidden;
 opacity:0;
 & > .tests-with-details-inner-container{
 background-color:$gray-border;
 padding:1rem 0;
-margin-bottom:2rem;;
-box-shadow:$box-shadow-gentle-inner;
+margin:0rem 2rem 2rem 2rem;
+box-shadow: $box-shadow-blur-modarate-plus;
 & > .test-box{
 @include flx-row();
 padding:0 1rem;
@@ -183,10 +184,16 @@ cursor: pointer;
 grid-column: span 2;
 }
 }
+& .delete-last-item-mono{
+height:0px;
+width:0%;
+}
 }
 // in the jsx the last item in the iteration is for example mono:'ih-usa', i had to ommit it here
-& > .tests-with-details-inner-container:last-child{
-// display:none;
+& .tests-with-details-inner-container:has(.delete-last-item-mono){
+  height:0;
+  padding:0;
+  border:0;
 }
 
 }//tests-with-details-container

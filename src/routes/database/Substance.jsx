@@ -10,7 +10,7 @@ useEffect(()=>{
     <div className="substance-container">
       {!error && (
         <>
-          <MonographList document={document} id={substanceId} />
+         <MonographList document={document} id={substanceId} />
         </>
       )}
     </div>

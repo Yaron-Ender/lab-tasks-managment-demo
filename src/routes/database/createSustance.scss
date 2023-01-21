@@ -1,9 +1,6 @@
 
-
-// start from the begining
 .create-Newsubstance-container{
 @include flx-col();
-// border:2px solid goldenrod;
 width: 100%;
 height:100%;
 & > h1{
@@ -16,35 +13,28 @@ height:100%;
 & form{
 height: 100%;
 width:90%;
-// border:4px solid rgb(0, 119, 255);
-display:grid;
-grid-template-columns:1fr;
-grid-template-rows:1fr;
-@include grid(1,1);
+@include grid(1fr,1fr);
 & header{
-@include grid(3fr 1fr,auto);
-// justify-items: flex-start;
-// border:10px solid green;
+width:30%;
+margin: 0 auto;
+@include flx-col(center,center);
 padding:$padding-medium 0 ;
-& > div{
-// width:100%;
-// border:10px solid red;
-@include flx-row(flex-start);
+& > div.btn-container{
+  width:100%;
+margin-top:2rem;
+@include flx-row(space-between);
 } 
 }
 & .monographes-container{
-  // border:10px solid green;
   @include grid(repeat(auto-fill,minmax(30rem,1fr)),auto,2rem);
+  align-items: flex-start;
   & .singel-monograph{
   background-color:$gray100;
-    // border:5px solid orange;
   box-shadow:$box-shadow-difution;
   @include flx-col(center stretch);
   & .general-details{
   width:100%; 
   border-bottom:3px solid $gray-primary; 
-  // box-shadow:$base-box-shadow;
-  // border:2px solid greenyellow; 
   @include grid(1fr 1fr,auto,1rem 0.5rem);
   & > div:has(input[name='monographName']){
  grid-column: 1 / 3;
@@ -52,14 +42,12 @@ padding:$padding-medium 0 ;
 }
 & .select-tech{
 box-shadow:$base-box-shadow;
-// border:2px solid red;
 padding-top: 2rem;
 width: 100%;
 @include flx-col();
 & .select-tech-result{
 padding: 2rem;
 box-shadow:$box-shadow-difution;
-//  border:2px solid blue;
 width: 100%;
 & > h3{
   text-align: center;

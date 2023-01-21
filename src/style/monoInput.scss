@@ -2,7 +2,6 @@
 .input-mono-container{
 position:relative;
  min-width:30%;
-//  border: 2px solid red;;
  padding: $padding-medium*2;
 & > span{
 position: absolute;
@@ -11,7 +10,6 @@ left:0;
 width:100%;
 height: 50%;
 @include flx-row();
-// transform: translateY(-50%);
 transition: all $base-transition;
 background-color:$gray-primary;
 }
@@ -31,8 +29,9 @@ transition-delay:1s;
 &:has(input:focus) span,
 &:not(:has(input:placeholder-shown)) span
 {
+  width:30%;
  top:-30%;
- left:-10%;
+ left:5%;
  z-index: 4;
  margin-bottom:0;
  padding-bottom: 0;

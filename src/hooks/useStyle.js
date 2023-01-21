@@ -5,16 +5,14 @@ const openDatabaseNavbar =()=>{
     setOpenDatabaseNavState(true)
 }
 const selectCompDatabaseStyle = {
-  control: (styles, state) => ({
+  control: (styles,) => ({
     ...styles,
     width: "calc(100% + 5rem)",
     fontSize: "2rem",
     padding: "0rem 3rem",
     margin: 0,
-    borderColor: state.isFocused ? "green" : "",
     border: "0.5px solid #222",
     boxShadow: "none",
-    backgroundColor: state.isFocused ? "" : "",
   }),
   placeholder: (styles) => ({
     ...styles,
@@ -63,11 +61,26 @@ const selectCompSupervisor = {
     fontSize: state.isFocused ? "1.3rem" : "1.5rem",
   }),
 };
+const selectCompAssignWorker ={
+option:(styles,{isFocused})=>{
+return {
+  ...styles,
+  fontSize: isFocused ? "2.4rem" : "2rem",
+  color: isFocused ? "#fff" : "#58249c",
+  backgroundColor: isFocused ? "#58249c" : "#fff;",
+  boxShadow: isFocused
+    ? "inset -0.5rem -1rem 0.5rem -1rem rgba(0,0,0,0.7)"
+    : "",
+};
+
+}
+}
 return {
   openDatabaseNavbar,
   openDatabaseNavState,
   selectCompDatabaseStyle,
   selectCompCreateSunstanceStyle,
   selectCompSupervisor,
+  selectCompAssignWorker
 };
 }

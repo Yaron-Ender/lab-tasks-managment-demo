@@ -149,7 +149,7 @@ return(
 {dueDateArray &&
 dueDateArray.length>0&&
 <span>
-{format(new Date(dueDateArray[0]),'EEEE MM/dd/yyyy')}
+{format(new Date(dueDateArray[0]),'EEEE dd/MM/yyyy')}
 </span>
 }
 <Button type="button" children="Delete Project" buttontype="deleteProject" onClick={()=>{deleteProject()}}/>
@@ -204,18 +204,18 @@ Object.entries(testArr[1]).sort().map((test,index)=>(
 <div className="test-box">
 <h4>{testAndDetailsArray[0]}</h4>
 </div>
+<div className="workers-box" >
+<span>workers:</span>
 {testAndDetailsArray[1]['workers'].length>0?
 testAndDetailsArray[1]['workers'].map((workerObj,index)=>(
-<div className="workers-box" key={index}>
-<span>workers:</span>
-<Avatar src={workerObj['workerAvatar']}/>
-</div>
+<Avatar key={index} src={workerObj['workerAvatar']}/>
 )):<span>no worker was assigned</span>
 }
+</div>
 <div className="test-details">
 <h4><span>monograph : </span>{techAndTestsArray[1]['mono']}</h4>
 {testAndDetailsArray[1]['dueDate']&&
-<h4><span> dueDate :</span> {testAndDetailsArray[1]['dueDate']}</h4>
+<h4><span> dueDate :</span>{format(new Date(testAndDetailsArray[1]['dueDate']),'EEEE dd/MM/yyyy')}</h4>
 }
 <h4><span> comments : </span>{testAndDetailsArray[1]['comments']}</h4>
 
@@ -242,11 +242,11 @@ placeholder='Select Supervisor'
 <Avatar className='supervisor-avatar' src={document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['photoURL']}/>
 :<span>no supervisor is assigne</span>}
 <span>supervisor duedate :</span>
-{document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['dueDate']?<span>{format(new Date(document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['dueDate']),'EEEE MM/dd/yyyy')}</span>:""
+{document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['dueDate']?<span>{format(new Date(document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['dueDate']),'EEEE dd/MM/yyyy')}</span>:""
 }
 </div>
 }
-</>:''
+</>:<div className="delete-last-item-mono"></div>
 }
 </div>
 ))}

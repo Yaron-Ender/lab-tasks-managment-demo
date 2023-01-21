@@ -8,7 +8,7 @@ import { format } from 'date-fns'
 const MonographList = ({ document,id }) => {
 const { updateDocument, updateMonographName } = useFriestore("substances");
 const [monographFields, setMonographFields] = useState(null);
-const [disabled, setdisabled] = useState(true);
+const [,setdisabled] = useState(true);
 const monographName = useRef("")
 const monoDeteails=useRef({})
 const [changeMonoName,setChangeMonoName] = useState("")
@@ -171,7 +171,7 @@ return (
   <h2> {mono} / <span>
   {document[mono]["monographEdition"]}
     </span></h2>
-  <h4> {format(new Date(document[mono]["effectiveDate"].toDate().toDateString()), 'MM/dd/yyyy')}</h4>
+  <h4> {format(new Date(document[mono]["effectiveDate"].toDate().toDateString()), 'dd/MM/yyyy')}</h4>
   </div> 
   {/* end of details_UI-container */}
    <div className="change-details">
@@ -255,8 +255,8 @@ buttontype="addProject"
 
 {/* tests*/}
 <div className="change-tests">
-{Object.keys(document[mono]['tests']).map((technology)=>
-<div className="change-tests-container">
+{Object.keys(document[mono]['tests']).map((technology,index)=>
+<div key={index} className="change-tests-container">
   <h3>{(technology)}</h3>
 <ul>
 { document[mono]['tests'][technology].map((t,index)=>

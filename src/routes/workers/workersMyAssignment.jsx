@@ -19,8 +19,6 @@ Object.entries(monographesObj).forEach((monoPlusTechArr)=>{
 //check if there a value in the monograph property
 if(monoPlusTechArr[1]){
 myAssignmentObj.monograph=monoPlusTechArr[0]
-// console.log(monoPlusTechArr) 
-// console.log(Object.entries(monoPlusTechArr[1][profession]))
 //array of test's name and details of the same technilogy
 Object.entries(monoPlusTechArr[1][profession]).forEach((arr)=>{
  arr[1]['workers'].forEach((worker)=>{

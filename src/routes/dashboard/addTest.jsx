@@ -2,11 +2,13 @@ import React from 'react';
 import { useDocument } from '../../hooks/useDocument';
 import Select from 'react-select';
  import { useRef,useState,useEffect } from 'react';
+ import { useStyle } from '../../hooks/useStyle';
 const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
   const { document: professionDoc } = useDocument("profession", tech);
   const [textArea, setTextArea] = useState("");
   const [workers,setWorkers] = useState([])
   const [date,setDate] =useState('')
+  const { selectCompAssignWorker } = useStyle();
   const fields = useRef({});
   fields.current = {
     [monoTitle]:{
@@ -58,6 +60,7 @@ const AddTest = ({ test,tech, monoTitle, handleTestFields }) => {
         {professionDoc && (
           <>
       <Select
+      styles={selectCompAssignWorker}
         className="select"
         name='workers'
         onChange={(option) => handleWorkers(option)}

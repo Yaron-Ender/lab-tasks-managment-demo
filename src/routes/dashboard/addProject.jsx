@@ -25,7 +25,7 @@ useEffect(()=>{
   arrOfMonogrpaghsNames.current=[]
   buildProjectObj.current = {[projName]:''};
 },[projName])
-// function that handle the data from AddTEst comp and from addProjectMono comp.
+// function that handle the data from AddTest comp and from addProjectMono comp.
 
 const handleTestFields =(monoTitle,fieldsObj,tech,test)=>{
   if(monoTitle){

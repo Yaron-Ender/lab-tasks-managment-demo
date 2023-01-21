@@ -157,10 +157,10 @@ margin:0 -2.5rem 3rem;
 background-color: aqua;
 }
 .workers-my-assignments{
+@include flx-col(flex-start,flex-start); 
 position: relative;
 border:3px solid $black-800;
 margin-bottom: 3rem;
-@include flx-col(flex-start,flex-start); 
 padding:3rem;
 & > h2{
 position: absolute;
@@ -169,6 +169,7 @@ background-color:$gray-primary;
 padding:0 1rem;
 }
 .workers-singel-test-container{
+margin-bottom:2rem;
 @include flx-row(flex-start);
 .workers-singel-test-card{
 width:27rem;

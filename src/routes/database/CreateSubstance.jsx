@@ -40,7 +40,7 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
   const [show, setShow] = useState(false);
   const [substanceName, setSubstanceName] = useState("");
   const [monograph, setMonograph] = useState([]); //All the monograpes that the user create
-  const [openTextareaPannel, setOpenTextareaPannel] = useState(false);
+  const [,setOpenTextareaPannel] = useState(false);
   const { selectCompCreateSunstanceStyle } = useStyle();
   //FUNCTIONS
   //take the monograph state that store all the monograpgh data and convert it to an object that could be stored in firestore
@@ -166,13 +166,12 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
   // *********************************
   return (
     <div className="create-Newsubstance-container">
-      <h1>Cretae New Substance</h1>
+      <h1>Create New Substance</h1>
       <form className="signup-form" onSubmit={handleSubmit}>
     <header>
-    <div>
       <MonoInput
-      span='add substance Title'
-       placeholder= ' '
+      span='add substance'
+        placeholder= ' '
         type="text"
         name="sustanceTitle"
         value={substanceName}
@@ -181,17 +180,18 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
         setSubstanceName(e.target.value);
         }}
       />
-      <Button
-        buttontype="createSubstance"
-        type="button"
-        onClick={addMonograph}
-        children={"add monograph"}
-      />
-    </div>
+    <div className="btn-container">
+    <Button
+      buttontype="createSubstance"
+      type="button"
+      onClick={addMonograph}
+      children={"add monograph"}
+    />
       <Button
        buttontype="createSubstance"
-        children={"save monograph"}
+        children={"Save Substance"}
          />
+    </div>
   </header>
    <div className={`${show ? "show" : ""} monographes-container`}>
   {monograph.length > 0 &&

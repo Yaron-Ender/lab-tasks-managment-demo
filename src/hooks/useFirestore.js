@@ -97,7 +97,7 @@ await updateDoc(docRef, { 'assignments':userAssignmentsArr});
 const deleteDocument =async (id)=>{
 await deleteDoc(doc(colRef,id))
 }
-//
+// called from workersAssignments --> update user Assignmets array
 const correctAssginments = async(correctAssignmentsArr,id)=>{
 const docRef = doc(colRef,id);
 const docsnap = await getDoc(docRef);

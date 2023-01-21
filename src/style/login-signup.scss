@@ -58,4 +58,8 @@ margin: 20px auto;
  @include shrinkLabel;
 }
 }
+.input-mono-container{
+  width:100%;
+  box-shadow: $box-shadow-blur-modarate;
+}
 

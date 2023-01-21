@@ -45,7 +45,6 @@ const closeCreateSubstanceComp =()=>{
     <div className="database">
       <nav className={`database-navbar ${open ? "open" : ""}`}>
     <div>
-    <h4>Select Substance to Modify</h4>
     <Select
     styles={selectCompDatabaseStyle}//from useStyle
     placeholder="substances list"
@@ -56,6 +55,7 @@ const closeCreateSubstanceComp =()=>{
     onMenuOpen={()=>{setOpenCreateNewSub(false)}}
     />
     </div>
+    <div className="vertical-border"></div>
      <h4 onClick={createNewSubstance}>Create New Substance</h4>
    </nav>
     {openCreateNewSub && (

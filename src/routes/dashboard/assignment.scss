@@ -22,8 +22,8 @@ padding:0.8rem 1.5rem;
 @include flx-row(flex-start);  
 gap:1rem; 
 font: {
-    family:poppins, sans-serif;
-    weight:bold;
+family:poppins, sans-serif;
+weight:bold;
 }
 letter-spacing:0.1rem;
 & span{
@@ -45,57 +45,55 @@ primary);
 & > .assign-project-container{
 & > form.select-proj-and-mono-container{
 @include grid(repeat(4,1fr),minmax(10rem,auto));
-// border:5px solid red;
 & >header{ 
 align-self:center;
  grid-column:span 2;
 & > label{
-     @include flx-row();
-     & > span{
-    padding:1rem 3rem;
-    }
-    }
+@include flx-row();
+ & > span{
+padding:1rem 3rem;
+}
+}
 }//header
 & > div{
+margin-bottom:3rem;
 @include flx-col(space-around);
 grid-column:span 2;
  & > h2{
 text-align: center;
 font: {
-   size:$font-size-xxl;
-   weight:100;
+size:$font-size-xxl;
+weight:100;
      }
 letter-spacing:0.5rem;
    }
 grid-column:span 2;
 }
 & > .projName-and-select-mono-container{
-    // border: 3px solid black;
-    grid-column: 1/-1; 
-    @include grid(1fr,auto,5rem);
-& >.assign-mono-box{
- margin:2rem 0;
- @include grid(1fr,minmax(10rem,auto) auto-fill);
+grid-column: 1/-1; 
+@include grid(1fr,auto,2rem);
+& > .assign-mono-box{
+//  @include grid(1fr,minmax(1rem,auto) auto-fill);
  padding:0rem 2rem;
- border-bottom:.3rem solid $black;
- // border: 20px solid rgb(222, 10, 10);
- & >h3{
+ border-bottom:.3rem solid $gray-border;
+ & >h3.mono-title{
+width:40%;
+margin:0 auto 2rem;
 @include flx-row();
- padding:1rem 0;
-background-color:$gray-border;
-color:$nav-color-dark;
+ padding:1rem 3rem;
+background: linear-gradient(0deg, rgba(247,247,247,1) 0%, rgba(227,227,227,1) 100%);
+ color:$nav-color-dark;
+letter-spacing:1rem;
+box-shadow:$box-shadow-blur-modarate-plus;
+& img.cancel-icon{
+margin-left:auto;
 font: {
 size:$font-size-lg*1.2;
 weight:700;
 }
-letter-spacing:1rem;
-box-shadow:$box-shadow-change-mono;
- // border:3px solid black;
-  border:0.1rem solid $black;
-& img.cancel-icon{
 width:3rem;
 border-radius: 50%;
-margin-left: auto;
+// margin-left: auto;
 cursor: pointer;
 transition:all $base-transition;
 &:hover{
@@ -110,8 +108,9 @@ transform: scale(0.9);
 }
 & > .assign-technology-box{
  margin-bottom: 3rem;
-@include grid(4rem repeat(auto-fill,minmax(10rem,auto)),auto,2rem);
-box-shadow:$box-shadow-difution;
+@include grid(4rem repeat(auto-fill,minmax(15rem,auto)),auto,2rem);
+box-shadow: $box-shadow-gentle;
+background: linear-gradient(0deg, rgba(247,247,247,1) 0%, rgba(227,227,227,1) 100%);
 & > h4{
 letter-spacing:1rem;
 text-align: center;
@@ -128,7 +127,7 @@ size:$font-size-lg;
 }
 }
 & > ul{
-background-color:$nav-color;
+background-color:$nav-color-2;
 color:$white;
 margin:1rem 0;
 box-shadow:$base-box-shadow;
@@ -145,7 +144,8 @@ padding:0.5rem 0;
 }
 }//end of assign-technology-box
 &:nth-child(1){
-border-top:0.3rem solid black;
+border-top:0.3rem solid $gray-border;
+padding-top:3rem;
 }
 }//end assign-mono-box
 }
