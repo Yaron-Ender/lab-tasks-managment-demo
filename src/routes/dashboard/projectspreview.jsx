@@ -1,5 +1,5 @@
 import { useDocument } from "../../hooks/useDocument";
-import { useState, useEffect,Fragment,useCallback} from "react";
+import { useState, useEffect,Fragment,useCallback,useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import Select from 'react-select';
@@ -20,6 +20,7 @@ const [testsArray,setTestsArray] = useState([]);
 const [technologyArr,setTechnologyArr]=useState([]);
 const [techWithTests,setTechWithTests]=useState([]);
 const [usersArray,setUsersArray]=useState([]);
+const supervisorBox = useRef()
 const navigate = useNavigate();
 //delete project
 const deleteProject =async () => {
@@ -50,40 +51,47 @@ setTimeout(()=>{
   setDueDateArray((prev)=>(prev.sort((a,b)=>b-a)))
    //end of last dueDate
 },[document]) 
+
 // update supervisor in assignment collection
 const handleSupervisor = async (option,projName,monograph,tech,test)=>{
   if(tech){
-  const updatedObject = { option, projName, monograph, tech, test }; 
-  await updateSupervisor(updatedObject, assignmentDocID);
-  const dateElement = window.document.getElementById(`${projName}-${monograph}-${tech}-${test}`);
-if(option.value){
-  dateElement.style.display='block' 
-}else{  
-  dateElement.style.display='none' 
-}
-}
+    const updatedObject = { option, projName, monograph, tech, test };
+    await updateSupervisor(updatedObject, assignmentDocID);
+    //handle with tests-with-details-container demensions
+    const selectElementBox = window.document.getElementById(
+      `select-${projName}-${monograph}-${tech}-${test}`
+    ).parentElement.parentElement;
+  const testWithDetailsContainer =selectElementBox.parentElement.parentElement;
+  testWithDetailsContainer.style.height = `${testWithDetailsContainer.scrollHeight}px`;
+//handlw with the apearance of the date element
+    const dateElement = window.document.getElementById(
+      `${projName}-${monograph}-${tech}-${test}`
+    );
+    if (option.value) {
+      dateElement.style.display = "block";
+    } else {
+      dateElement.style.display = "none";
+    }
+  }
 }
 const handlsupervisorDuedate =async(projName, monograph, tech, test, e) => {
  const date =  e.target.value;
  const updatedObject = { projName, monograph, tech, test,date }; 
  await updateSupervisorDuedate(updatedObject,assignmentDocID)
-
 };
 //open single tech
 const handleOpenTech = (e) => {
  e.target.classList.toggle("open-tech-pannel");
- const testsWithDetailsContainer = e.target.parentElement.nextElementSibling;
+const testsWithDetailsContainer = e.target.parentElement.nextElementSibling;
  if(e.target.classList.contains('open-tech-pannel')){
-   testsWithDetailsContainer.style.height = `${testsWithDetailsContainer.scrollHeight}px`;
-   testsWithDetailsContainer.style.opacity = "1";
-  if(testsWithDetailsContainer.style.height === `${testsWithDetailsContainer.scrollHeight}px`){
-    testsWithDetailsContainer.style.visibility = "visible";
-  }
+testsWithDetailsContainer.style.height = `${testsWithDetailsContainer.scrollHeight}px`;
+testsWithDetailsContainer.style.opacity = "1";
+testsWithDetailsContainer.style.margin='0 1rem 2rem 1rem'
  }
  if(!e.target.classList.contains('open-tech-pannel')){
  testsWithDetailsContainer.style.height ='0';
-  testsWithDetailsContainer.style.visibility = "hidden";
    testsWithDetailsContainer.style.opacity = "0";
+     testsWithDetailsContainer.style.margin = "0";
  }
 };
 //this useEffect response on:1.lastDuedate 2.on the presantaion of the tests checkboxes
@@ -121,6 +129,7 @@ useEffect(()=>{
   })
   const techWithTestArr =[];
 if(techArr.length>0){
+  setTechWithTests([])
   techArr.forEach((tech)=>{
   const testsObject = document[projName][mono][tech]
  techWithTestArr.push({ [tech]:{...testsObject,mono }});
@@ -130,7 +139,6 @@ if(techArr.length>0){
 }) 
 }
 },[document])
-
 useEffect(()=>{
 if(usersCollectionArray.length){
   setUsersArray(usersCollectionArray)
@@ -183,9 +191,9 @@ Object.entries(testArr[1]).sort().map((test,index)=>(
 </div>
 </div>
 {/* end of header */}
-<div className="project-tech-container">
+<div className="project-all-technologies-container">
 {technologyArr.length>0&&technologyArr.map((tech,index)=>(
-<div key={index}>
+<div className="project-tech" key={index}>
   <div className="tech-chevron-box">
   <h3>{tech}</h3>
   <img src={chevron} alt="chevron icon" onClick={handleOpenTech}
@@ -224,10 +232,13 @@ testAndDetailsArray[1]['workers'].map((workerObj,index)=>(
 <div className="supervisor-container">
 <div className='supervisor-select-box'>
 <Select
+id={`select-${projName}-${techAndTestsArray[1]['mono']}-${tech}-${testAndDetailsArray[0]}`}
 styles={selectCompSupervisor}
 onChange={(option)=>(handleSupervisor(option,projName,techAndTestsArray[1]['mono'],tech,testAndDetailsArray[0]))}
 options={professionDocument['supervisor'].concat({label:'cancel choise',value:'',id:'',photoURL:''})}
 placeholder='Select Supervisor'
+ref = {supervisorBox}
+// onFocus ={(e)=>{handleTestsBoxDimension(e)}}
 />
 </div>
   <label>
@@ -240,9 +251,10 @@ placeholder='Select Supervisor'
 </label>
 {document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['photoURL']?
 <Avatar className='supervisor-avatar' src={document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['photoURL']}/>
-:<span>no supervisor is assigne</span>}
+:<span className="no-supervisor">no supervisor is assigned</span>
+}
 <span>supervisor duedate :</span>
-{document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['dueDate']?<span>{format(new Date(document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['dueDate']),'EEEE dd/MM/yyyy')}</span>:""
+{document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['dueDate']?<span>{format(new Date(document[projName][techAndTestsArray[1]['mono']][tech][testAndDetailsArray[0]]['supervisor']['dueDate']),'EEEE dd/MM/yyyy')}</span>:<span></span>
 }
 </div>
 }

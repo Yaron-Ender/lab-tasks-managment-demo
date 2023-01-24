@@ -1,4 +1,3 @@
-import { useState,useEffect,useCallback } from "react";
 import WorkersSuperAssignmentsList from "./workersSuperAssignmentsList";
 const WorkersSupervisor = ({ arrayOfDocID,superId}) => {
 // this function get called from workersAssignmentsList

@@ -38,53 +38,53 @@ await correctAssginments(myAssignments, userDocuemnt["id"]);
   if (profession !== "supervisor" && profession !== "manager") {
     return (
       <div className="workers-container">
-        {errorUser && <h2>user does not exsist</h2>}
-        <h1>Assignmets</h1>
-        <div className="workers-my-assignments">
-          <h2>My Assignments</h2>
-          {myAssignments.length > 0 ? (
-            myAssignments.map((assignmentID, index) => (
-              <WorkersMyAssignment
-                key={index}
-                myAssignmentID={assignmentID}
-                profession={profession}
-                userID={userDocuemnt.id}
-                myAssignmentsLength={myAssignments.length}
-              />
-            ))
-          ) : (
-            <h3>No project has been assigned</h3>
-          )}
-        </div>
-        <div className="workers-same-tech-container">
-          <h2>{profession} Assignments</h2>
-          <div className="workers-same-tech-tests-container">
-            {arrayOfDocID.length > 0 &&
-              arrayOfDocID.map((assignmentID, index) => (
-                <WorkersSameTechAssignment
-                  key={index}
-                  assignmentID={assignmentID}
-                  profession={profession}
-                  userID={userDocuemnt.id}
-                  docNum={arrayOfDocID.length}
-                />
-              ))}
-          </div>
-        </div>
-        <div className="workers-other-container">
-          <h2>Other workers Assignments</h2>
-          <div className="workers-other-tests-container">
-            {arrayOfDocID.length > 0 &&
-              arrayOfDocID.map((assignmentID, index) => (
-                <WorkersOtherAssignments
-                  key={index}
-                  assignmentID={assignmentID}
-                  profession={profession}
-                  userID={userDocuemnt.id}
-                  docNum={arrayOfDocID.length}
-                />
-              ))}
-          </div>
+    {errorUser && <h2>user does not exsist</h2>}
+    <h1>Assignments</h1>
+    <div className="workers-my-assignments">
+    <h2>My Assignments</h2>
+    {myAssignments.length > 0 ? (
+    myAssignments.map((assignmentID, index) => (
+    <WorkersMyAssignment
+    key={index}
+    myAssignmentID={assignmentID}
+    profession={profession}
+    userID={userDocuemnt.id}
+    myAssignmentsLength={myAssignments.length}
+    />
+      ))
+    ) : (
+      <h3>No project has been assigned</h3>
+        )}
+  </div>
+    <div className="workers-same-tech-container">
+      <h2>{profession} Assignments</h2>
+      <div className="workers-same-tech-tests-container">
+        {arrayOfDocID.length > 0 &&
+          arrayOfDocID.map((assignmentID, index) => (
+      <WorkersSameTechAssignment
+        key={index}
+        assignmentID={assignmentID}
+        profession={profession}
+        userID={userDocuemnt.id}
+        docNum={arrayOfDocID.length}
+      />
+    ))}
+      </div>
+    </div>
+      <div className="workers-other-container">
+      <h2>Other worker's Assignments</h2>
+      <div className="workers-other-tests-container">
+      {arrayOfDocID.length > 0 &&
+        arrayOfDocID.map((assignmentID, index) => (
+      <WorkersOtherAssignments
+        key={index}
+        assignmentID={assignmentID}
+        profession={profession}
+        userID={userDocuemnt.id}
+        docNum={arrayOfDocID.length}
+      />
+        ))}
+    </div>
         </div>
       </div>
     );

@@ -15,7 +15,7 @@ const statusPannel=useRef()
 
 const handleStatusbox =useCallback(()=>{
 setOpen((prev) => !prev);
-},[open]) 
+},[]) 
 
 useEffect(()=>{
   if (open) {
@@ -55,7 +55,7 @@ return (
   <div className="supervisor-singel-test">
   <div className="supervisor-card-date-proj-box">
   {dueDate&&
-    <span>{format(new Date(dueDate), "EEEE MM/dd/yyyy")}</span>
+    <span>{format(new Date(dueDate), "EEEE dd/MM/yyyy")}</span>
   }
     <h3>{proj}</h3>
   </div>

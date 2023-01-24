@@ -37,7 +37,7 @@ if(testAndDetArr[1].supervisor.id===superId){
 })
  })   
  }   
-},[document])
+},[document,superId])
   return (
 <div className="supervisor-singel-proj">
 {projectDetailsArr.length>0&&projectDetailsArr.sort().map((supervisorObj,index)=>(

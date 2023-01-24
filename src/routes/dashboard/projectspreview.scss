@@ -89,9 +89,11 @@ visibility: hidden;
 }
 }
 }//end of project-header
-& .project-tech-container{
+& .project-all-technologies-container{
 background-color:$white;
 width:100%;
+& >.project-tech{
+@include flx-col(space-between);
 & .tech-chevron-box{
 transition: all $base-transition-slow;
 width:100%;
@@ -103,7 +105,8 @@ font: {
 }
 }
 & > img{
-  cursor: pointer;
+z-index:2;
+cursor: pointer;
 width:2rem;
 height:2rem;
 transition:all $base-transition;
@@ -118,31 +121,33 @@ padding:1rem 0.3rem;
 }
 }
 & .tests-with-details-container{
-height:0;
+ height:0;
+ opacity:0;
+ @include flx-row();
+ gap:2rem;
 transition:all $base-transition-slow;
-visibility:hidden;
-opacity:0;
 & > .tests-with-details-inner-container{
+// @include flx-col();
 background-color:$gray-border;
-padding:1rem 0;
-margin:0rem 2rem 2rem 2rem;
 box-shadow: $box-shadow-blur-modarate-plus;
 & > .test-box{
 @include flx-row();
 padding:0 1rem;
 }
 & > .workers-box{
-padding:1rem;
-@include flx-row(space-between);
-& >span{
-font: {
-size:$font-size-sm;
-weight:900;
-}
-letter-spacing:0.2rem;
+  width:100%;
+  padding:1rem;
+  @include flx-row(space-between);
+  & >span{
+  font: {
+  size:$font-size-sm;
+  weight:900;
+  }
+  letter-spacing:0.2rem;
 }
 }
 & > .test-details{
+ width:100%;
 & > h4{
 padding:1rem;
 @include flx-row(space-between);
@@ -157,10 +162,11 @@ letter-spacing:0.2rem;
 }
 & > .supervisor-container{
 padding:1rem 0 0 1rem;
- margin:1.5rem;
+margin:1.5rem;
 @include grid(repeat(3,1fr),1fr 1fr,1rem);
 justify-items:center;
 align-items:center;
+justify-content: center;
 transition: all $base-transition-slow;
 box-shadow:$box-shadow-gentle;
 & > .supervisor-select-box{
@@ -168,25 +174,35 @@ transition: all $base-transition;
 }
 & > label{
 & > input[name="date"]{
-max-width:5rem;
+position: relative;
+ max-width:4rem;
 background-color: transparent;
-border:none;
 display:none;
-&::-webkit-calendar-picker-indicator {
+opacity:1;
+color: transparent;
+transform: translateX(50%);
+&::-webkit-calendar-picker-indicator{
+position:absolute;
 color:$gray-border;
 background-color:$gray-border;
-border-radius:0.5rem;
+opacity:1;
 cursor: pointer;
+z-index: 2;
+transform:scale(1.2);
 }
 }
+}
+& span.no-supervisor{
+  grid-row: span 2;
 }
 & span:last-child{
 grid-column: span 2;
 }
-}
+}//end of supervisor-container
 & .delete-last-item-mono{
 height:0px;
 width:0%;
+margin:0;
 }
 }
 // in the jsx the last item in the iteration is for example mono:'ih-usa', i had to ommit it here
@@ -194,10 +210,14 @@ width:0%;
   height:0;
   padding:0;
   border:0;
+  margin:0;
 }
-
 }//tests-with-details-container
-}//project-tech-container-->end of new style
+}
+& > .project-tech:last-child:has(.open-tech-pannel){
+margin-bottom:4rem;
+}
+}//project-all-technologies-container-->end of new style
 }//end project-preview
 }//end of project-preview
 }//end of project-dashboard

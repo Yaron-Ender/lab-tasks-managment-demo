@@ -154,7 +154,9 @@ padding:0 2.5rem;
 & >h1{
 padding-left:2.5rem;
 margin:0 -2.5rem 3rem;
-background-color: aqua;
+background-color:$gray-border;
+color:$nav-color-2;
+background-image:linear-gradient(90deg,$gray-border,$white)
 }
 .workers-my-assignments{
 @include flx-col(flex-start,flex-start); 
@@ -171,6 +173,8 @@ padding:0 1rem;
 .workers-singel-test-container{
 margin-bottom:2rem;
 @include flx-row(flex-start);
+gap:2rem;
+align-items: flex-start;
 .workers-singel-test-card{
 width:27rem;
 color:$nav-color-2;
