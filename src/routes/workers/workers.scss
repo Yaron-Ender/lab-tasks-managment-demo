@@ -159,7 +159,8 @@ color:$nav-color-2;
 background-image:linear-gradient(90deg,$gray-border,$white)
 }
 .workers-my-assignments{
-@include flx-col(flex-start,flex-start); 
+@include flx-row(flex-start,flex-start); 
+gap:2rem;
 position: relative;
 border:3px solid $black-800;
 margin-bottom: 3rem;
@@ -171,11 +172,16 @@ background-color:$gray-primary;
 padding:0 1rem;
 }
 .workers-singel-test-container{
-margin-bottom:2rem;
-@include flx-row(flex-start);
-gap:2rem;
-align-items: flex-start;
-.workers-singel-test-card{
+&.today{
+transform: scale(1.1);
+margin:1rem;
+box-shadow:$box-shadow-difution;
+}
+&.today > .workers-singel-test-card{
+border-block-start:0.7rem solid $green-home-400;
+border-radius:0.7rem;
+}
+& > .workers-singel-test-card{
 width:27rem;
 color:$nav-color-2;
 background-color:$gray-border;
@@ -184,13 +190,13 @@ border-radius:0.7rem;
 padding:1rem;
 box-shadow:$box-shadow-blur-modarate-plus;
 & > h4:first-child{
-@include flx-row();
+    @include flx-row();
 }
 & >h4{
-@include flx-row(space-between);
+ @include flx-row(space-between);
 padding:1rem 0; 
 & >span{
-font: {
+ font: {
 size:$font-size-sm;
 weight:900;
 }

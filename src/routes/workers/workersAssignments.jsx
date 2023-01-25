@@ -7,9 +7,12 @@ import WorkersMyAssignment from "./workersMyAssignment";
 import WorkersSameTechAssignment from "./workersSameTechAssignment";
 import WorkersOtherAssignments from "./workersOtherAssignments";
 import { useFriestore } from "../../hooks/useFirestore"; 
+import { useCallback } from "react";
+import WorkersMyAssignmentByDate from "./workersMyAssignmentByDate";
 const WorkersAssignments = () => {
   const { correctAssginments } = useFriestore("users"); 
   const { arrayOfDocID } = useCollection("assignments");
+  const [orderbyDate,setOrderByDate] =useState([])
   const { user } = useAuthContext();
   const { document: userDocuemnt, error: errorUser } = useDocument(
     "users",
@@ -17,6 +20,18 @@ const WorkersAssignments = () => {
   );
   const [profession, setProfession] = useState(null);
   const [myAssignments, setMyAssignments] = useState([]);
+// get called in WorkersMyAssignments--> it return back the object with all project's details
+  const orderByDateFunction = useCallback((myAssignmentObj) => {
+  if(myAssignmentObj.test.length>0){
+  myAssignmentObj.test.forEach((test)=>{
+  setOrderByDate((prev)=>[...prev,{test:test[0],details:test[1],monograph:myAssignmentObj.monograph,projectName:myAssignmentObj.projectName}])
+  })
+  setOrderByDate((prev)=>(prev.sort((a,b)=>{
+  return new Date(b.details.dueDate).getTime()  - new Date (a.details.dueDate).getTime()
+  })))
+}
+}, [orderbyDate]);
+console.log(orderbyDate);
   const sendTofireBase = useMemo(async()=>{
     if (userDocuemnt) {
 await correctAssginments(myAssignments, userDocuemnt["id"]);
@@ -46,6 +61,7 @@ await correctAssginments(myAssignments, userDocuemnt["id"]);
     myAssignments.map((assignmentID, index) => (
     <WorkersMyAssignment
     key={index}
+    orderByDateFunction={orderByDateFunction}
     myAssignmentID={assignmentID}
     profession={profession}
     userID={userDocuemnt.id}
@@ -55,6 +71,11 @@ await correctAssginments(myAssignments, userDocuemnt["id"]);
     ) : (
       <h3>No project has been assigned</h3>
         )}
+    {myAssignments.length > 0 && orderbyDate.length>0&&
+    orderbyDate.map((testItem,index)=>(
+    <WorkersMyAssignmentByDate key={index} singelTest={testItem}/>
+    ))
+    }
   </div>
     <div className="workers-same-tech-container">
       <h2>{profession} Assignments</h2>
