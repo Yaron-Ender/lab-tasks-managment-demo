@@ -31,7 +31,6 @@ const WorkersAssignments = () => {
   })))
 }
 }, [orderbyDate]);
-console.log(orderbyDate);
   const sendTofireBase = useMemo(async()=>{
     if (userDocuemnt) {
 await correctAssginments(myAssignments, userDocuemnt["id"]);

@@ -26,17 +26,16 @@ const Navbar = () => {
     <nav className="main-navbar">
     {!error&&document&&(
       <>
-      {/* only manager can see the database and the "/" and workers links */}
+      {/* only manager can see the database and the "assignment"  */}
     {document['position']['manager']&&  
-    <>   
+    <div className="main-navbar-link-btn">   
     <NavLink to="database"
     onClick={()=>{openDatabaseNavbar()}}
     >database</NavLink>
     <NavLink to="assignment"
-    >assign job</NavLink>
-
-    <NavLink to="workers">workers</NavLink>
-    </>
+    >dashboard</NavLink>
+    </div>
+    
     }
     {user&&<p className="welcome-user">hello <span>{user.displayName}</span></p>}
       </>

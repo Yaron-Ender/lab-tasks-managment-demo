@@ -11,7 +11,7 @@ const MainSidebar = () => {
 <li>
 <NavLink to="/assignment/projectsDashboard">
 <img src={dashboardIcon}alt='dashboard icon'/>
-<span>Dashboard</span>
+<span>See projects</span>
 </NavLink>
 </li>
 <li>

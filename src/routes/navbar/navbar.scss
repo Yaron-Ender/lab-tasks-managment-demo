@@ -9,24 +9,27 @@
   @include flx-row ($justify:space-around);
   color:map-get($colors,'white');
   box-shadow:0rem 1.5rem 4.5rem -2.2rem rgba(0,0,0,1) ;
- 
- & a{
-   text-decoration: none;
-   color:map-get($colors,'white');
-   border:$base-border-thickness solid currentcolor;
-   padding:$base-padding*0.5 $base-padding;
-   border-radius:$base-border-radius*0.3;
-   transition:$base-transition;
-   font: {
+ & > .main-navbar-link-btn{
+  @include flx-row();
+  gap:2rem;
+  & a{
+    text-decoration: none;
+    color:map-get($colors,'white');
+    border:$base-border-thickness solid currentcolor;
+    padding:$base-padding*0.5 $base-padding;
+    border-radius:$base-border-radius*0.3;
+    transition:$base-transition;
+    font: {
     size:$base-font-size;
-   }
-   letter-spacing:0.1rem;
-   &:hover{
-   background-color:map-get($colors,'white');
+    }
+    letter-spacing:0.1rem;
+    &:hover{
+    background-color:map-get($colors,'white');
     color:$nav-color-shining;
-   border:$base-border-thickness solid $nav-color;
-   font-weight:bold;
-   }
+    border:$base-border-thickness solid $nav-color;
+    font-weight:bold;
+    }
+  }
  }
  & .welcome-user >span{
  text-transform: capitalize;

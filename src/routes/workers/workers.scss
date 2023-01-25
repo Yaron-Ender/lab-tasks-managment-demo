@@ -7,7 +7,7 @@ height:100vh;
 background-color:$gray-border;
 & nav{
 position:sticky;
-top:10rem;
+top:12.5rem;
 left:0;
 max-height:100%;
 @include flx-col(center,flex-end);
