@@ -1,0 +1,190 @@
+.welcome-page{
+font-family:'indie Flower',sans-serif;
+position: fixed;
+top:2rem;
+height: 100vh;
+width:100vw;
+margin-top: 5rem;
+padding:2rem;
+@include grid(repeat(10,1fr),repeat(7,1fr),0.1rem);
+background-image: linear-gradient(0deg,$gray-border,$gray-primary);
+// font-family: 'Open Sans', sans-serif;
+font-size: 1.4em;
+perspective: $perspective;
+-webkit-perspective: $perspective;
+-ms-perspective: $perspective;
+-webkit-perspective-origin: 50%;
+-ms-perspective-origin: 50%;
+  perspective-origin:50%;
+  & > header{
+    grid-area: 1 / 4 / 3 / 8; 
+    & > h1{
+    font: {
+      size:7rem;
+    }
+    text-shadow:  0 0 0.2em rgba(0, 0, 0, 0.2);
+    -webkit-text-stroke: 1px $nav-color-2;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    }
+  }
+  & > .informational-container{
+  position: relative;
+   height:45%;
+   border:1px solid rgba(0, 0, 0, 0.2);
+   box-shadow: inset rgba(0, 0, 0, 0.2) 0.2em 0.2em 1em;
+    border-radius: 2rem;
+    background-image: linear-gradient(0deg,rgba(250,250,247,0.5),$gray-primary);
+   grid-area: 2 / 1 / 7 / 3;
+   transition: all $base-transition-slow;
+   overflow: hidden;
+   padding:1.5rem 3rem;
+ overflow:hidden;
+  & > h3{
+   text-align: center;
+   margin-bottom: 1rem;
+
+  }
+  & >p{
+   text-align: justify;
+  text-justify: inter-word;
+  height: 100%;
+  justify-content: center;
+    line-height:1.5;
+  letter-spacing:0.3rem;
+  font: {
+    weight:900;
+  }
+  }
+  & > .read-more{
+  position:sticky;
+  margin-left: auto;
+  bottom:0rem;
+  right:0;
+  @include flx-row();
+  width: 100%;
+   background-image: linear-gradient(0deg,rgba(250,250,247,1),$gray-primary);
+  box-shadow: 0rem 3rem 1rem 5rem rgba(250,250,247,1);
+  cursor: pointer;
+  & > span{
+    padding: 0.5rem 1rem;
+    margin-left:auto;
+    color:$nav-color-2;
+   border-radius:.55rem;
+ background: linear-gradient(90deg,rgba(255,255,255,0.6),rgba(255,255,255,1));
+     box-shadow:  3px 3px 5px #bebebe, 
+                 -3px -3px 5px #ffffff;
+    font: {
+      size: 2rem;
+      weight:900;
+    }
+    letter-spacing:0.2rem;
+  }
+  }
+  &.open{
+  z-index: 9;
+  min-height:100%;
+  margin-right:auto;
+ grid-area: 2 / 1 / 7 / 4;
+  @include run-animation(open-container);
+ @if(grid-area  2 / 1 / 7 / 4){
+ & + div.main-messages-container{
+transform: rotateY(3deg) translateX(10rem);
+filter: drop-shadow(-1px 2px 0.1rem  rgba(0, 0, 0, 0.5));
+ }
+ }
+  }
+
+}
+& > .main-messages-container{
+  grid-area: 3 / 4 / 7 / 8;
+  transform: rotateY(0.75deg);
+  transition: all $base-transition-slow;
+  box-shadow:-11rem 12rem 4rem -12rem rgba(0, 0, 0, 0.8);
+  filter: drop-shadow(-1px 2px 1rem  rgba(0, 0, 0, 0.5));
+ & >.inner-main-messages-container{
+   width: 100%;
+   height: 100%;
+ position:relative;
+ box-shadow: 0.1em 0.1em 1em rgba(0, 0, 0, 0.8);
+ background-image: linear-gradient(0deg,$gray-border,$gray-primary);
+ border-radius: 2rem;
+ padding: 2rem;
+ & > h3{
+ text-align: center;
+ margin-bottom: 1rem;
+ font: {
+  family:'indie Flower',sans-serif;
+}
+}
+& >.main-messages-text-box{
+& > p{
+  font: {
+  size: 2rem;
+  }
+  margin-bottom: 1rem;
+  line-height:1.5;
+  letter-spacing:0.3rem;
+}
+}
+ &:after{
+   position: absolute;
+   z-index:-1;
+   top:0;
+   left:0;
+   content:"";
+   width:104%;
+   height:104%;
+   display:inline-flex;
+   border:1px solid rgba(0, 0, 0, 0.2);
+   box-shadow: inset rgba(0, 0, 0, 0.2) 0.2em 0.2em 1em;
+   transform: translate(-2% ,-2%);
+   background-image: linear-gradient(
+     148deg,
+     rgba(246, 248, 249, 0) 0%,
+     rgba(245, 247, 249, 0) 100%
+     ),
+     radial-gradient(
+       rgba(246, 248, 249, 1) 0%,
+       rgba(205, 212, 217, 1) 75%,
+       rgba(205, 212, 217, 1) 76%,
+       rgba(245, 247, 249, 1) 100%
+       );
+       border-radius: 2rem;
+     }
+     &:before{
+ transform-origin: right;
+ z-index:-3;
+ position: absolute;
+ bottom:0;
+ left:-7%;
+ content:"";
+ width: 8%;
+ height:80%;
+  background: linear-gradient(to bottom, #f9f9f9, #666 80%);
+ clip-path: polygon(100% 0, 100% 0, 100% 100%, 0% 100%);
+ }
+ }
+
+}
+& >.general-masseges-contaioner{
+  grid-area: 2 / 9 / 7 / -1;
+  border:1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset rgba(0, 0, 0, 0.2) 0.2em 0.2em 1em;
+  border-radius: 2rem;
+  background-image: linear-gradient(0deg,rgba(250,250,247,0.5),$gray-primary);
+  overflow: hidden;
+  & > ul{
+ height: 100%;
+ padding: 1rem 1.5rem;
+ @include  run-curosel-massage-animation(massage-curosel);
+ & > li{
+text-align:center;
+margin:2rem 0;
+padding: 1rem;
+border:1px solid rgba(0, 0, 0, 0.2);
+box-shadow: inset rgba(0, 0, 0, 0.2) 0.2em 0.2em 1em;
+ }
+  }
+} 
+}

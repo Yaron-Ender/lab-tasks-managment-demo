@@ -3,11 +3,6 @@ const WorkersSidebar = ({ userDoc }) => {
     return (
     <div className="worker-sidebar">
   <nav>
-    <li>
-    <NavLink to="/workers">
-        workers home page
-    </NavLink>
-    </li>
  <li> 
 {userDoc['position']['supervisor']&&
 <NavLink to="/workers/supervisor">
@@ -16,10 +11,15 @@ const WorkersSidebar = ({ userDoc }) => {
 }
 {!userDoc['position']['supervisor']&&
 <NavLink to="/workers/workersAssignments">
-   projecs
+   Projecs
 </NavLink>
 }
  </li>
+  <li>
+  <NavLink to="/workers">
+     Safety
+  </NavLink>
+  </li>
   </nav>
     </div> 
     );

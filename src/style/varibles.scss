@@ -34,6 +34,9 @@ $black-300:#333;
 $black:#222;
 $black-font:#121212;
 $white:#fff;
+//varibles for welcome page and animation
+$perspective: 30rem;
+$time:2s;
 
 $colors:(
   "gray-bck":$gray-primary,
@@ -118,10 +121,10 @@ $center:center;
     flex-wrap: wrap;
 }
 @mixin flx-col($justify:$center, $aling:$center){
-    display:flex;
-    justify-content:$justify;
-    align-items:$aling;
-    flex-flow: column wrap;
+  display:flex;
+  justify-content:$justify;
+  align-items:$aling;
+  flex-flow: column wrap;
 }
 @mixin grid($col:1fr,$row:1fr,$gap:0) {
 display: grid;
@@ -140,3 +143,42 @@ gap:$gap;
 box-shadow: 0 0px 1px rgba(0, 0, 0, 0.4);
 transform: translateY(1px);
 }
+
+//animation
+ @mixin animation ($name){
+  @-webkit-keyframes #{$name} {@content;}
+  @-moz-keyframes #{$name} {@content;}
+  @-o-keyframes #{$name} {@content;}
+  @keyframes #{$name} {@content;}
+ }
+
+ @include animation(open-container){
+ 0%{  grid-area: 2 / 1 / 7 / 3;}
+ 50%{grid-column:1 / 4}
+ 100%{grid-row: 2 /7;}
+ }
+ @include animation(translate-container){
+ to{transform: rotateY(3deg) translateX(10rem);
+  ;}
+ }
+ @include animation(massage-curosel){
+ 0%{transform: translateY(-100%)};
+ 90%,100%{transform: translateY(100%)};
+ }
+
+ @mixin run-animation($name) {
+  -webkit-animation: $name $base-transition-slow*2 ease-in-out forwards;
+  -moz-animation: $name $base-transition-slow*2 ease-in-out forwards;
+  -o-animation: $name $base-transition-slow*2 ease-in-out forwards;
+  animation: $name $base-transition-slow*2 ease-in-out forwards;
+}
+
+@mixin run-curosel-massage-animation($name){
+  -webkit-animation: $name $time*5 linear 2s  infinite;
+  -moz-animation: $name $time*5 linear 2s infinite;
+  -o-animation: $name $time*5 linear 2s infinite;
+  animation: $name $time*5 linear  infinite;
+  
+}
+
+

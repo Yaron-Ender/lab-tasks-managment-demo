@@ -1,5 +1,4 @@
 .assignment{
-// @include grid(minmax(17rem,1fr) 5fr);
 min-height:100vh;
 @include grid(15% 1fr,1fr);
 & .main-sidebar{
