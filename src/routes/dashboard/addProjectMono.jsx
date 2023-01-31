@@ -47,16 +47,18 @@ export default function AddProjectMono({ projName, handleTestFields, deleteMonog
     key={buildObjBasedDocument.current[monoTitle]["id"]}
     className="assign-mono-box"
   >
+  {document[monoTitle]&&
   <h3 className="mono-title">
-    {monoTitle}/{document[monoTitle]["monographEdition"]}
+  {monoTitle}/{document[monoTitle]["monographEdition"]}
      <img
       className="cancel-icon"
       src={cancel}
       onClick={() => {
         handleClick(monoTitle);
       }}
-    />
+      />
   </h3>
+    }
     {/* try to add the img as content to h3 */}
 
     {Object.keys(buildObjBasedDocument.current[monoTitle].tests).map(

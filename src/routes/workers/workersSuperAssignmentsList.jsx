@@ -29,7 +29,10 @@ if(testAndDetArr[1].supervisor.id===superId){
       dueDate: testAndDetArr[1].supervisor["dueDate"],
       comments: testAndDetArr[1].comments,
     },
-  ]);   
+  ]); 
+  setProjectDetailsArr((prev)=>prev.sort((a,b)=>{
+return new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
+  }))
 }
 })
 })

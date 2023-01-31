@@ -7,7 +7,7 @@ height:100vh;
 background-color:$gray-border;
 & nav{
 position:sticky;
-top:12.5rem;
+top:30%;
 left:0;
 max-height:100%;
 @include flx-col(center,flex-end);
@@ -16,17 +16,18 @@ max-height:100%;
 margin-bottom:1rem;
 width:100%;
 & > a{
-font-size:$base-font-size;
+font-size:$font-size-lg;
 text-align: center;
 width:85%;
 color:$nav-color-2;
 padding:0.5rem 0;
+transition: all $base-transition-slow;
 &:hover{
-font-size:$base-font-size*1.1;
 background-color:$gray-primary;
 color:$nav-color-2;
 border-top-left-radius:10rem;
 border-bottom-left-radius:10rem;
+transform: translateX(1rem);
 }
 }
 }
@@ -62,7 +63,8 @@ background-color:$gray-border;
 border-block-start:0.7rem solid $black-500;
 border-radius:0.7rem;
 padding:1rem;
-box-shadow:$box-shadow-blur-modarate-plus;
+box-shadow:$box-shadow-inner-light,$box-shadow-gentle-inner;
+border:1px solid rgba(0, 0, 0, 0.2);
 & >h4{
 @include flx-row(space-between);
 padding:1rem 0; 
@@ -144,6 +146,13 @@ background-color:$error;
 }
 }
 }
+&.today{
+transform: scale(1.1);
+margin:1rem;
+box-shadow:$box-shadow-difution;
+border-block-start:0.7rem solid $green-home-400;
+border-radius:0.7rem;
+}
 }//end of supervisor-singel-test
 }//end supervisor-single-card
 }//end of supervisor-assignments-list
@@ -188,7 +197,8 @@ background-color:$gray-border;
 border-block-start:0.7rem solid $black-500;
 border-radius:0.7rem;
 padding:1rem;
-box-shadow:$box-shadow-blur-modarate-plus;
+box-shadow:$box-shadow-inner-light,$box-shadow-gentle-inner;
+border:1px solid rgba(0, 0, 0, 0.2);
 & > h4:first-child{
     @include flx-row();
 }
@@ -311,6 +321,21 @@ padding:0.5rem 0;
 gap:1rem
 }
 }    
+}
+}
+& > .workers-safety{
+min-height:100vh; 
+width:100%;
+padding:2rem;
+@include flx-col();
+& > .img-hero-safety{
+width:70%;
+height:60%;
+background:center / 98% 98% no-repeat url('../../asstes/underconstruction.jpg'), 
+linear-gradient(0deg,$gray-border,$gray-primary);
+ box-shadow: 0.1em 0.1em 1em rgba(0, 0, 0, 0.8);
+ border-radius: .2rem;
+padding:4rem;
 }
 }
 }//end of workers

@@ -44,12 +44,12 @@ setTimeout(()=>{
     }
   }
   ); //end forEach details
-  })
-  }) 
-  })
-  }) 
-  setDueDateArray((prev)=>(prev.sort((a,b)=>b-a)))
-   //end of last dueDate
+})
+}) 
+})
+}) 
+setDueDateArray((prev)=>(prev.sort((a,b)=>b-a)))
+//end of last dueDate
 },[document]) 
 
 // update supervisor in assignment collection

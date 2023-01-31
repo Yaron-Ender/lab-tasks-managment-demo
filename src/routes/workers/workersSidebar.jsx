@@ -16,7 +16,7 @@ const WorkersSidebar = ({ userDoc }) => {
 }
  </li>
   <li>
-  <NavLink to="/workers">
+  <NavLink to="/workers/workerSafety">
      Safety
   </NavLink>
   </li>

@@ -15,6 +15,7 @@ updateTests(id,testList)
 },[testList])
 
 const handleClick= (e)=>{
+console.log(e)
 if(text){
    setTestList((prev) =>({...prev,[technology]:[...prev[technology],text]}));
  setText("");
@@ -48,11 +49,6 @@ if(text){
   buttontype="done" 
   children={<img className="done-img" src={done} alt='done-btn'/>} 
 />
-   {/* <Button type="button" 
-   buttontype='addTest' 
-    children={<img className="plus-sign" src={plusSign}
-     onClick={handleClick}  />}
-    /> */}
     </div>
     </div>
 }

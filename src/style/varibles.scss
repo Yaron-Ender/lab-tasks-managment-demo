@@ -99,6 +99,7 @@ $box-shadow-difution:
 -.2rem -.2rem .5rem #FFFFFF;
 $box-shadow-gentle-inner: inset .2rem .2rem .5rem #c8d0e7, 
 inset -.2rem -.2rem .5rem #FFFFFF;
+$box-shadow-inner-light:inset rgba(0, 0, 0, 0.2) 0.2em 0.2em 1em;
 // font sizes
 $base-font-size: 1.6rem;
 $font-size-sm: $base-font-size * 0.75;

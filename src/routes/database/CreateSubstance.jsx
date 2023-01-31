@@ -45,8 +45,11 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
   //FUNCTIONS
   //take the monograph state that store all the monograpgh data and convert it to an object that could be stored in firestore
   const handleSubmit = async (e) => {
+    console.log(substanceName)
+    console.log(e.nativeEvent.submitter.id);
+    console.log(e.nativeEvent);
     e.preventDefault();
-    if (substanceName&&monograph.length>0) {
+    if (substanceName && monograph.length > 0 && e.nativeEvent.submitter.id==='submit') {
       let monoNamesArr = [];
       const monographObj = new Object();
       //step 1 - create an array with monograph names
@@ -60,16 +63,16 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
         let individualMono = {
           ...monograph.filter((mono) => mono.monographName == monoNamesArr[i]),
         };
-        let {id,monographEdition, effectiveDate, note, tests } =
+        let { id, monographEdition, effectiveDate, note, tests } =
           individualMono["0"];
         //delete empty technology
-          Object.keys(tests).forEach((tech)=>{
-           if(tests[tech].length==0){
-             delete tests[tech]
-           }
-          })
+        Object.keys(tests).forEach((tech) => {
+          if (tests[tech].length == 0) {
+            delete tests[tech];
+          }
+        });
         monographObj[monoNamesArr[i]] = {
-        id,
+          id,
           monographEdition,
           effectiveDate,
           note,
@@ -188,8 +191,10 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
       children={"add monograph"}
     />
       <Button
-       buttontype="createSubstance"
-        children={"Save Substance"}
+    id='submit'
+    // onKeyPress={(e)=>{console.log(e.key)}}
+    buttontype="createSubstance"
+    children={"Save Substance"}
          />
     </div>
   </header>
@@ -215,7 +220,7 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
       handleMonographInput(e, item.id);
     }}
     required
-  />
+    />
   <MonoInput
     span="effective date"
     type="date"
@@ -224,7 +229,7 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
       handleMonographInput(e, item.id);
     }}
     required
-  />
+    />
     </div>
   {/* tech section */}
   <div className="select-tech">
@@ -239,13 +244,13 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
     />
     {item.tech.map((technology) => (
       <SingelTech
-        key={technology}
-        technology={technology}
-        id={item.id}
-        updateTests={updateTests}
-        monograph={monograph}
+      key={technology}
+      technology={technology}
+      id={item.id}
+      updateTests={updateTests}
+      monograph={monograph}
       />
-    ))}
+      ))}
   </div>
   {/* textarea */}
 <div className="add-note-container">
@@ -278,6 +283,7 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
 </div>
 ))}
 </div>
+
 </form>
     </div>
   );

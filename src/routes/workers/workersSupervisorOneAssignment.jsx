@@ -7,6 +7,7 @@ import { useFriestore } from "../../hooks/useFirestore";
 const WorkersSupervisorOneAssignment = ({ supervisorObj, assignmentID }) => {
 const { updateProjectStatusBySupervisor } = useFriestore('assignments');
 const [open,setOpen]=useState(false)
+const [today, setToday] = useState("");
 const {proj,test,monograph,workers,comments,dueDate,status} = supervisorObj
 const handelFirestore = async (supervisorObj) => {
 await updateProjectStatusBySupervisor(supervisorObj,assignmentID);
@@ -25,6 +26,11 @@ useEffect(()=>{
     statusPannel.current.style.height = "0";
   }
 },[open])
+//handle with dotay supervisor assignment
+useEffect(() => {
+setToday(format(new Date(), "dd/MM/yyyy"));
+}, [supervisorObj]);
+
 const handleStatus = (e)=>{
 const { name } =e.target;
 switch(name){
@@ -52,7 +58,7 @@ break;
 }
 
 return (
-  <div className="supervisor-singel-test">
+  <div className={`supervisor-singel-test  ${today&&dueDate&& (today===format(new Date(dueDate),"dd/MM/yyyy"))?'today':''}`}>
   <div className="supervisor-card-date-proj-box">
   {dueDate&&
     <span>{format(new Date(dueDate), "EEEE dd/MM/yyyy")}</span>

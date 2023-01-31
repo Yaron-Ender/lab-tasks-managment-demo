@@ -6,7 +6,7 @@ return (
   <fieldset className="supervisor-assignments-list" >
   <legend> your projects</legend>
   {arrayOfDocID.length > 0 &&
-  arrayOfDocID.sort().map((assignmentID,index)=>(
+  arrayOfDocID.map((assignmentID,index)=>(
   <WorkersSuperAssignmentsList key={index} assignmentID={assignmentID} superId={superId} />
   ))}
   </fieldset>
