@@ -93,6 +93,7 @@ $box-shadow-difution:
     12.8px 34.4px 32.2px -4.1px  rgba(0,0,0,0.02);
   $box-shadow-blur-modarate:
   0 0.1rem 0.2rem rgba(0,0,0,0.19),0 0.6rem 0.6rem rgba(0,0,0,0.23);
+   $box-shadow-blur-modarate-hover: 0.2rem 0.1rem 0.2rem rgba(0,0,0,0.19),0.6rem 0.6rem 0.6rem rgba(0,0,0,0.23);
   $box-shadow-blur-modarate-plus:
   0.2rem 0.1rem 1rem rgba(0,0,0,0.19),0 0.6rem 0.6rem rgba(0,0,0,0.23);
   $box-shadow-gentle: .3rem .3rem .6rem #c8d0e7, 
@@ -100,6 +101,8 @@ $box-shadow-difution:
 $box-shadow-gentle-inner: inset .2rem .2rem .5rem #c8d0e7, 
 inset -.2rem -.2rem .5rem #FFFFFF;
 $box-shadow-inner-light:inset rgba(0, 0, 0, 0.2) 0.2em 0.2em 1em;
+$box-shadow-glasses:  3px 3px 5px #bebebe, -3px -3px 5px #ffffff;
+$box-shadow-glasses-error:  1px 1px 5px $error, -3px -3px 5px #ffffff;
 // font sizes
 $base-font-size: 1.6rem;
 $font-size-sm: $base-font-size * 0.75;

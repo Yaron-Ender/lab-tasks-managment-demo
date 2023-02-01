@@ -7,10 +7,11 @@ position:relative;
 @include flx-row(space-around);
 transform:translateY(-100%);
 background-color:map-get($colors,'white');
-background-image:linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(227,227,227,1) 100%);
 width:100vw;
 padding:$base-padding*2 $padding-medium*10;
-box-shadow:inset 0rem 1.5rem 1.5rem -1.2rem rgba(0,0,0,0.5);
+border:1px solid rgba(0, 0, 0, 0.2);
+box-shadow:$box-shadow-inner-light;
+ background-image: linear-gradient(0deg,rgba(250,250,247,0.5),$gray-primary);
 color:$nav-color-light;
 & h4{
  font-size: 2.5rem;
@@ -29,17 +30,20 @@ color:$nav-color-light;
  background-color:$gray-strong ;
 }
 & >h4:last-child{
-  box-shadow:$box-shadow-gentle;
   padding: 2rem;
-
+  box-shadow:$box-shadow-glasses;
 }
 & > h4:hover{
   cursor: pointer;
-  box-shadow:0rem 0.3rem 1rem rgba(0,0,0,0.1);
+  box-shadow:  $box-shadow-blur-modarate-hover;
 font: {
   size: 2.6rem;
   color:$nav-color-dark;
 } 
+}
+& >h4:active{
+  box-shadow:$base-box-shadow;
+ transform: translateY(0.5rem);
 }
 &.open{
  transition:all $base-transition*2;

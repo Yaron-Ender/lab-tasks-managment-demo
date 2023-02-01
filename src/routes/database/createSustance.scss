@@ -10,7 +10,7 @@ height:100%;
   } 
   letter-spacing:0.2rem;
 }
-& form{
+& .signup-form{
 height: 100%;
 width:90%;
 @include grid(1fr,1fr);

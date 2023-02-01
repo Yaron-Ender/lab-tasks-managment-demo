@@ -15,7 +15,6 @@ updateTests(id,testList)
 },[testList])
 
 const handleClick= (e)=>{
-console.log(e)
 if(text){
    setTestList((prev) =>({...prev,[technology]:[...prev[technology],text]}));
  setText("");

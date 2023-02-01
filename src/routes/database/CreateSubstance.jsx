@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import Button from "../../component/button/button";
@@ -41,47 +40,79 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
   const [substanceName, setSubstanceName] = useState("");
   const [monograph, setMonograph] = useState([]); //All the monograpes that the user create
   const [,setOpenTextareaPannel] = useState(false);
+  const [popup,setPopup]=useState(false);
+  const [note,setNote]=useState([]);
   const { selectCompCreateSunstanceStyle } = useStyle();
   //FUNCTIONS
   //take the monograph state that store all the monograpgh data and convert it to an object that could be stored in firestore
   const handleSubmit = async (e) => {
-    console.log(substanceName)
-    console.log(e.nativeEvent.submitter.id);
-    console.log(e.nativeEvent);
     e.preventDefault();
-    if (substanceName && monograph.length > 0 && e.nativeEvent.submitter.id==='submit') {
+    setNote([])
+    if (substanceName && monograph.length > 0) {
       let monoNamesArr = [];
       const monographObj = new Object();
       //step 1 - create an array with monograph names
       monograph.forEach((monograph) => {
-        if (!monoNamesArr.includes(monograph.monographName)) {
-          monoNamesArr.push(monograph.monographName);
-        }
-      });
-      //step 2 - iterate throuth monograph and add to the monographObj the monographName as a property
-      for (let i = 0; i < monoNamesArr.length; i++) {
-        let individualMono = {
-          ...monograph.filter((mono) => mono.monographName == monoNamesArr[i]),
-        };
-        let { id, monographEdition, effectiveDate, note, tests } =
-          individualMono["0"];
-        //delete empty technology
-        Object.keys(tests).forEach((tech) => {
-          if (tests[tech].length == 0) {
-            delete tests[tech];
-          }
-        });
-        monographObj[monoNamesArr[i]] = {
-          id,
-          monographEdition,
-          effectiveDate,
-          note,
-          tests,
-        };
+  //just if monographName is not emty it will be included in the array
+    if(monograph.monographName){
+      if (!monoNamesArr.includes(monograph.monographName)) {
+        monoNamesArr.push(monograph.monographName);
       }
-      await addDocument(substanceName, monographObj);
-      closeCreateSubstanceComp();
+    }else{
+    } 
+      });
+   //step 2 - iterate throuth monograph and add to the monographObj the monographName as a property
+   for (let i = 0; i < monoNamesArr.length; i++) {
+   let individualMono = {
+     ...monograph.filter((mono) => mono.monographName == monoNamesArr[i]),
+     };
+  let { id, monographEdition, effectiveDate, note, tests } =
+    individualMono["0"];
+    //delete empty technology
+    Object.keys(tests).forEach((tech) => {
+      if (tests[tech].length == 0) {
+        delete tests[tech];
+      }
+    });
+    monographObj[monoNamesArr[i]] = {
+      id,
+      monographEdition,
+      effectiveDate,
+      note,
+      tests,
+    };
+   }
+ //prevent of sending the form if monograoh field is empty
+//if there is empty fields of monograpk name, the arr is > 0
+if (window.document.querySelectorAll("div.monoName-empty").length>0) {
+console.log("mononame is empty");
+if (!note.includes("please fillup monograph name")){
+setNote((prev) => [...prev, "please fillup monograph name"]);
+}
+}
+
+if (window.document.querySelectorAll("div.monoEdition-empty").length > 0) {
+console.log("eddition is  empty");
+if(!note.includes("please fillup monograph eddition")){
+setNote((prev) => ([...prev, "please fillup monograph eddition"]));
+  }
+}
+
+if (window.document.querySelectorAll("div.efectiveDate-empty").length > 0) {
+console.log("efective date is  empty");
+if (!note.includes("please fillup monograph effective date")){
+setNote((prev) => [...prev, "please fillup monograph effective date"]);
+  }
+}
+if(window.document.querySelectorAll("div.monoName-empty").length<1&&
+   window.document.querySelectorAll("div.monoEdition-empty").length<1&&
+   window.document.querySelectorAll("div.efectiveDate-empty").length<1
+){
+await addDocument(substanceName, monographObj);
+ closeCreateSubstanceComp();
+}
     }
+console.log(note)
   };
   //add the individual monograph to state that store all the monographes
   const addMonograph = (e) => {
@@ -100,16 +131,29 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
       if (item.id === id) {
   switch (e.target.name) {
     case "monographName":
-      item.monographName = e.target.value;
-      break;
-    case "edition":
-      item.monographEdition = e.target.value;
-      break;
-    case "date":
-      item.effectiveDate = Timestamp.fromDate(new Date(e.target.value));
-      break;
+    item.monographName = e.target.value;
+   e.target.parentElement.classList.remove('monoName-empty')
+    if(e.target.value===''){e.target.parentElement.classList.add("monoName-empty");}
+  break;
+  case "edition":
+  item.monographEdition = e.target.value;
+  e.target.parentElement.classList.remove("monoEdition-empty");
+  if (e.target.value === "") {
+  e.target.parentElement.classList.add("monoEdition-empty");
+  }
+break;
+  case "date":
+  item.effectiveDate = Timestamp.fromDate(new Date(e.target.value));
+  if(item.effectiveDate){
+  e.target.parentElement.classList.remove("efectiveDate-empty");   
+  }
+  if(!item.effectiveDate.seconds){
+    e.target.parentElement.classList.add("efectiveDate-empty");   
+  }
+
+  break;
     default:
-      return;
+    return;
   }
       }
     });
@@ -170,7 +214,9 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
   return (
     <div className="create-Newsubstance-container">
       <h1>Create New Substance</h1>
-      <form className="signup-form" onSubmit={handleSubmit}>
+
+    <div className="signup-form" >
+      <form onSubmit={handleSubmit}>
     <header>
       <MonoInput
       span='add substance'
@@ -180,30 +226,31 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
         value={substanceName}
         className='input-mono-container'
         onChange={(e) => {
-        setSubstanceName(e.target.value);
+          setSubstanceName(e.target.value);
         }}
-      />
+        />
     <div className="btn-container">
     <Button
       buttontype="createSubstance"
       type="button"
       onClick={addMonograph}
       children={"add monograph"}
-    />
+      />
       <Button
     id='submit'
-    // onKeyPress={(e)=>{console.log(e.key)}}
     buttontype="createSubstance"
     children={"Save Substance"}
-         />
+    />
     </div>
   </header>
+    </form>
    <div className={`${show ? "show" : ""} monographes-container`}>
-  {monograph.length > 0 &&
+     {monograph.length > 0 &&
     monograph.map((item) => (
-      <div className="singel-monograph" key={item.id}>
+    <div className="singel-monograph" key={item.id}>
     <div className="general-details">
   <MonoInput
+  className='monoName-empty'
     span="monograph"
     type="text"
     name="monographName"
@@ -211,8 +258,9 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
       handleMonographInput(e, item.id);
     }}
     required
-  />
+    />
   <MonoInput
+   className='monoEdition-empty'
     span="edition"
     type="number"
     name="edition"
@@ -222,6 +270,7 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
     required
     />
   <MonoInput
+   className='efectiveDate-empty'
     span="effective date"
     type="date"
     name="date"
@@ -236,11 +285,11 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
     <p>select Tech</p>
     <Select
     styles={selectCompCreateSunstanceStyle}
-      onChange={(option) => {
-        handleSelectOption(option, item.id);
-      }}
-      options={technologies}
-      isMulti
+    onChange={(option) => {
+      handleSelectOption(option, item.id);
+    }}
+    options={technologies}
+    isMulti
     />
     {item.tech.map((technology) => (
       <SingelTech
@@ -267,8 +316,8 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
   </p>
   {item["openNote"] && (
     <textarea
-      className="note-textarea"
-      onKeyUpCapture={(e) => {
+    className="note-textarea"
+    onKeyUpCapture={(e) => {
         handletextareaContent(e, item.id);
       }}
     ></textarea>
@@ -284,7 +333,8 @@ const CreateSubstance = ({ closeCreateSubstanceComp }) => {
 ))}
 </div>
 
-</form>
+{/* </form> */}
+</div>
     </div>
   );
 };

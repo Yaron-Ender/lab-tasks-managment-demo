@@ -3,6 +3,7 @@
 position:relative;
  min-width:30%;
  padding: $padding-medium*2;
+ padding:3rem 0;
 & > span{
 position: absolute;
 top:20%;
@@ -19,9 +20,14 @@ top:0;
 left:0;
 width: 100%;
 height: 100%;
+color:$nav-color-2;
+text-align: center;
 background: transparent;
 cursor: pointer;
 transition-delay:1s;
+font: {
+size:$font-size-lg;
+}
 &:focus{
   border:1px solid $black;
 }
@@ -75,4 +81,12 @@ cursor: pointer;
 &:has(input:focus) > span{
   opacity:0;
 }
+}
+.monoName-empty,
+.efectiveDate-empty,
+.monoEdition-empty{
+  & > input{
+ box-shadow:$box-shadow-glasses-error;
+ border:1px solid $error;
+  }
 }

@@ -162,7 +162,7 @@ return (
   <h2 className="substance-title">{id}</h2>
     {document &&
    // create the Monograph title
-   Object.keys(document).map((mono) => (
+   Object.keys(document).sort().map((mono) => (
      <div className="change-singel-monograph"
      key={document[mono]["id"]}>
     

@@ -169,7 +169,8 @@ grid-area:details;
   width:100%;
   height:100%;
   & > .change-tests-container{
-    background-color:$white;
+  padding-bottom: 2rem;
+   background-color:$white;
   //the label has 2 children
   @include grid(1fr,1fr 3fr,1rem);
   justify-items: center;
