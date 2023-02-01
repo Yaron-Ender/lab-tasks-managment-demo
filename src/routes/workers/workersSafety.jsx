@@ -1,4 +1,3 @@
-import underconstruction from '../../asstes/underconstruction.jpg'
 
 const WorkersSafety = () => {
     return (

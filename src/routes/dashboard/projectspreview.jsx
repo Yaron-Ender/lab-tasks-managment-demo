@@ -8,7 +8,6 @@ import { useStyle } from "../../hooks/useStyle";
 import Button from '../../component/button/button'
 import Avatar from "../../component/avatar/avatar";
 import chevron from '../../asstes/chevron.svg'
-// export const DeleteAssignmentIDContex = createContext();
 const Projectspreview = ({ assignmentDocID,usersCollectionArray }) => {
 const { error: documentError, document } = useDocument("assignments",assignmentDocID);
 const { document:professionDocument } = useDocument('profession','supervisor');
@@ -21,6 +20,17 @@ const [technologyArr,setTechnologyArr]=useState([]);
 const [techWithTests,setTechWithTests]=useState([]);
 const [usersArray,setUsersArray]=useState([]);
 const supervisorBox = useRef()
+const testObj = useRef(
+  [{GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"EUR"}},
+   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"EUR"}},
+   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"EUR"}},
+   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"JP"}},
+   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"JP"}},
+   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"USA"}},
+   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"USA"}},
+
+]
+).current
 const navigate = useNavigate();
 //delete project
 const deleteProject =async () => {
@@ -119,31 +129,34 @@ setTestsArray((prev) => [...prev, { [mono]:{...arr2} }]);
 useEffect(()=>{
   if(document){
   const projName = Object.keys(document)[0];
-   const techArr = []
+  const techArr = []
+  const techWithTestArr =[];
   Object.keys(document[Object.keys(document)[0]]).sort().forEach((mono)=>{
   Object.entries(document[Object.keys(document)[0]][mono]).sort().forEach((techAndTestArr) => {
   if(!techArr.includes(techAndTestArr[0])) {
   techArr.push(techAndTestArr[0])
     }
   setTechnologyArr(techArr)
-  })
-  const techWithTestArr =[];
+})
+// setTechWithTests([])
 if(techArr.length>0){
-  setTechWithTests([])
   techArr.forEach((tech)=>{
-  const testsObject = document[projName][mono][tech]
+    const testsObject = document[projName][mono][tech]
  techWithTestArr.push({ [tech]:{...testsObject,mono }});
-  })
-  setTechWithTests((prev) => [...prev, ...techWithTestArr]);
+})
+// console.log(techWithTestArr)
 }
 }) 
+setTechWithTests((prev) => [...prev, ...techWithTestArr]);
 }
 },[document])
 useEffect(()=>{
-if(usersCollectionArray.length){
-  setUsersArray(usersCollectionArray)
-}
+  if(usersCollectionArray.length){
+    setUsersArray(usersCollectionArray)
+  }
 },[usersCollectionArray])
+//  console.log(techWithTests)
+//  console.log(technologyArr)
 
 ////////////////////////////////////////////////////
 return(
@@ -199,13 +212,19 @@ Object.entries(testArr[1]).sort().map((test,index)=>(
   <img src={chevron} alt="chevron icon" onClick={handleOpenTech}
   />
   </div>
+  {/* {testObj&&console.log(testObj)} */}
+  {techWithTests.length>0&&console.log(techWithTests)}
   {techWithTests.length>0&&techWithTests.map((objectOfTechAndTests)=>(
-// HPLC:{imp: {…}, assay: {…}, organic: {…}, mono: 'ih-eur'}
+    // {HPLC:{imp: {…}, assay: {…}, organic: {…}, mono: 'ih-eur'} }
   Object.entries(objectOfTechAndTests).sort().map((techAndTestsArray,index)=>(
-(techAndTestsArray[0]===tech)?
+  //['HPLC', {…}]
+  //1:{Imp: {…}, Assay: {…}, mono: 'EUR'}
+  (techAndTestsArray[0]===tech)?
 <div key={index}  className='tests-with-details-container'>
+  {techWithTests.length>0&&console.log(techAndTestsArray)}
 {Object.entries(techAndTestsArray[1]).sort().map((testAndDetailsArray,index)=>(
-<div key={index} className='tests-with-details-inner-container'>
+  <div key={index} className='tests-with-details-inner-container'>
+  {techWithTests.length>0&&console.log(testAndDetailsArray)}
 {
 (testAndDetailsArray[0]!=='mono')?
 <>
