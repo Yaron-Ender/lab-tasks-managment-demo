@@ -90,9 +90,11 @@ visibility: hidden;
 }
 }//end of project-header
 & .project-all-technologies-container{
+// border:4px solid green;
 background-color:$white;
 width:100%;
 & >.project-tech{
+// border:4px solid magenta;
 @include flx-col(space-between);
 & .tech-chevron-box{
 transition: all $base-transition-slow;
@@ -120,13 +122,22 @@ background-size: 0;
 padding:1rem 0.3rem;
 }
 }
+& >.tech-container{
+  visibility: hidden;
+  // opacity:0;
+// border: 7px solid black;
+max-height:0;
+transition: all 0.5s;
 & .tests-with-details-container{
- height:0;
- opacity:0;
- @include flx-row();
- gap:2rem;
+// border:3px solid blue;
+  height:100%;
+  @include flx-row();
+//  gap:2rem;
 transition:all $base-transition-slow;
 & > .tests-with-details-inner-container{
+// border:2px solid red;
+height:100%;
+margin:0 1rem 2rem 1rem;
 // @include flx-col();
 background-color:$gray-border;
 box-shadow: $box-shadow-blur-modarate-plus;
@@ -144,78 +155,80 @@ padding:0 1rem;
   weight:900;
   }
   letter-spacing:0.2rem;
-}
-}
-& > .test-details{
- width:100%;
-& > h4{
-padding:1rem;
-@include flx-row(space-between);
-& >span{
-font: {
-size:$font-size-sm;
-weight:900;
-}
-letter-spacing:0.2rem;
-}
-}
-}
-& > .supervisor-container{
-padding:1rem 0 0 1rem;
-margin:1.5rem;
-@include grid(repeat(3,1fr),1fr 1fr,1rem);
-justify-items:center;
-align-items:center;
-justify-content: center;
-transition: all $base-transition-slow;
-box-shadow:$box-shadow-gentle;
-& > .supervisor-select-box{
-transition: all $base-transition;
-}
-& > label{
-& > input[name="date"]{
-position: relative;
- max-width:4rem;
-background-color: transparent;
-display:none;
-opacity:1;
-color: transparent;
-transform: translateX(50%);
-&::-webkit-calendar-picker-indicator{
-position:absolute;
-color:$gray-border;
-background-color:$gray-border;
-opacity:1;
-cursor: pointer;
-z-index: 2;
-transform:scale(1.2);
-}
-}
-}
-& span.no-supervisor{
-  grid-row: span 2;
-}
-& span:last-child{
-grid-column: span 2;
-}
-}//end of supervisor-container
-& .delete-last-item-mono{
-height:0px;
-width:0%;
-margin:0;
-}
-}
-// in the jsx the last item in the iteration is for example mono:'ih-usa', i had to ommit it here
-& .tests-with-details-inner-container:has(.delete-last-item-mono){
-  height:0;
-  padding:0;
-  border:0;
+  }
+  }
+  & > .test-details{
+   width:100%;
+  & > h4{
+  padding:1rem;
+  @include flx-row(space-between);
+  & >span{
+  font: {
+  size:$font-size-sm;
+  weight:900;
+  }
+  letter-spacing:0.2rem;
+  }
+  }
+  }
+  & > .supervisor-container{
+  padding:1rem 0 0 1rem;
+  margin:1.5rem;
+  @include grid(repeat(3,1fr),1fr 1fr,1rem);
+  justify-items:center;
+  align-items:center;
+  justify-content: center;
+  transition: all $base-transition-slow;
+  box-shadow:$box-shadow-gentle;
+  & > .supervisor-select-box{
+  transition: all $base-transition;
+  }
+  & > label{
+  & > input[name="date"]{
+  position: relative;
+   max-width:4rem;
+  background-color: transparent;
+  display:none;
+  opacity:1;
+  color: transparent;
+  transform: translateX(50%);
+  &::-webkit-calendar-picker-indicator{
+  position:absolute;
+  color:$gray-border;
+  background-color:$gray-border;
+  opacity:1;
+  cursor: pointer;
+  z-index: 2;
+  transform:scale(1.2);
+  }
+  }
+  }
+  & span.no-supervisor{
+    grid-row: span 2;
+  }
+  & span:last-child{
+  grid-column: span 2;
+  }
+  }//end of supervisor-container
+  & .delete-last-item-mono{
+  height:0px;
+  width:0%;
   margin:0;
-}
-}//tests-with-details-container
+  }
+  }
+  // in the jsx the last item in the iteration is for example mono:'ih-usa', i had to ommit it here
+  & .tests-with-details-inner-container:has(.delete-last-item-mono){
+    height:0;
+    padding:0;
+    border:0;
+    margin:0;
+  }
+  }//tests-with-details-container
+}//end of tech-container
 }
 & > .project-tech:last-child:has(.open-tech-pannel){
 margin-bottom:4rem;
+// border:5px solid orange;
 }
 }//project-all-technologies-container-->end of new style
 }//end project-preview

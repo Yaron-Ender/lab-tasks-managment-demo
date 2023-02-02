@@ -19,18 +19,7 @@ const [testsArray,setTestsArray] = useState([]);
 const [technologyArr,setTechnologyArr]=useState([]);
 const [techWithTests,setTechWithTests]=useState([]);
 const [usersArray,setUsersArray]=useState([]);
-const supervisorBox = useRef()
-const testObj = useRef(
-  [{GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"EUR"}},
-   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"EUR"}},
-   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"EUR"}},
-   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"JP"}},
-   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"JP"}},
-   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"USA"}},
-   {GC:{methanol :{comments:'001-005'},DMSO:{comments:'008'},mono:"USA"}},
-
-]
-).current
+const supervisorBox = useRef();
 const navigate = useNavigate();
 //delete project
 const deleteProject =async () => {
@@ -67,15 +56,9 @@ const handleSupervisor = async (option,projName,monograph,tech,test)=>{
   if(tech){
     const updatedObject = { option, projName, monograph, tech, test };
     await updateSupervisor(updatedObject, assignmentDocID);
-    //handle with tests-with-details-container demensions
-    const selectElementBox = window.document.getElementById(
-      `select-${projName}-${monograph}-${tech}-${test}`
-    ).parentElement.parentElement;
-  const testWithDetailsContainer =selectElementBox.parentElement.parentElement;
-  testWithDetailsContainer.style.height = `${testWithDetailsContainer.scrollHeight}px`;
 //handlw with the apearance of the date element
     const dateElement = window.document.getElementById(
-      `${projName}-${monograph}-${tech}-${test}`
+      `${assignmentDocID}-${projName}-${monograph}-${tech}-${test}`
     );
     if (option.value) {
       dateElement.style.display = "block";
@@ -91,17 +74,21 @@ const handlsupervisorDuedate =async(projName, monograph, tech, test, e) => {
 };
 //open single tech
 const handleOpenTech = (e) => {
- e.target.classList.toggle("open-tech-pannel");
-const testsWithDetailsContainer = e.target.parentElement.nextElementSibling;
- if(e.target.classList.contains('open-tech-pannel')){
-testsWithDetailsContainer.style.height = `${testsWithDetailsContainer.scrollHeight}px`;
-testsWithDetailsContainer.style.opacity = "1";
-testsWithDetailsContainer.style.margin='0 1rem 2rem 1rem'
- }
- if(!e.target.classList.contains('open-tech-pannel')){
- testsWithDetailsContainer.style.height ='0';
-   testsWithDetailsContainer.style.opacity = "0";
-     testsWithDetailsContainer.style.margin = "0";
+  let height = 0
+  e.target.classList.toggle("open-tech-pannel");
+  const techContainer = e.target.parentElement.nextElementSibling;
+const techContainerArr = e.target.parentElement.nextElementSibling.childNodes;
+techContainerArr.forEach((item)=>{
+  height += item.scrollHeight
+})
+if(e.target.classList.contains('open-tech-pannel')){
+techContainer.style.maxHeight = `${height}px`;
+techContainer.style.visibility='visible';
+}
+if(!e.target.classList.contains('open-tech-pannel')){
+  techContainer.style.maxHeight = `0px`;
+  techContainer.style.visibility = "hidden";
+
  }
 };
 //this useEffect response on:1.lastDuedate 2.on the presantaion of the tests checkboxes
@@ -138,7 +125,7 @@ useEffect(()=>{
     }
   setTechnologyArr(techArr)
 })
-// setTechWithTests([])
+setTechWithTests([])
 if(techArr.length>0){
   techArr.forEach((tech)=>{
     const testsObject = document[projName][mono][tech]
@@ -155,8 +142,7 @@ useEffect(()=>{
     setUsersArray(usersCollectionArray)
   }
 },[usersCollectionArray])
-//  console.log(techWithTests)
-//  console.log(technologyArr)
+  // console.log(techWithTests)
 
 ////////////////////////////////////////////////////
 return(
@@ -212,19 +198,18 @@ Object.entries(testArr[1]).sort().map((test,index)=>(
   <img src={chevron} alt="chevron icon" onClick={handleOpenTech}
   />
   </div>
-  {/* {testObj&&console.log(testObj)} */}
-  {techWithTests.length>0&&console.log(techWithTests)}
+  <div className="tech-container">
   {techWithTests.length>0&&techWithTests.map((objectOfTechAndTests)=>(
     // {HPLC:{imp: {…}, assay: {…}, organic: {…}, mono: 'ih-eur'} }
   Object.entries(objectOfTechAndTests).sort().map((techAndTestsArray,index)=>(
   //['HPLC', {…}]
   //1:{Imp: {…}, Assay: {…}, mono: 'EUR'}
   (techAndTestsArray[0]===tech)?
-<div key={index}  className='tests-with-details-container'>
-  {techWithTests.length>0&&console.log(techAndTestsArray)}
+<div key={index} className='tests-with-details-container'>
+  {/* {techWithTests.length>0&&console.log(techAndTestsArray)} */}
 {Object.entries(techAndTestsArray[1]).sort().map((testAndDetailsArray,index)=>(
   <div key={index} className='tests-with-details-inner-container'>
-  {techWithTests.length>0&&console.log(testAndDetailsArray)}
+  {/* {techWithTests.length>0&&console.log(testAndDetailsArray)} */}
 {
 (testAndDetailsArray[0]!=='mono')?
 <>
@@ -257,12 +242,11 @@ onChange={(option)=>(handleSupervisor(option,projName,techAndTestsArray[1]['mono
 options={professionDocument['supervisor'].concat({label:'cancel choise',value:'',id:'',photoURL:''})}
 placeholder='Select Supervisor'
 ref = {supervisorBox}
-// onFocus ={(e)=>{handleTestsBoxDimension(e)}}
 />
 </div>
   <label>
   <input
-  id={`${projName}-${techAndTestsArray[1]['mono']}-${tech}-${testAndDetailsArray[0]}`}
+  id={`${assignmentDocID}-${projName}-${techAndTestsArray[1]['mono']}-${tech}-${testAndDetailsArray[0]}`}
   name='date'
   type="date"
  onChange={(e) =>handlsupervisorDuedate(projName,techAndTestsArray[1]['mono'],tech,testAndDetailsArray[0],e)}
@@ -285,6 +269,14 @@ ref = {supervisorBox}
 :''    
 ))
 ))}
+
+
+
+
+
+
+  </div>
+
 </div>
 ))}
 </div>

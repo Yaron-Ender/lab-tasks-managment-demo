@@ -112,7 +112,6 @@ await addDocument(substanceName, monographObj);
  closeCreateSubstanceComp();
 }
     }
-console.log(note)
   };
   //add the individual monograph to state that store all the monographes
   const addMonograph = (e) => {
