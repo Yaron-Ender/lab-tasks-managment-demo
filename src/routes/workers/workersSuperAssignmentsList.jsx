@@ -41,7 +41,6 @@ return new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
  })   
  }   
 },[document,superId])
-console.log(projectDetailsArr)
   return (
 <div className="supervisor-singel-proj">
 {projectDetailsArr.length>0&&projectDetailsArr.map((supervisorObj,index)=>(

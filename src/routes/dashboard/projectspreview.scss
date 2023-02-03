@@ -90,16 +90,16 @@ visibility: hidden;
 }
 }//end of project-header
 & .project-all-technologies-container{
-// border:4px solid green;
 background-color:$white;
 width:100%;
 & >.project-tech{
-// border:4px solid magenta;
 @include flx-col(space-between);
 & .tech-chevron-box{
 transition: all $base-transition-slow;
 width:100%;
-background:linear-gradient($gray-border,$gray-border) center right/100% no-repeat;
+background:linear-gradient($gray-border,$gray-border) 
+center right/100% no-repeat;
+border-bottom:1px solid rgba(0,0,0,0.4);
 @include flx-row(space-between);
 & > h3{
 font: {
@@ -120,25 +120,20 @@ transition:all $base-transition;
 transition: all $base-transition-slow;
 background-size: 0;
 padding:1rem 0.3rem;
+border:0;
 }
 }
 & >.tech-container{
-  visibility: hidden;
-  // opacity:0;
-// border: 7px solid black;
+visibility: hidden;
 max-height:0;
 transition: all 0.5s;
 & .tests-with-details-container{
-// border:3px solid blue;
   height:100%;
   @include flx-row();
-//  gap:2rem;
 transition:all $base-transition-slow;
 & > .tests-with-details-inner-container{
-// border:2px solid red;
 height:100%;
 margin:0 1rem 2rem 1rem;
-// @include flx-col();
 background-color:$gray-border;
 box-shadow: $box-shadow-blur-modarate-plus;
 & > .test-box{
