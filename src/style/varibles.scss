@@ -37,7 +37,8 @@ $white:#fff;
 //varibles for welcome page and animation
 $perspective: 30rem;
 $time:2s;
-
+//varible for gallery
+$galerry-size:20rem;
 $colors:(
   "gray-bck":$gray-primary,
  "primary": $gray-primary,
@@ -169,7 +170,13 @@ transform: translateY(1px);
  0%{transform: translateY(-100%)};
  90%,100%{transform: translateY(100%)};
  }
-
+@include animation(gallery-animation){
+  0%,5%{ transform: rotate(0deg);}
+ 25%,30%{ transform:rotate(90deg);}
+ 50%,55%{ transform:rotate(180deg);}
+ 75%,80%{ transform:rotate(270deg);}
+ 100%{ transform:rotate(360deg);}
+}
  @mixin run-animation($name) {
   -webkit-animation: $name $base-transition-slow*2 ease-in-out forwards;
   -moz-animation: $name $base-transition-slow*2 ease-in-out forwards;
@@ -183,6 +190,12 @@ transform: translateY(1px);
   -o-animation: $name $time*5 linear 2s infinite;
   animation: $name $time*5 linear  infinite;
   
+}
+@mixin run-gallery-animation($name){
+-webkit-animation: $name $time*4 infinite cubic-bezier(.5, -0.2, .5, 1.2);
+-moz-animation: $name $time*4 infinite cubic-bezier(.5, -0.2, .5, 1.2);
+-o-animation: $name $time*4 infinite cubic-bezier(.5, -0.2, .5, 1.2);
+animation: $name $time*4 infinite cubic-bezier(.5, -0.2, .5, 1.2);  
 }
 
 

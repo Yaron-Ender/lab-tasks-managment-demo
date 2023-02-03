@@ -1,5 +1,8 @@
 import { useState } from "react";
-
+import laboratory1 from '../../asstes/laboratory1.jpg'
+import laboratory2 from '../../asstes/laboratory2.jpg'
+import laboratory3 from '../../asstes/laboratory3.jpg'
+import laboratory4 from '../../asstes/laboratory4.jpg'
 const Welcome = () => {
 const [openInfomational,setOpenInformational] = useState(false)
 return (
@@ -32,7 +35,7 @@ return (
    
     </div>
     </div>
-    <div className="general-masseges-contaioner">
+    <div className="general-masseges-container">
       <ul>
         <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate perferendis voluptatum autem, deserunt ex excepturi iusto 
         </li>
@@ -41,6 +44,16 @@ return (
         <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate perferendis voluptatum autem, deserunt ex excepturi iusto 
         </li>
       </ul>
+    </div>
+    <div className="image-gallery">
+    <div className="gallery-container">
+    <div className="image-gallery-bc"></div>
+    <img src={laboratory1} alt="laboratory" />
+    <img src={laboratory2} alt="laboratory" />
+    <img src={laboratory3} alt="laboratory" />
+    <img src={laboratory4} alt="laboratory" />
+    </div>
+
     </div>
   </div>
 );
