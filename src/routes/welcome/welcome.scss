@@ -257,5 +257,19 @@ animation-delay: -6s;
 }
 &:has(.informational-container.open) .image-gallery{
   display:none;
+}
+& > footer{
+grid-area:7 /1 / 8 / -1;
+padding:1rem 0rem;
+margin: 2rem auto;
+
+& > small{
+font: {
+size:2rem;
+family:Poppins,serif;
+family:Cinzel,serif;
+}
+letter-spacing:.2rem;
+}
 } 
 }
