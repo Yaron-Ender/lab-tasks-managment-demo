@@ -30,6 +30,22 @@ const handleSubmit = (e)=>{
   login(email,password,employeeNumber,position)
   setInputFields(defaultInput)
   }
+  const handleDemoSubmision =(e)=>{
+  const id = e.target.id
+  switch(id){
+  case 'manager':
+  login('yona@y.com','123123','100000',position); 
+  break;
+  case 'worker':
+  login('lisa@l.com','123123','222222',position);
+  break;
+  case 'supervisor':
+  login('brad@b.com','123123','999999',position);
+  break;
+  default:
+  return
+  }
+  }
     return (
       <div className="login-container">
         <h2>log in</h2>
@@ -56,6 +72,9 @@ const handleSubmit = (e)=>{
             forgot password ? click <span>here</span>
           </p>
           {!isPending && <Button children="Login" buttontype="login" />}
+          {!isPending && <Button id='manager' type='button' onClick={handleDemoSubmision} children="Login As Manager" buttontype="login" />}
+          {!isPending && <Button id='supervisor' type='button' onClick={handleDemoSubmision} children="Login As Supervisor" buttontype="login" />}
+          {!isPending && <Button id='worker' type='button' onClick={handleDemoSubmision}  children="Login As HPLC Worker" buttontype="login" />}
           {isPending && (
             <Button
               disabled={"disabled"}

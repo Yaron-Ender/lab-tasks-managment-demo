@@ -19,6 +19,7 @@ export const useISManager = ()=>{
     case "111111":
     case "222222":
     case "333333":
+    case "456456":
     return   position.current = { ...position.current,HPLC: true };
     case "444444":
     case "555555":
