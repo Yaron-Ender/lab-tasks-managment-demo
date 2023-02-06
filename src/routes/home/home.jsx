@@ -11,13 +11,13 @@ const [signupNote,setSginupNote] = useState(false)
           <h1 className="top-half">analitical laboratory</h1>
           <h1 className="bottom-half">analitical laboratory</h1>
         </div>
-      {signupNote&&
+      {/* {signupNote&&
       
         <div className="signup-note">
           <h2>Welcome to Lab Task Managment Project</h2>
           <h3>becuase it's Demo version continue via Login Button</h3>
         </div>
-      }
+      } */}
         <nav className="login-navbar">
           <div className="login-navbar-container">
             <Link className="login-link" to="login" onClick={()=>{setSginupNote(false)}} >
