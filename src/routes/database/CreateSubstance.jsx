@@ -198,9 +198,9 @@ break;
   };
   //function that update the tests object,it get called from SingleTest Comp and pass "testList"
   const updateTests = (id, testList) => {
-    monograph.forEach((item) => {
-     if (item.id === id) {
-    Object.keys(testList).forEach((technology) => {
+  monograph.forEach((item) => {
+  if (item.id === id) {
+   Object.keys(testList).forEach((technology) => {
    if (testList[technology].length > 0) {
     item.tests[technology] = testList[technology];
     }
