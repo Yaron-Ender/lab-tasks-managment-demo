@@ -20,8 +20,9 @@ const WorkersAssignments = () => {
   );
   const [profession, setProfession] = useState(null);
   const [myAssignments, setMyAssignments] = useState([]);
-// get called in WorkersMyAssignments--> it return back the object with all project's details
+  // get called in WorkersMyAssignments--> it return back the object with all project's details
   const orderByDateFunction = useCallback((myAssignmentObj) => {
+  // console.log(myAssignmentObj)
   if(myAssignmentObj.test.length>0){
   myAssignmentObj.test.forEach((test)=>{
   setOrderByDate((prev)=>[...prev,{test:test[0],details:test[1],monograph:myAssignmentObj.monograph,projectName:myAssignmentObj.projectName}])
