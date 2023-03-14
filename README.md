@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Lab Tasks Managmant
+## overView
+> Lab Tasks Managmant is a Web App for pharma analytical laboratories.  
+  the App gives to the manager ability to create substances database with their tests  
+  and then to create work plan to he employees based on the created database
+    
+## Technologies
++ React V 18
++ React-Router V 6.3
++ React-Select
++ Date-fns
++ Firebase V 9
+  + Authantication
+  + firesore
+  + storage
+  + firestore-rules
++ Scss
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Detailed explanation
+> After Authantication check the App detect user's role that could be manager,supervisor or employee
 
-## Available Scripts
+### manager
+> The manager control the App by the database and dashboard modules,witch can be create,update and deleat only by the manager
 
-In the project directory, you can run:
+> **database module** - create substances database with their tests with the ability to modify test name and substance details
+![database](readme-assets/database.png)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+>**dashboard module** - allows the manager to create a new project and assign it to workers and supervisor(person who check and approve other workers tests)
+#### add project (*create new project*)
+> select substance from the database list and fill tests details
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![add project](readme-assets/add%20project.png)
+> after saving the project the manager can see the project that has been created at "see project" page
+#### see projects
+> all the runnig projects in the laboratory are organized by card
+![see projects](readme-assets/see%20project.png)
+>all the project's tests are hidden in cards  behind their technology,by clicking the chevron the tests card become visible
+![opened test card](readme-assets/open%20tech%20chevron.png)
+> When the manager decide to assign a test to supervisor for approval, he choose supervisor from the supervisor list and attach him due date
 
-### `npm test`
+![supervisor due date](readme-assets/supervisor%20due%20date.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+>*tests status*
+The tests status box allows the manager to be informed with the status of each test (for status indication meaning see below at the supervisor section)
+![status box](readme-assets/status%20box.png)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### workers
+> The page of the workers divided into three sections
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+***Their tests*** - all the direct tests that belong to the worker, the tests are ordered by date and the daily test is highlighted.  
+whenever the manager will assign supervisor to the test, it will update at the worker too.  
+***Other workers's tests within the same technology*** - The App distinguish every worker by his technology and expose him to other members tests with the same technology.  
+***All the other tests*** - at the end of the page the worker see all the other tests that belong to other technologies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![worker page](readme-assets/workers.png)
 
-### `npm run eject`
+### supervisor 
+When the supervisor finished to check the test he has the ability to indicate the test status by the "project status box" ,he can mark approve, issue or both, when the checkbox was filled it immadiatly reflected in the manager's  status box
+![supervisor page](readme-assets/supervisor.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Links
+Detailed explanation in hebrew about this App on YouTube
+[Lab Tasks Managmant App](https://youtu.be/OYyHok3CFOM) 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
