@@ -2,7 +2,11 @@
 ## overView
 > Lab Tasks Managmant is a Web App for pharma analytical laboratories.  
   the App gives to the manager ability to create substances database with their tests  
-  and then to create work plan to he employees based on the created database
+  and then to create work plan to the employees based on the created database
+  
+## Links
+Detailed explanation in hebrew about this App on YouTube
+[Lab Tasks Managmant App](https://youtu.be/OYyHok3CFOM) 
     
 ## Technologies
 + React V 18
@@ -61,7 +65,4 @@ When the supervisor finished to check the test he has the ability to indicate th
 ![supervisor page](readme-assets/supervisor.png)
 
 
-## Links
-Detailed explanation in hebrew about this App on YouTube
-[Lab Tasks Managmant App](https://youtu.be/OYyHok3CFOM) 
 
